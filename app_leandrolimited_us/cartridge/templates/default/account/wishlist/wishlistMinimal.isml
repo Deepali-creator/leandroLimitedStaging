@@ -1,0 +1,10 @@
+<isif condition="${empty(pdict.CurrentForms.wishlist.items)}">
+<iscomment> no iteams </iscomment>
+<iselse/>
+    <isloop items="${pdict.CurrentForms.wishlist.items}" var="item" status="loopstate">
+        <input id="wishpid-${loopstate.count}" name="" value="<isprint value="${item.object.product.ID}"/>">
+        <isif condition="${loopstate.last}">
+            <input id="wishpidCount"  name="" value="${loopstate.count}"/>
+        </isif>
+    </isloop>
+</isif>

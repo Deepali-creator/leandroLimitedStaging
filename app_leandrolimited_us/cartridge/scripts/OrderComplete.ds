@@ -1,0 +1,15 @@
+/**
+*
+*
+* @input Order : dw.order.Order
+* @output Location : String
+*
+*/
+
+importPackage( dw.system );
+
+function execute( args : PipelineDictionary ) : Number {
+	var payload={extCardId:args.Order.custom.extCartId,dwOrderNo:args.Order.orderNo,total:args.Order.totalGrossPrice.value.toFixed(2)};
+	args.Location=Site.current.getCustomPreferenceValue("ShopifyConfirmationURL")+"?JSON="+JSON.stringify(payload);
+	return PIPELET_NEXT;
+}

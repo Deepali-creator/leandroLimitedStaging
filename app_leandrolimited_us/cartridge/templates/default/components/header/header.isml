@@ -1,0 +1,97 @@
+<iscontent type="text/html" charset="UTF-8" compact="true" />
+
+<iscomment>SLOT CONFIGURATION: SLOT/ID: header-banner</iscomment>
+<header id="header" class="header">
+	<div class="header-top" role="banner">
+
+	</div>
+	<div class="header-bottom" style="background:white;">
+		<iscontentasset aid="LeandroHeader" style="overflow:hidden" />
+		<div class="wrap wrap--header">
+			<button class="menu-toggle no-inherit">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<strong class="visually-hidden">Menu</strong>
+			</button>
+			<h1 class="primary-logo" style="padding:2%">
+				<a href="${URLUtils.url('Home-Show')}" title="${Resource.msgf('global.storename', 'locale', null, Resource.msg('global.storename', 'locale', null), Resource.msg(
+                                              	'global.home', 'locale', null))}">
+					<iscomment> <img src="${URLUtils.staticURL('/images/leandro-logo.svg')}" </iscomment>
+					<img src="${URLUtils.staticURL('/images/Leandro_Limited_logo_new.png')}"
+						alt="${Resource.msg('global.storename', 'locale', null)}">
+					<span class="visually-hidden">${Resource.msg('global.storename', 'locale', null)}</span>
+				</a>
+			</h1>
+
+			<div class="header-utility">
+				<button class="search-toggle no-inherit">
+					<img src="${URLUtils.staticURL('/images/icon-search-new.svg')}" alt="${Resource.msg('simplesearch.searchtext', 'search', null)}"\>
+				</button>
+				<div class="header-search">
+					<isinclude template="search/simplesearch" />
+					<button class="search-toggle mobile-search-close no-inherit mobile-only">
+						<iscomment> <img src="${URLUtils.staticURL('/images/search_icon.png')}"
+							alt="${Resource.msg('simplesearch.close', 'search', null)}"> </iscomment>
+							<i class="fa fa-times" aria-hidden="true"></i>
+					</button>
+				</div>
+				<!--  utility user menu -->
+				<ul class="menu-utility-user">
+					<!-- iscomment>INCLUDE: Customer login information, login, etc. (contains personal information, do not cache)</iscomment-->
+					<isinclude url="${URLUtils.url('Home-IncludeHeaderCustomerInfo')}" />
+				</ul>
+				<a href="${URLUtils.url('Wishlist-Show')}" class="wishlist-link">
+					<span class="visually-hidden">${Resource.msg('global.wishlist', 'locale', null)}</span>
+					<iscomment> <img style="width:60px" src="${URLUtils.staticURL('/images/heart_icon_activated.png')}" alt=""/> </iscomment>
+					<i class="fa fa-heart" alt="wishlist"></i>
+				</a>
+				<iscomment>INCLUDE: Mini-cart, do not cache</iscomment>
+				<div id="mini-cart">
+					<isinclude url="${URLUtils.url('Cart-MiniCart')}" />
+				</div>
+			</div>
+		</div>
+		<div class="header-info-bar">
+			<iscomment> ${Resource.msg('global.header.info', 'locale', null)} </iscomment>
+			<div class="wrap">
+				<isslot id="header-banner" description="Slot in the site header" context="global" />
+			</div>
+		</div>
+		<nav id="navigation" role="navigation" style="top:0; ">
+			<div class="nav-wrap" style="">
+				<button class="menu-toggle no-inherit" style="right:0;left:auto;    top: 5%;">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<strong class="visually-hidden">Menu</strong>
+				</button>
+				<iscomment>INCLUDE: category menu</iscomment>
+				<isinclude url="${URLUtils.url('Home-IncludeHeaderMenu')}" />
+				<div>
+					<p class="display-none-destop" style="padding-top: 40px;  padding-bottom: 20px;  font-size: 38px; line-height: 38px;  font-family: 'Helvetica Neue LT W01_75 Bold'; text-transform: uppercase;   margin-left: 15%;   text-align: left;">On a need<br> to know <br>basis</p>
+					<p class="display-none-destop" style="    padding-bottom: 20px;  text-align: left; margin-left: 15%;    font-size: 15px;   font-family: 'Helvetica Neue'; ">Join #Leandrobeauty gang for <br>exclusive offers and latest news. </p>
+					<div  style="display: flex;  margin-left: 15%;">
+						<a href="${URLUtils.https('Account-Show')}" style="margin-right: 10px;"><button class="display-none-destop" type="button" style="height: 30px;  width: 109px;  font-size: 15px; text-transform: Uppercase;padding:0% 10%;">Join</button></a>
+					<a href="${URLUtils.https('Account-Show')}"><button class="display-none-destop" type="button" style="height: 30px;  width: 109px;  font-size: 15px; background-color: white;  color: black; text-transform: Uppercase;padding:0% 10%;">Sign in</button></a>
+					</div>
+					<a class="mini-cart-link display-none-destop" href="${URLUtils.https('Cart-Show')}" style="display:block; font-size: 1.25rem; margin-top: 50px;   text-align: left;  margin-left: 15%;" title="${Resource.msg('minicart.viewcart', 'checkout', null)}">
+						<span style="display:flex;aling-items:center;padding-bottom:20px;"class="minicart-icon ">
+							<i style="font-size:40px;" class="fa fa-shopping-cart"></i>
+							<span style="padding-left:20px;"> View cart</span>
+						</span>
+					</a>
+					<a href="${URLUtils.url('Wishlist-Show')}" class="wishlist-link display-none-destop" style="display:flex;aling-items:center;text-align: left;top:auto;left: auto;   width: auto !important;  margin-left: 15%;padding-bottom: 100px;">
+						<span style="display:flex;aling-items:center;" class="visually-hidden">${Resource.msg('global.wishlist', 'locale', null)}</span>
+						<i style="font-size:40px;" class="fa fa-heart"></i>
+							<span style="padding-left:20px;">View favorites</span>
+					</a>
+
+				</div>
+			</div>
+		</nav>
+	</div><!-- /header -->
+	<div class="overlay menu-toggle" id="overlay"></div>
+</header>

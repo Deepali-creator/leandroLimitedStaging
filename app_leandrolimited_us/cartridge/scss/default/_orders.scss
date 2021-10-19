@@ -1,0 +1,183 @@
+// Order History - Order Details Styling
+
+.order-history-header {
+    overflow: hidden;
+    padding: 0.625rem;
+    button {
+        float: right;
+    }
+    .order-date, .order-status, .order-number {
+        float: left;
+        margin: 0.125rem 0;
+        width: 60%;
+    }
+}
+.order-history-items {
+    margin: 1.25rem 0;
+    .order-history-table {
+        th, td {
+            padding: 0.3125rem 0.625rem;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style-position: inside;
+            list-style-type: square;
+        }
+        .order-shipped-to,
+        .order-items,
+        .order-total-price {
+            width: 33%;
+        }
+        .toggle {
+            cursor: pointer;
+            display: block;
+        }
+    }
+}
+.js .order-history-table .hidden {
+    display: none;
+}
+
+// Details Styling
+
+.orderdetails {
+    h2 {
+        clear: both;
+        font-size: 1rem;
+        padding: 0 0 0.3125rem;
+        border: solid $color-gray-20;
+        border-width: 0 0 rem(1);
+    }
+    .label {
+        font-weight: 600;
+        text-transform: none;
+    }
+    .order-shipment-table {
+        background-color: $color-gray-10;
+        border: rem(1) solid $color-gray-20;
+        border-radius: rem(5);
+        padding: 1em;
+    }
+    .order-shipment-details {
+        .order-shipment-address {
+            float: right;
+        }
+    }
+    .line-items {
+        clear: both;
+        padding-top: 1rem;
+        .line-item {
+            padding-bottom: 1rem;
+            .line-item-details,
+            .line-item-quantity,
+            .line-item-price {
+                display: inline-block;
+                vertical-align: top;
+            }
+            .line-item-quantity,
+            .line-item-price {
+                width: 14%;
+            }
+            .line-item-details {
+                width: 55%;
+            }
+            .line-item-quantity {
+                text-align: center;
+            }
+            .line-item-price {
+                text-align: right;
+            }
+        }
+    }
+    .order-number {
+        font-size: 1.5rem;
+    }
+    .order-number,
+    .order-date {
+        text-align: center;
+    }
+    .order-information,
+    .order-shipments {
+        width: 100%;
+        display: inline-block;
+        vertical-align: top;
+        margin: 2rem 0;
+        @include breakpoint(lgTabletUp) {
+            width: 48%;
+        }
+    }
+    .order-information {
+        padding: 0 2rem 0 0;
+        .label {
+            text-transform: none;
+        }
+        .order-payment-instruments,
+        .order-billing {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+        }
+        .order-payment-summary {
+            margin: 1rem 0;
+            & > .label {
+                border: solid $color-gray-20;
+                border-width: 0 0 rem(1);
+                padding: 0 0 0.3125rem;
+            }
+        }
+    }
+    .payment-amount {
+        .label {
+            font-weight: normal;
+            text-transform: none;
+        }
+    }
+    .order-totals-table td {
+        &:first-child {
+            padding-right: 5rem;
+            text-align: left;
+        }
+    }
+}
+.pt_order,
+.confirmation {
+    .actions {
+        padding: .5em 1%;
+        a {
+            margin-right: 2rem;
+        }
+    }
+}
+
+.confirmation-message {
+    border: solid $color-black;
+    border-width: 0 0 0.1875rem;
+    margin: 1rem 0;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.confirmation {
+    &.create-account {
+        .login-create-account,
+        .order-confirmation-details {
+            display: block;
+        }
+        .login-box-content {
+            background-color: $color-gray-10;
+            border: rem(1) solid $color-gray-20;
+            border-radius: rem(5);
+            padding: 1em;
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            .form-row {
+                margin: 0;
+            }
+        }
+    }
+}

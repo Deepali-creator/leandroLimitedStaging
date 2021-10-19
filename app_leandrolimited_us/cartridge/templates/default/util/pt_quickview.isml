@@ -1,0 +1,164 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<style>
+
+.js .ui-dialog-content .product-col-1 {
+padding: 0.8125rem 5%;
+width: 50%; }
+.js .ui-dialog-content .product-col-1 .product-image {
+max-width: 100%; }
+.js .ui-dialog-content .product-col-1 .thumb-slider .slick-next {
+top: 15%; }
+.js .ui-dialog-content .product-col-1 .thumb-slider .slick-prev {
+top: 10%; }
+
+.js .ui-dialog-content .product-col-2 {
+padding: 1.25rem 2%;
+width: 40%; }
+
+.ui-dialog .ui-dialog-content{
+	padding:3rem 1rem 0rem;
+}
+.product-description table tbody tr td {
+	border-style: none none none none !important;
+}
+.pdp-main .product-description{
+	font-size:12px;
+	padding:0px;
+	margin:0px;
+}
+
+.pdp-main .product-description pre{
+	font-size:12px;
+	font-family:'Helvetica Neue';
+	white-space:pre-wrap;
+	color: #414141;
+}
+.product-detail-top1 {
+        display: block;
+        overflow: hidden;
+}
+.product-nameQV{
+	font-family:'Helvetica Neue';
+	font-weight:normal;
+	font-size:12px;
+	margin:0 0 10px;
+}
+
+.product-brandQV{
+	font-size:11px;
+	font-family:'Helvetica Neue LT W01_75 Bold';
+	letter-spacing:2px !important;
+}
+
+
+.js .ui-dialog-content .product-col-2{
+	padding:0px 0px 0px 0px;
+}
+
+.pdp-main .product-add-to-cart{
+	padding:1.5rem 0 1.5rem;
+}
+
+.pdp-main .product-add-to-cart .quantity-select{
+	border-radius:0.50rem;
+}
+
+.pdp-main .product-add-to-cart .add-to-cart{
+	text-transform:uppercase !important;
+	font-size:12px !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close{
+	z-index:101;
+}
+
+.product-thumbnails{
+	max-width:25%;
+}
+.primary-image{
+	max-width:90%;
+}
+
+.js .ui-dialog-content .product-col-1{
+	padding:10px 0px 0px 0px ;
+}
+
+.viewfullpage{
+	font-weight:bold;
+	text-transform:uppercase;
+	font-size:12px;
+	font-family:'Helvetica Neue LT W05 65 Medium';
+	color:#1D1D1D;
+}
+
+.viewfullpage:hover{
+	text-decoration:underline;
+}
+@media only screen and  (max-width:959px) {
+    .thumb-slider1 {
+		display: none
+	}
+}
+
+@media only screen and  (min-width:960px) {
+    .thumb-slider {
+		display: none
+	}
+	    .thumbs {
+        margin: 0 rem(5);
+        max-width: 100%;
+        border: rem(1) solid $color-gray-50;
+        &.selected {
+            border-color: $color-black;
+        }
+        @include breakpoint(lgTabletUp) {
+            max-width: rem(205);
+        }
+}
+/* quantity select */
+.quantity{
+	width:10rem;
+	height:2.5rem;
+}
+
+.inventory{
+	width:70px !important;
+	user-select:none;
+}
+span {cursor:pointer;}
+.plus{
+			width:20px;
+			height:30px;
+			display: inline-block;
+			vertical-align: middle;
+			margin-left:10px;
+			text-align: center;
+		}
+
+    .minus{
+			width:20px;
+			height:30px;
+			margin-left:-60px ;
+			display: inline-block;
+			vertical-align: middle;
+			text-align: center;
+		}
+input{
+	height:34px;
+	width: 50px;
+	text-align: center;
+	font-size: 26px;.
+	border:1px solid #ddd;
+	border-radius:4px;
+	display: inline-block;
+	vertical-align: middle;
+}
+</style>
+<isreplace/>
+<iscomment>
+	This decorator just place the decorated template in order to produce
+	correct partial pages (e.g. only the inner template) if needed.
+	This is necessary to provide a partial page only, e.g. a category landing
+	page if it was requested through an Ajax request, where an additional
+	decoration has to be omitted.
+</iscomment>

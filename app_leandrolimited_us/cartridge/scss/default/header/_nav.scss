@@ -1,0 +1,319 @@
+.pt_cart #navigation,
+.pt_checkout #navigation {
+	display: none;
+}
+
+nav[role="navigation"] {
+	@extend .clearfix;
+	color: $color-black;
+	width: 100%;
+	text-align: center;
+	height: 0;
+	max-height: 0;
+	pointer-events: none;
+	transition: all 0.3s ease-in-out;
+	overflow: hidden;
+	@include breakpoint(desktop) {
+		position: absolute;
+		bottom: rem(-84);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 1;
+		pointer-events: auto;
+		height: auto;
+		max-height: none;
+	}
+	.menu-active & {
+		position: absolute;
+		top: rem(130);
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		z-index: 90;
+		pointer-events: auto;
+		max-height: 1000%;
+		overflow: visible;
+		background-color: $color-white;
+	}
+}
+
+.menu-toggle {
+	position: relative;
+	background-color: transparent;
+	border: none;
+	color: $color-black;
+	display: inline-block;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin: 0 1.25rem 0 0;
+	padding: 0;
+	border-radius: 0;
+	line-height: normal;
+	transition: all 0.3s ease;
+	position: absolute;
+	top: 50%;
+	left: rem(15);
+	z-index: 90;
+	transform: translateY(-50%);
+	@include breakpoint(desktop) {
+		display: none;
+	}
+	&:hover {
+		color: $color-black;
+		background-color: transparent;
+	}
+	.icon-bar {
+		position: absolute;
+		left: 50%;
+		display: block;
+		width: 1.5rem;
+		height: 0.125rem;
+		background: $color-black;
+		opacity: 1;
+		transform: translateX(-50%);
+		transition: all 0.3s ease;
+		top: auto;
+		&:first-of-type{
+			top: 20%;
+		}
+		&:nth-child(2),
+		&:nth-child(3) {
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+		&:last-of-type {
+			bottom: 20%;
+		}
+		.menu-active & {
+			&:first-of-type {
+				top: 50%;
+				transform: translate(-50%, -50%);
+				opacity: 0;
+			}
+			&:nth-child(2) {
+				transform: translate(-50%, -50%) rotate(-45deg);
+			}
+			&:nth-child(3) {
+				transform: translate(-50%, -50%) rotate(45deg);
+			}
+			&:last-of-type {
+				bottom: 50%;
+				transform: translate(-50%, -50%);
+				opacity: 0;
+			}
+		}
+	}
+}
+
+.menu-category {
+	@extend %clearfix;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-family: $sans-serif-alt-black;
+	font-size: rem(18);
+	background-color: $color-white;
+	@include breakpoint(desktop) {
+		border-width: 0;
+		margin: 0;
+		display: inline-block;
+		background-color: transparent;
+	}
+	li {
+		list-style: none;
+		position: relative;
+		@include breakpoint(desktop) {
+			border: none;
+			display: inline-block;
+			&:hover,
+			&:focus {
+				> a {
+					background-color: transparent;
+					color: $color-gray-50;
+				}
+			}
+			+ li {
+				&:before {
+					content: '';
+					width: rem(1);
+					height: rem(15);
+					background-color: $color-black;
+					position: absolute;
+					top: 50%;
+					left: 0;
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+	a {
+		color: $color-black;
+		display: inline-block;
+		font-size: 1rem;
+		font-weight: 700;
+		padding: 1.25rem 1rem;
+		overflow: visible;
+		width: 100%;
+		border: solid $color-gray-20;
+		border-width: 0 0 rem(1);
+		text-align: center;
+		text-transform: uppercase;
+		@include breakpoint(desktop) {
+			text-align: left;
+			padding: 1.875rem 2rem;
+			border-width: 0;
+		}
+		&:hover,
+		&:focus {
+			color: $color-gray-50;
+		}
+		.fa {
+			position: relative;
+			top: 0.5rem;
+			color: $color-gray-50;
+			vertical-align: top;
+			line-height: 0.75em;
+			transform: rotate(180deg);
+			transition: all 0.3s ease;
+		}
+	}
+}
+
+.level-1 > li {
+	@extend %clearfix;
+	background-color: transparent;
+	position: relative;
+	&:first-child {
+		border: none;
+	}
+	.menu-item-toggle {
+		position: absolute;
+		top: 0;
+		right: 1rem;
+		color: $color-black;
+		cursor: pointer;
+		padding: 1rem;
+		line-height: 2rem;
+		transition: all 0.3s ease-in-out;
+		&:hover {
+			color: $color-gray-50;
+		}
+		@include breakpoint(tabletUp) {
+			display: none;
+		}
+	}
+	> a {
+		width: calc(100% - 2.1rem);
+		font-size: 1rem;
+		text-transform: uppercase;
+		@include breakpoint(desktop) {
+			width: 100%;
+			display: block;
+			&.has-sub-menu {
+				width: 100%;
+			}
+		}
+		&.active-cat {
+			color: $color-gray-50;
+		}
+	}
+	&.active {
+		> a {
+			color: $color-gray-50;
+			@include breakpoint(tabletUp) {
+				color: $color-black;
+			}
+		}
+	}
+}
+
+.level-2 {
+	display: none;
+	clear: left;
+	background-color: $color-gray-10;
+	> ul {
+		@extend .clearfix;
+		padding: 0;
+	}
+	.level-1 > .active & {
+		display: block;
+	}
+	@include breakpoint(desktop) {
+		box-shadow: 0 0.3125rem 0.5rem rgba($color-gray-30, 0.25);
+		color: $color-black;
+		padding: 0;
+		position: absolute;
+		z-index: 1;
+		a {
+			color: $color-black;
+			border: solid $color-gray-20;
+			border-width: 0 0 rem(1);
+			padding: 1rem 0;
+			text-transform: none;
+			&:last-child {
+				//border-width: 0;
+			}
+			&:hover {
+				color: $color-gray-50;
+			}
+		}
+		> ul {
+			float: left;
+			padding: 0;
+			> li {
+				float: none;
+				min-width: 18em;
+				padding: 0 1rem;
+				text-transform: uppercase;
+				&:last-of-type {
+					a {
+						border-width: 0;
+					}
+				}
+			}
+		}
+		.menu-vertical {
+			//padding: 1rem 0;
+		}
+		.menu-horizontal {
+			float: none;
+			padding: 1rem 0;
+			> li {
+				float: left;
+				padding-right: 1.25rem;
+			}
+		}
+		.banner {
+			float: left;
+		}
+	}
+	.banner {
+		display: none;
+		@include breakpoint(desktop) {
+			display: block;
+		}
+		img {
+			vertical-align: top;
+		}
+	}
+}
+
+.level-3 {
+	display: none;
+	padding-left: 2em;
+	.level-2 .active & {
+		display: block;
+	}
+	@include breakpoint(desktop) {
+		display: block;
+		a {
+			font-size: 1em;
+			padding: 0;
+		}
+		li {
+			float: none;
+			padding: 0.4em;
+		}
+	}
+}

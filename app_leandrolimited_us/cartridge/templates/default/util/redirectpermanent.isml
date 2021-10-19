@@ -1,0 +1,52 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>ISREDIRECT must be before ISCACHE, because ISREDIRECT clears the response created so far</iscomment>
+<isredirect location="${pdict.Location}" permanent="true"/>
+<iscache type="relative" hour="24"/>
+
+<iscomment>a page with a meta refresh in case the browser doesn't follow the redirect</iscomment>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>${Resource.msg('common.redirect_permanent.title','common',null)}</title>
+<meta http-equiv="refresh" content="2;url=${pdict.Location}">
+<meta http-equiv="Robots" content="noindex, nofollow" />
+</head>
+<body>
+	${Resource.msg('common.redirect_permanent.message','common',null)} <a href="${pdict.Location}" title="${Resource.msg('common.redirect_permanent.message','common',null)} ${pdict.Location}">${pdict.Location}</a>
+	<script>
+		(function() {
+			var s = document.createElement('script'),
+				e = !document.body ? document.querySelector('head') : document.body;
+			s.src = 'https://acsbapp.com/apps/app/dist/js/app.js';
+			s.async = true;
+			s.onload = function() {
+				acsbJS.init({
+					statementLink: '',
+					footerHtml: '',
+					hideMobile: false,
+					hideTrigger: false,
+					language: 'en',
+					position: 'right',
+					leadColor: '#146FF8',
+					triggerColor: '#146FF8',
+					triggerRadius: '50%',
+					triggerPositionX: 'right',
+					triggerPositionY: 'bottom',
+					triggerIcon: 'people',
+					triggerSize: 'medium',
+					triggerOffsetX: 20,
+					triggerOffsetY: 20,
+					mobile: {
+						triggerSize: 'small',
+						triggerPositionX: 'right',
+						triggerPositionY: 'center',
+						triggerOffsetX: 0,
+						triggerOffsetY: 0,
+						triggerRadius: '50%'
+					}
+				});
+			};
+			e.appendChild(s);
+		}());
+	</script>
+</body>
+</html>

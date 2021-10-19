@@ -1,0 +1,155 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+
+    <isscript>
+        var pageContext = {
+            title: 'Wishlist',
+            type: 'Wishlist',
+            ns: 'wishlist'
+        };
+    </isscript>
+    <isinclude template="util/modules"/>
+
+    <isinclude template="components/header/htmlhead"/>
+    <isinclude template="account/wishlist/pt_wishlist_UI"/>
+    <style>
+        /* quantity select */
+        .quantity{
+            width:10rem;
+            height:2.5rem;
+        }
+
+        .inventory{
+            width:70px !important;
+            user-select:none;
+        }
+        span {cursor:pointer;}
+        .plus{
+            position:absolute;
+            top:5px;
+            left:45px;
+            width:20px;
+            height:30px;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .minus{
+            position:absolute;
+            top:5px;
+            left:5px;
+            width:20px;
+            height:30px;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .item-qty .input-select input{
+            height:37px !important;
+            width: 70px !important;
+            text-align: center;
+            font-size: 20px !important;
+            color: ${"#292929"} !important;
+            border:2px solid ${"#D0CCCC"} !important;
+            border-radius:4px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="wrapper" class="pt_wish-list">
+
+        <isinclude template="components/header/header"/>
+
+        <div id="main" role="main" class="page-content clearfix">
+            <div class="wrap">
+                <style>
+                .breadcrumb {
+                    margin: 0;
+                    padding-top: 2rem !important;
+                    text-transform: uppercase;
+                }
+                </style>
+                <isbreadcrumbs bcurl1="${URLUtils.https('Account-Show')}" bctext1="${Resource.msg('account.header','account',null)}" bctext2="${Resource.msg('account.wishlist.breadcrumb','account',null)}"/>
+
+
+                <div id="primary" class="primary-content">
+                    <isreplace/>
+                </div>
+            </div>
+        </div><!-- /main -->
+
+        <isinclude template="components/footer/footer"/>
+        <isinclude template="account/wishlist/pt_wishlist_VARS"/>
+
+    </div>
+
+    <script>
+        (function() {
+            var s = document.createElement('script'),
+                e = !document.body ? document.querySelector('head') : document.body;
+            s.src = 'https://acsbapp.com/apps/app/dist/js/app.js';
+            s.async = true;
+            s.onload = function() {
+                acsbJS.init({
+                    statementLink: '',
+                    footerHtml: '',
+                    hideMobile: false,
+                    hideTrigger: false,
+                    language: 'en',
+                    position: 'right',
+                    leadColor: '#146FF8',
+                    triggerColor: '#146FF8',
+                    triggerRadius: '50%',
+                    triggerPositionX: 'right',
+                    triggerPositionY: 'bottom',
+                    triggerIcon: 'people',
+                    triggerSize: 'medium',
+                    triggerOffsetX: 20,
+                    triggerOffsetY: 20,
+                    mobile: {
+                        triggerSize: 'small',
+                        triggerPositionX: 'right',
+                        triggerPositionY: 'center',
+                        triggerOffsetX: 0,
+                        triggerOffsetY: 0,
+                        triggerRadius: '50%'
+                    }
+                });
+            };
+            e.appendChild(s);
+        }());
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('.minus').click(function () {
+                var $input = $(this).parent().find('input');
+                var count = parseInt($input.val()) - 1;
+                count = count < 1 ? 1 : count;
+                $input.val(count);
+                $input.change();
+                return false;
+            });
+            $('.plus').click(function () {
+                var $input = $(this).parent().find('input');
+                var countp = parseInt($input.val()) + 1;
+                countp = countp > 9 ? 9:countp;
+                $input.val(countp);
+                $input.change();
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

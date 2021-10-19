@@ -1,0 +1,81 @@
+/**
+*
+* @input CartForm : dw.web.FormList
+* @input Cookie : String
+* @input Basket : dw.order.Basket
+* @output BasketStatus : dw.system.Status
+*/
+importPackage( dw.system );
+importPackage( dw.web );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+
+	var liList : FormList = pdict.CartForm;
+	var cookie = pdict.Cookie;
+	var basket = pdict.Basket;
+	
+	if ( empty(liList) || empty(basket) ) {
+		return PIPELET_NEXT;
+	}
+	
+	//var currentlimits = JSON.parse(cookie);
+	var currentlimits = cookie!="{}"?JSON.parse(cookie):null;
+	var basketcategories : dw.util.HashMap = new dw.util.HashMap();
+	
+	// collect current values from cookie
+	for each (var limit in currentlimits) {
+		var catid = limit.catid;
+		var count = limit.cnt;
+		if (basketcategories.containsKey(catid)) { // this should never ever happen since catIDs must be unique.
+			count += basketcategories.get(catid);
+		}
+		basketcategories.put(catid,count);
+	}
+	
+	for each (var fli : FormListItem in liList){
+		for each (var fpli : FormListItem in fli.items){
+			var quantity : Number = fpli.quantity.value;
+			var pli = fpli.object;
+			var product = pli.product.variant?pli.product.variationModel.master:pli.product;
+			var category = product.classificationCategory;
+			
+			if (!empty(category) && 'purchaseLimit' in category.custom) {
+				var purchaselimit = category.custom.purchaseLimit;
+			} else {
+				continue;
+			}
+			
+			var cnt = quantity;
+			if (basketcategories.containsKey(category.ID)) {
+				cnt = basketcategories.get(category.ID) + cnt;
+			}
+			
+			var pl = category.custom['purchaseLimit'];
+			var cid = category.ID;
+			var inbasket = cnt;
+			
+			/*
+			if ( !empty(currentlimits) ) {
+				for each (var limit in currentlimits) {
+					var sum = limit.cnt + inbasket;
+					if (cid == limit.catid && sum > pl) {
+						pdict["BasketStatus"] = new Status(Status.ERROR, "PurchaseLimitError");
+						return PIPELET_ERROR;
+					}
+				}
+			} */
+			// cookie status does not exist
+			if (inbasket > pl) {
+				pdict["BasketStatus"] = new Status(Status.ERROR, "PurchaseLimitError");
+				return PIPELET_ERROR;
+			}
+			basketcategories.put(category.ID,cnt);
+		}
+	}
+	
+
+	
+
+	return PIPELET_NEXT;
+}

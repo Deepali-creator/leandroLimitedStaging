@@ -1,0 +1,105 @@
+/**
+* @output FileNameToImport : String
+*
+*/
+ 
+ importPackage( dw.system );
+ importPackage( dw.util );
+ importPackage( dw.catalog );
+ importPackage( dw.io );
+ 
+var XML_NAMESPACE : String = "http://www.demandware.com/xml/impex/catalog/2006-10-31";
+var enfolder : File = new dw.io.File([File.LIBRARIES,Site.current.ID,"en_CA","Instruction Booklet"].join(File.SEPARATOR));
+var frfolder : File = new dw.io.File([File.LIBRARIES,Site.current.ID,"fr_CA","Instruction Booklet"].join(File.SEPARATOR));
+var megabyte=1024*1024;
+
+function execute( pdict : PipelineDictionary ) : Number {
+	var newdir : File = new File([File.IMPEX,"src","bookletassign"].join(File.SEPARATOR));
+	newdir.mkdirs();
+	var importfilename : String = [File.IMPEX,"src","bookletassign","cacuisinartbookletassign.xml"].join(File.SEPARATOR);
+	var productsearch=new ProductSearchModel();
+	productsearch.setCategoryID(CatalogMgr.getSiteCatalog().root.ID);
+	productsearch.setRecursiveCategorySearch(true);
+	productsearch.search();
+	try {
+		var xsw : XMLStreamWriter = initXML(new File(importfilename), "master-ca");
+		var hits=new ArrayList(productsearch.products);
+		for each(var p : Product in hits){
+			writeProduct(xsw,p);
+		}
+        finalizeFeed(xsw);
+    } catch(ex) {
+    	Logger.error(ex);
+    	return PIPELET_ERROR;
+    }
+    pdict.FileNameToImport = importfilename.replace(File.IMPEX + File.SEPARATOR + "src" + File.SEPARATOR, "");
+    return PIPELET_NEXT;
+}
+
+function writeProduct(xsw : XMLStreamWriter, product : Product) {
+	var locale="en";
+	var searcher=function(candidate:File){
+		return (product.ID+"_"+locale+".pdf").toLocaleLowerCase() == candidate.name.toLocaleLowerCase();
+	}
+	var enresults=enfolder.listFiles(searcher);
+	locale="fr";
+	var frresults=frfolder.listFiles(searcher);
+	if (!enresults.isEmpty()||!frresults.isEmpty()) {
+		xsw.writeStartElement("product");
+		xsw.writeAttribute("product-id", product.ID);
+		xsw.writeStartElement("custom-attributes");
+		if(!enresults.isEmpty()){
+			var file=enresults[0];
+			xsw.writeStartElement("custom-attribute");
+			xsw.writeAttribute("attribute-id", "informationBooklet");
+			xsw.writeAttribute("xml:lang", "en-CA");
+			xsw.writeCharacters("/Instruction Booklet/" + file.name);
+			xsw.writeEndElement(); //custom-attribute
+			xsw.writeStartElement("custom-attribute");
+			xsw.writeAttribute("attribute-id", "informationBookletSize");
+			xsw.writeAttribute("xml:lang", "en-CA");
+			xsw.writeCharacters(file.length()>megabyte?(file.length()/megabyte).toFixed(1)+"MB":(file.length()/1024).toFixed()+"KB");
+			xsw.writeEndElement(); //custom-attribute
+		}
+		if(!frresults.isEmpty()){
+			var file=frresults[0];
+			xsw.writeStartElement("custom-attribute");
+			xsw.writeAttribute("attribute-id", "informationBooklet");
+			xsw.writeAttribute("xml:lang", "fr-CA");
+			xsw.writeCharacters("/Instruction Booklet/" + file.name);
+			xsw.writeEndElement(); //custom-attribute
+			xsw.writeStartElement("custom-attribute");
+			xsw.writeAttribute("attribute-id", "informationBookletSize");
+			xsw.writeAttribute("xml:lang", "fr-CA");
+			xsw.writeCharacters(file.length()>megabyte?(file.length()/megabyte).toFixed(1)+"MB":(file.length()/1024).toFixed()+"KB");
+			xsw.writeEndElement(); //custom-attribute
+		}
+		xsw.writeEndElement(); //custom-attributes
+	    xsw.writeEndElement(); //product
+	}
+}
+
+/*
+* Initializes XML Stream
+*/
+
+function initXML(file : File, catalogid: String) : XMLStreamWriter {
+    var fw : FileWriter = new FileWriter(file);
+    var xsw : XMLIndentingStreamWriter = new XMLIndentingStreamWriter(fw);
+    xsw.writeStartDocument("UTF-8", "1.0");
+    xsw.writeStartElement("catalog");
+    xsw.writeAttribute("xmlns", XML_NAMESPACE);
+    //xsw.writeAttribute("catalog-id", dw.catalog.CatalogMgr.siteCatalog.ID);
+    xsw.writeAttribute("catalog-id", catalogid);
+    return xsw;
+}
+
+/*
+* Closes XML and Stream
+*/
+function finalizeFeed(xsw : XMLStreamWriter) {
+    xsw.writeEndElement(); 
+    xsw.writeEndDocument();
+    xsw.flush();
+    xsw.close();
+}

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?demandware-pipeline version="2.0"?>
+
+<pipeline type="view">
+  <branch basename="Home">
+    <segment>
+      <node>
+        <start-node name="Home" secure="false"/>
+        <node-display x="1" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="UpdatePageMetaData" pipelet-set-identifier="bc_api">
+          <key-binding alias="null" key="DefaultTitle"/>
+          <key-binding alias="null" key="DefaultKeywords"/>
+          <key-binding alias="null" key="DefaultDescription"/>
+          <key-binding alias="null" key="Product"/>
+          <key-binding alias="null" key="Category"/>
+          <key-binding alias="dw.content.ContentMgr.getContent(&quot;featured-video&quot;)" key="Content"/>
+          <key-binding alias="null" key="Folder"/>
+        </pipelet-node>
+        <node-display x="0" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <interaction-node transaction-required="false">
+          <template buffered="true" dynamic="false" name="content/content/videolanding"/>
+        </interaction-node>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="Ajax_Display">
+    <segment>
+      <node>
+        <start-node name="Ajax_Display" secure="false"/>
+        <node-display x="3" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <key-binding alias="dw.content.ContentMgr.getFolder(CurrentHttpParameterMap.folder_id.value)" key="From_0"/>
+          <key-binding alias="folder" key="To_0"/>
+          <key-binding alias="null" key="From_1"/>
+          <key-binding alias="null" key="To_1"/>
+          <key-binding alias="null" key="From_2"/>
+          <key-binding alias="null" key="To_2"/>
+          <key-binding alias="null" key="From_3"/>
+          <key-binding alias="null" key="To_3"/>
+          <key-binding alias="null" key="From_4"/>
+          <key-binding alias="null" key="To_4"/>
+          <key-binding alias="null" key="From_5"/>
+          <key-binding alias="null" key="To_5"/>
+          <key-binding alias="null" key="From_6"/>
+          <key-binding alias="null" key="To_6"/>
+          <key-binding alias="null" key="From_7"/>
+          <key-binding alias="null" key="To_7"/>
+          <key-binding alias="null" key="From_8"/>
+          <key-binding alias="null" key="To_8"/>
+          <key-binding alias="null" key="From_9"/>
+          <key-binding alias="null" key="To_9"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Paging" pipelet-set-identifier="bc_api">
+          <config-property key="DefaultPageSize" value="6"/>
+          <key-binding alias="folder.onlineContent.iterator()" key="Objects"/>
+          <key-binding alias="CurrentHttpParameterMap.start.intValue" key="Start"/>
+          <key-binding alias="VideoPaging" key="PagingModel"/>
+          <key-binding alias="folder.onlineContent.length" key="ObjectsCount"/>
+          <key-binding alias="CurrentHttpParameterMap.sz.intValue" key="PageSize"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <interaction-node transaction-required="false">
+          <template buffered="true" dynamic="false" name="content/content/video_landing_grid_ajax"/>
+        </interaction-node>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="Video_Paging">
+    <segment>
+      <node>
+        <start-node name="Video_Paging" secure="false"/>
+        <node-display x="5" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <key-binding alias="dw.content.ContentMgr.getFolder(CurrentHttpParameterMap.folder_id.value)" key="From_0"/>
+          <key-binding alias="folder" key="To_0"/>
+          <key-binding alias="null" key="From_1"/>
+          <key-binding alias="null" key="To_1"/>
+          <key-binding alias="null" key="From_2"/>
+          <key-binding alias="null" key="To_2"/>
+          <key-binding alias="null" key="From_3"/>
+          <key-binding alias="null" key="To_3"/>
+          <key-binding alias="null" key="From_4"/>
+          <key-binding alias="null" key="To_4"/>
+          <key-binding alias="null" key="From_5"/>
+          <key-binding alias="null" key="To_5"/>
+          <key-binding alias="null" key="From_6"/>
+          <key-binding alias="null" key="To_6"/>
+          <key-binding alias="null" key="From_7"/>
+          <key-binding alias="null" key="To_7"/>
+          <key-binding alias="null" key="From_8"/>
+          <key-binding alias="null" key="To_8"/>
+          <key-binding alias="null" key="From_9"/>
+          <key-binding alias="null" key="To_9"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Paging" pipelet-set-identifier="bc_api">
+          <config-property key="DefaultPageSize" value="6"/>
+          <key-binding alias="folder.onlineContent.iterator()" key="Objects"/>
+          <key-binding alias="CurrentHttpParameterMap.start.intValue" key="Start"/>
+          <key-binding alias="VideoPaging" key="PagingModel"/>
+          <key-binding alias="folder.onlineContent.length" key="ObjectsCount"/>
+          <key-binding alias="CurrentHttpParameterMap.sz.intValue" key="PageSize"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <interaction-node transaction-required="false">
+          <template buffered="true" dynamic="false" name="content/content/video_paging"/>
+        </interaction-node>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="Show">
+    <segment>
+      <node>
+        <start-node name="Show" secure="false"/>
+        <node-display x="7" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Search" pipelet-set-identifier="bc_api">
+          <config-property key="SearchProduct" value="false"/>
+          <config-property key="SearchContent" value="true"/>
+          <config-property key="DisallowOfflineCategory" value="false"/>
+          <config-property key="RecursiveCategorySearch" value="false"/>
+          <config-property key="RecursiveFolderSearch" value="true"/>
+          <key-binding alias="CurrentHttpParameterMap.q.value" key="SearchPhrase"/>
+          <key-binding alias="null" key="SortBy1"/>
+          <key-binding alias="null" key="SortBy3"/>
+          <key-binding alias="null" key="SortBy2"/>
+          <key-binding alias="null" key="SortBy1Direction"/>
+          <key-binding alias="null" key="SortBy2Direction"/>
+          <key-binding alias="null" key="SortBy3Direction"/>
+          <key-binding alias="null" key="PriceMax"/>
+          <key-binding alias="null" key="PriceMin"/>
+          <key-binding alias="null" key="RefineBy1Name"/>
+          <key-binding alias="null" key="RefineBy1Phrase"/>
+          <key-binding alias="null" key="RefineBy1Min"/>
+          <key-binding alias="null" key="RefineBy1Max"/>
+          <key-binding alias="null" key="RefineBy2Name"/>
+          <key-binding alias="null" key="RefineBy2Phrase"/>
+          <key-binding alias="null" key="RefineBy2Min"/>
+          <key-binding alias="null" key="RefineBy2Max"/>
+          <key-binding alias="null" key="RefineBy3Name"/>
+          <key-binding alias="null" key="RefineBy3Phrase"/>
+          <key-binding alias="null" key="RefineBy3Min"/>
+          <key-binding alias="null" key="RefineBy3Max"/>
+          <key-binding alias="null" key="RefineBy4Name"/>
+          <key-binding alias="null" key="RefineBy4Phrase"/>
+          <key-binding alias="null" key="RefineBy4Min"/>
+          <key-binding alias="null" key="RefineBy4Max"/>
+          <key-binding alias="null" key="RefineBy5Name"/>
+          <key-binding alias="null" key="RefineBy5Phrase"/>
+          <key-binding alias="null" key="RefineBy5Min"/>
+          <key-binding alias="null" key="RefineBy5Max"/>
+          <key-binding alias="null" key="CategoryID"/>
+          <key-binding alias="null" key="ProductID"/>
+          <key-binding alias="CurrentHttpParameterMap.fdid.value" key="FolderID"/>
+          <key-binding alias="CurrentHttpParameterMap.cid.value" key="ContentID"/>
+          <key-binding alias="ContentSearchResult" key="ContentSearchModel"/>
+          <key-binding alias="&quot;prefn&quot;" key="RefineByNamePrefix"/>
+          <key-binding alias="&quot;prefv&quot;" key="RefineByPhrasePrefix"/>
+          <key-binding alias="null" key="RefineByMinPrefix"/>
+          <key-binding alias="null" key="RefineByMaxPrefix"/>
+          <key-binding alias="null" key="OrderableProductsOnly"/>
+          <key-binding alias="null" key="SortingRuleID"/>
+          <key-binding alias="null" key="PromotionID"/>
+          <key-binding alias="null" key="PromotionProductType"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <decision-node condition-key="!(ContentSearchResult.emptyQuery)" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <decision-node condition-key="ContentSearchResult.count &gt; 0" condition-operator="expr"/>
+              <node-display x="0" y="1"/>
+              <branch basename="b2" source-connector="yes">
+                <transition target-connector="in">
+                  <transition-display>
+                    <bend-point relative-to="source" x="0" y="1"/>
+                  </transition-display>
+                </transition>
+                <segment>
+                  <node>
+                    <pipelet-node pipelet-name="Paging" pipelet-set-identifier="bc_api">
+                      <config-property key="DefaultPageSize" value="16"/>
+                      <key-binding alias="ContentSearchResult.content" key="Objects"/>
+                      <key-binding alias="pageSize" key="PageSize"/>
+                      <key-binding alias="CurrentHttpParameterMap.start.intValue" key="Start"/>
+                      <key-binding alias="ContentPagingModel" key="PagingModel"/>
+                      <key-binding alias="ContentSearchResult.count" key="ObjectsCount"/>
+                    </pipelet-node>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <simple-transition/>
+                  <node>
+                    <decision-node condition-key="ContentSearchResult.folderSearch &amp;&amp; !ContentSearchResult.refinedFolderSearch &amp;&amp; !empty(ContentSearchResult.folder.template)" condition-operator="expr"/>
+                    <node-display x="0" y="1"/>
+                    <branch basename="b2" source-connector="yes">
+                      <transition target-connector="in">
+                        <transition-display>
+                          <bend-point relative-to="source" x="0" y="1"/>
+                        </transition-display>
+                      </transition>
+                      <segment>
+                        <node>
+                          <interaction-node transaction-required="false">
+                            <description>use alternative search result template</description>
+                            <template buffered="true" dynamic="true" name="ContentSearchResult.folder.template"/>
+                          </interaction-node>
+                          <node-display x="0" y="1"/>
+                        </node>
+                      </segment>
+                    </branch>
+                  </node>
+                  <simple-transition>
+                    <transition-display>
+                      <bend-point relative-to="source" x="2" y="0"/>
+                      <bend-point relative-to="target" x="0" y="-1"/>
+                    </transition-display>
+                  </simple-transition>
+                  <node>
+                    <interaction-node transaction-required="false">
+                      <template buffered="true" dynamic="false" name="content/video/videocontenthits"/>
+                    </interaction-node>
+                    <node-display x="1" y="1"/>
+                  </node>
+                </segment>
+              </branch>
+            </node>
+            <simple-transition>
+              <transition-display>
+                <bend-point relative-to="source" x="1" y="0"/>
+              </transition-display>
+            </simple-transition>
+            <node>
+              <interaction-node transaction-required="false">
+                <template buffered="true" dynamic="false" name="search/nohits"/>
+              </interaction-node>
+              <node-display orientation="horizontal" x="1" y="0"/>
+            </node>
+          </segment>
+        </branch>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="1" y="0"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <jump-node start-name-ref="Video-Home"/>
+        <node-display orientation="horizontal" x="1" y="0"/>
+      </node>
+    </segment>
+  </branch>
+</pipeline>

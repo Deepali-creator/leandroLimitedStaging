@@ -1,0 +1,42 @@
+/**
+*
+*
+*   @input CategoryID : String
+*   @output Denied : Boolean true when a customer is trying to reorder a product in specified category
+*
+*/
+importPackage( dw.system );
+importPackage( dw.catalog );
+importPackage( dw.object );
+importPackage( dw.order );
+importPackage( dw.util );
+
+function execute( args : PipelineDictionary ) : Number {
+	var basket:Basket=BasketMgr.currentBasket;
+	if(empty(args.CategoryID)||empty(basket)){
+		return PIPELET_ERROR;
+	}
+	args.Denied=false;
+	var productsInQuestion:Array=[];
+	for each(var line:ProductLineItem in basket.allProductLineItems){
+		for each(var category:Category in line.product.allCategories){
+			if(category.ID===args.CategoryID){
+				productsInQuestion.push(line.productID);
+			}
+		}
+	}
+	if(!empty(productsInQuestion)){
+		var pastOrders:SeekableIterator=SystemObjectMgr.querySystemObjects("Order","customerEmail ILIKE {0}","creationDate",[basket.customerEmail]);
+		for each(var order:Order in new ArrayList(pastOrders)){
+			for each(var line:ProductLineItem in order.allProductLineItems){
+				for each(var productID:String in productsInQuestion){
+					if(line.productID===productID){
+						args.Denied=true;
+						return PIPELET_ERROR;
+					}
+				}
+			}
+		}
+	}
+	return PIPELET_NEXT;
+}

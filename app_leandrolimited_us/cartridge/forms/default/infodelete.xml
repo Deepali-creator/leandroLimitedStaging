@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+	<field formid="firstName" label="profile.firstname" type="string" mandatory="true" binding="firstName" max-length="50" missing-error="address.firstname.missing" range-error="address.field.invalid" />
+	<field formid="lastName" label="profile.lastname" type="string" mandatory="true" binding="lastName" max-length="50" missing-error="address.lastname.missing" range-error="address.field.invalid" />
+	<field formid="address1" label="resource.address" type="string" mandatory="true" binding="address1" max-length="50" missing-error="resource.addresserror" range-error="address.field.invalid" />
+	<field formid="city" label="resource.city" type="string" mandatory="true" binding="city" min-length="2" max-length="50" missing-error="address.city.missing" range-error="address.field.invalid" />
+	<field formid="postal" label="resource.zipcode" type="string" mandatory="true" min-length="5" max-length="10" regexp="(^9\d{4}(-\d{4})?$)" binding="postalCode" missing-error="resource.errorzip"/>
+	<field formid="state" label="resource.state" type="string" mandatory="true" binding="stateCode" missing-error="address.state.missing" value-error="address.field.invalid">
+		<options>
+			<option optionid="" 	label="resource.select" 		value=""/>
+			<option optionid="CA" 	label="state.us.california" 	value="CA"/>
+			<option optionid="OTHER" label="state.us.other" 				value="OTHER"/>
+		</options>
+	</field>
+	<field formid="emailAddress" label="billing.email" type="string" mandatory="true" regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" binding="email" max-length="50" missing-error="address.email.invalid" range-error="address.email.invalid" parse-error="address.email.invalid" value-error="address.email.invalid"/>
+
+	<field formid="relationship" label="relationship" type="string" mandatory="true" min-length="1" missing-error="address.email.invalid" range-error="address.email.invalid">
+		<options>
+			<option optionid="" 	label="" 		value=""/>
+			<option optionid="customer" 			label="relationship.customer" 			value="customer"/>
+			<option optionid="potentialcustomer" 	label="relationship.potentialcustomer" 	value="potentialcustomer"/>
+			<option optionid="dwelling" 			label="relationship.dwelling" 			value="dwelling"/>
+			<option optionid="service" 				label="relationship.service" 			value="service"/>
+			<option optionid="potentialservice" 	label="relationship.potentialservice" 	value="potentialservice"/>
+			<option optionid="agent" 				label="relationship.agent"		 		value="agent"/>
+			<option optionid="other"			 	label="relationship.other" 				value="other"/>
+		</options>
+	</field>
+
+	<field formid="request" label="request" type="string" mandatory="true" min-length="1" missing-error="address.email.invalid" range-error="address.email.invalid">
+		<options>
+			<option optionid="" 	label="" 		value=""/>
+			<option optionid="all" 			label="request.all" 			value="all"/>
+			<option optionid="myaccount" 	label="request.myaccount" 		value="myaccount"/>
+			<option optionid="allmarketing" label="request.allmarketing"	value="allmarketing"/>
+			<option optionid="conair" 	label="request.conair" 		value="conair"/>
+			<option optionid="otherbrands" 	label="request.otherbrands" 	value="otherbrands"/>
+		</options>
+	</field>
+	<action formid="delete" valid-form="true" label="infodelete" />
+</form>

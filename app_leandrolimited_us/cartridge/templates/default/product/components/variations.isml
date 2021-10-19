@@ -1,0 +1,157 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>
+	Desc:
+		Creates the variation section if product is a variation or a master,
+		otherwise
+
+	Parameter:
+		Product - the product to use
+
+	Options:
+		none
+	Available if empty: no
+	Full-Block-Element: yes
+</iscomment>
+
+<isscript>
+	// Get context variables to insert into template placeholders
+    var VariationUtils = require('~/cartridge/scripts/product/VariationUtils.js');
+    var context = VariationUtils.getContext(pdict);
+</isscript>
+
+<isif condition="${context.isValidProductType}">
+	<div class="product-variations" data-attributes="${context.selectedAttrs}">
+		<h2 class="visually-hidden">Variations</h2>
+		<iscomment>
+			Filter out variation attribute values with no orderable variants.
+			The "clean" ProductVariationModel of the master without any selected attribute values is used to filter the variants.
+			Otherwise hasOrderableVariants() would use currently selected values resulting in a too narrow selection of variants.
+		</iscomment>
+		<ul>
+		<isloop items="${context.attrs}" var="attr">
+			<isif condition="${attr.hasSwatch}">
+				<li class="attribute">
+					<div class="label">
+						 ${attr.resourceGlobalSelect} <isprint value="${attr.displayName}"/>
+					</div>
+					<div class="value">
+						<ul class="swatches ${attr.attributeId.toLowerCase()}">
+							<isloop items="${attr.values}" var="attrValue">
+								<isif condition="${attrValue.isOrderableInMaster}">
+									<li class="${attrValue.swatchClass}">
+										<isif condition="${attrValue.isSelectable}">
+											<a class="swatchanchor"
+												href="${attrValue.linkUrl}"
+												title="${attrValue.resourceVariationsLabel}"
+												data-lgimg='<isif condition="${attrValue.hiresImage}">${attrValue.hiresImage}"}</isif>'>
+												<isif condition="${attrValue.isColorSwatch}">
+													<img src="${attrValue.swatchImageUrl}" alt="${attrValue.displayValue}">
+												<iselse/>
+													<isprint value="${attrValue.displayValue}"/>
+												</isif>
+											</a>
+										<iselse/>
+											<a class="swatchanchor" title="${attrValue.resourceVariationNotAvailable}">
+												<isprint value="${attrValue.displayValue}"/>
+											</a>
+										</isif>
+									</li>
+								</isif>
+							</isloop>
+							<isif condition="${attr.selectedValue}">
+								<li class="selected-value"><isprint value="${attr.selectedValue}"/></li>
+							</isif>
+						</ul>
+
+						<iscomment>Size Chart link</iscomment>
+						<isif condition="${attr.sizeChart}">
+							<div class="size-chart-link">
+								<a href="${attr.sizeChart.url}"
+									target="_blank"
+									title="${attr.sizeChart.title}">
+										${attr.sizeChart.label}
+								</a>
+							</div>
+						</isif>
+					</div>
+				</li>
+			<iselse/>
+				<iscomment>Drop down list</iscomment>
+				
+			<iscomment>	<div class="value">
+						<div class="select-field-wrapper">
+							<select class="input-select variation-select" id="va-${attr.attributeId}" name="${'dwvar_' + attr.masterId + '_' + attr.attributeId}">
+								<option value="" class="emptytext">${attr.resourceGlobalSelect} <isprint value="${attr.displayName}"/></option>
+								<isloop items="${attr.values}" var="attrValue">
+									
+									<isif condition="${attrValue.isOrderableInMaster}">
+										<isif condition="${attrValue.isAvailable}">
+										
+											<option value="${attrValue.optionValue}<isif condition="${!attr.uuid}">&uuid=${attr.uuidStringValue}</isif>"
+												data-lgimg='<isif condition="${attrValue.hiresImage}">${attrValue.hiresImage}</isif>' <isprint value="${attrValue.selected}" encoding="off"/>>
+												<isprint value="${(attrValue.displayValue)}"/>
+											</option>
+										</isif>
+									</isif>
+								</isloop>
+							</select>
+							<span class="select-field__icon"><i class="fa fa-angle-down"></i></span>
+						</div>
+					</div></iscomment>
+					
+							
+								<div class="variation-Product-data" >
+								<isloop items="${attr.values}" var="attrValue">
+			                            
+									<iscomment>filter out unorderable variation attribute values</iscomment>
+									<isif condition="${attrValue.isOrderableInMaster}">
+										<isif condition="${attrValue.isAvailable}">
+										<isscript>
+										var image=attrValue.hiresImage;
+										dw.system.Logger.warn('image '+image);
+										var img=JSON.parse(image);
+										dw.system.Logger.warn('img '+img);
+										var variationProductImage=img.url;
+										dw.system.Logger.warn('variationProductImage '+variationProductImage);
+										var variationProductAlt=img.alt;
+										
+										 var selectedVariationProduct;
+										if(attrValue.selected)
+										{
+                                                  selectedVariationProduct="selected";
+										}
+										else
+										{
+                                                   selectedVariationProduct="notselected";
+										}
+
+										</isscript>
+
+
+
+								<div class="variation-Product-data1" style="display: inline;">		
+					<a href="${attrValue.optionValue}">
+					<isif condition="${selectedVariationProduct=="selected"}">
+						<img  class="Variation-Image" src="${variationProductImage}" alt="${variationProductAlt}" style="width: 14%;height: 14%;border: 2px solid #000000;display: inline;"/>
+						<iselse/>
+						   <img  class="Variation-Image" src="${variationProductImage}" alt="${variationProductAlt}" style="width: 14%;height: 14%;border: 2px solid #E9EBED;display: inline;"/>
+						</isif>
+						
+					</a>
+					</div>
+			
+										
+											
+										</isif>
+									</isif>
+								</isloop>
+							</div>
+							
+								
+						
+				
+			</isif>
+		</isloop>
+		</ul>
+	</div>
+</isif>

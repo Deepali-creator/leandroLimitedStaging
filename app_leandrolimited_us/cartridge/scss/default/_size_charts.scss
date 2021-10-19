@@ -1,0 +1,26 @@
+.sizinginformation {
+	border: 0 none;
+	padding: rem(10);
+	th {
+		background: none repeat scroll 0 0 $color-gray-10;
+	}
+	td, th {
+		border-bottom: rem(1) solid $color-gray-10;
+		padding: rem(10);
+	}
+	td {
+		border-left: rem(1) solid $color-gray-10;
+	}
+	.ui-tabs-nav {
+		height: rem(33);
+	}
+	.sizing-charts {
+		border: 0 none;
+	}
+	.tips-list {
+		padding: 0 !important;
+		li {
+			list-style: none outside none !important;
+		}
+	}
+}

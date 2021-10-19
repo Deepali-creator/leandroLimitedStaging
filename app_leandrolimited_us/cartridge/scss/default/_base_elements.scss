@@ -1,0 +1,169 @@
+html {
+	font-size: $base-font-size;
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	background: $color-white;
+	color: $color-black;
+	font-family: $sans-serif;
+	line-height: 1.6;
+	font-size: inherit;
+	text-rendering: optimizeLegibility;
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		overflow-x: hidden;
+	}
+}
+
+a {
+	color: $color-black;
+	outline: medium none;
+	overflow: hidden;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	&:hover {
+		color: $color-gray-50;
+	}
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	max-width: 100%;
+}
+
+fieldset {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	width: 100%;
+}
+
+th {
+	text-align: left;
+}
+
+td {
+	padding: 1em;
+	vertical-align: top;
+}
+
+button:not(.no-inherit):not(.ui-dialog-titlebar-close):not(.slick-arrow),
+.button,
+.buttonstyle,
+input[type="button"] {
+	background-color: $color-black;
+	border: solid $color-black;
+	border-width: rem(1);
+	color: $color-white;
+	cursor: pointer;
+	display: inline-block;
+	font-size: rem(24);
+	font-family: $sans-serif-alt-black;
+	letter-spacing: 0.0625rem;
+	padding: 0 1.875rem;
+	text-align: center;
+	text-transform: lowercase;
+	transition: all 0.3s ease;
+	&:hover {
+		color: $color-white;
+		border-color: $color-gray-50;
+		background-color: $color-gray-50;
+	}
+	&.button-secondary {
+		color: $color-black;
+		border-width: rem(1);
+		background-color: $color-white;
+		&:hover {
+			color: $color-white;
+			border-color: $color-gray-50;
+			background-color: $color-gray-50;
+		}
+	}
+	&.button-text {
+		background-color: transparent;
+		border-width: 0;
+		color: $color-black;
+		text-transform: uppercase;
+		padding: 0;
+		font-family: $sans-serif-bold;
+		font-size: rem(14);
+		&:hover {
+			color: $color-black;
+			background-color: transparent;
+			text-decoration: underline;
+		}
+	}
+	&.button-full-width {
+		padding-left: 0;
+		padding-right: 0;
+		text-align: center;
+		width: 100%;
+	}
+	&.simple {
+		background-color: $color-white;
+		color: $color-black;
+	}
+	&.button-small {
+		display: block;
+		margin: rem(5) 0;
+		font-size: 1rem;
+	}
+	&.simple-submit {
+		.js & {
+			display: none;
+		}
+	}
+	&.mobile-ref-toggle {
+		display: block;
+		width: 100%;
+		font-size: rem(18);
+		@include breakpoint(lgTabletUp) {
+			display: none;
+		}
+	}
+	&[disabled],
+	&.disabled {
+		background-color: $color-gray-40;
+		border-color: $color-gray-40;
+		color: $color-gray-50;
+		opacity: 0.5;
+	}
+	a {
+		color: $color-white;
+		&:hover {
+			color: $color-black;
+		}
+	}
+	i,
+	.fa {
+		&.left {
+			margin-right: 0.625em;
+		}
+		&.right {
+			margin-left: 0.625em;
+		}
+	}
+}
+
+.button-fancy-small {
+}
+
+.button-fancy-medium {
+}
+
+.button-fancy-large {
+}
+

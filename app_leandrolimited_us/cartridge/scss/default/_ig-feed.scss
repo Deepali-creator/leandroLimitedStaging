@@ -1,0 +1,136 @@
+.instagram-heading {
+    font-family: $kokomo-breeze;
+    font-size: rem(84);
+    text-align: center;
+    margin: 2rem 0 0;
+    font-weight: normal;
+    text-transform: capitalize;
+
+    @include breakpoint(lgTabletUp) {
+        font-size: rem(180);
+	}
+
+	@include breakpoint(smMobile) {
+		font-size: 4rem;
+	}
+}
+
+.ig-tiles {
+	list-style: none;
+	display: block;
+	text-align: center;
+	margin: 0 0 rem(36);
+	padding: 0 1rem;
+	transition: opacity 0.3s ease-in-out;
+	overflow: hidden;
+	.js & {
+		opacity: 0;
+
+		&.slick-initialized {
+			opacity: 1;
+		}
+	}
+	.slick-list {
+		padding: 0 !important;
+		@include breakpoint(tabletUp) {
+			padding: 0 rem(50) !important;
+		}
+	}
+	.ig-tile {
+		display: inline-block;
+		vertical-align: top;
+		width: 100%;
+		height: auto;
+		margin: 0 0 0.625rem;
+		padding: 0 0.625rem;
+		text-align: left;
+		@include breakpoint(tabletUp) {
+			width: 25%;
+			max-width: rem(300);
+			height: 100%;
+			max-height: rem(300);
+			margin: 0 auto;
+		}
+		&:last-child {
+			padding-right: 0;
+		}
+		.image-wrap {
+			position: relative;
+			overflow: hidden;
+			margin: 0;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+			@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+				display: block;
+			}
+		}
+
+		a {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+		img {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.post-caption {
+			position: relative;
+			text-align: left;
+			height: rem(33);
+			text-overflow: ellipsis;
+			overflow: hidden;
+			display: none;
+		}
+
+		.view-desc-link {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			padding: 0.125em 0.625em 0.125em 0;
+			color: darkgray;
+			background: white;
+
+			&:before {
+				content: '...';
+				margin-right: 0.3125em;
+				background: white;
+				text-decoration: none !important;
+				color: darkgray;
+			}
+		}
+
+		a {
+			&:hover {
+				text-decoration: none;
+
+				p {
+					color: darkgray;
+				}
+
+				span span {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	.slick-prev,
+	.slick-next {
+		position: absolute;
+		top: 45%;
+        z-index: 1;
+	}
+
+	.slick-prev {
+		top: 42%;
+        left: 7%;
+	}
+
+	.slick-next {
+		right: 7%;
+	}
+}

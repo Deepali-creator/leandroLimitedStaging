@@ -1,0 +1,458 @@
+<isdecorate template="content/home/pt_storefront">
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24"/>
+<style>
+    .PressPage{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        padding:10% 5% 5%;
+        font-family:"Helvetica Neue";
+    }
+    .PressHeading{
+        position:relative;
+        width :90%;
+        color:#1A1A1A;
+    }
+    .PressHeading h1{
+        font-family: 'Helvetica Neue';
+        margin:0;
+        font-size:35px;
+        color:#1A1A1A;
+    }
+
+    /* .PressPage p{
+        padding-bottom:5%;
+        font-size:16px;
+    } */
+    /* MAIN CONTENT */
+    .MainContent{
+        width:80%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        padding-bottom:5%;
+    }
+    .MainContent .mainContentHr{
+        width:100%;
+        background:#707070;
+        border: 0;
+        height: 1px;
+    }
+
+    .mainContentHrFirst{
+        display:block;
+        width:90% !important;
+        margin: 0% 0% 0% 110px;
+        border:0;
+        height:1px;
+        background:#707070;
+    }
+    .MainContent .PressArticle{
+        padding-top:4%;
+        width:80%;
+        padding-bottom:6%;
+    }
+
+    .MainContent .ReadMore{
+        font-weight:Bold;
+        font-size:13px;
+        color:#1A1A1A;
+        font-family:'Helvetica Neue CondensedBold';
+    }
+    /* ARTICLE*/
+    .ArticleSource{
+        text-transform:uppercase;
+        font-weight:bold;
+        font-family:'Helvetica Neue CondensedBold';
+        padding-bottom:2%;
+        font-size:16px;
+        color:#3C3C3C;
+    }
+
+    .PressPage .ArticleTitle{
+        font-size:30px;
+        text-transform:none;
+        font-family:"Bodoni 72";
+        color:#1A1A1A;
+    }
+
+    .PressArticle .ArticleTitle:hover ,a:hover{
+        text-decoration:underline;
+    }
+
+    .PressArticle a:hover{
+        text-decoration:underline;
+    }
+
+    /* DISPLAY DESKTOP DESCRIPTION(longer description) */
+    .ArticleDescription-Desktop{
+        display:block;
+        padding-bottom:5%;
+        font-size:18px;
+        color:#1A1A1A;
+    }
+    .ArticleDescription-Mobile{
+        display:none;
+        color:#1A1A1A;
+    }
+
+    /* SHOW MORE BUTTON */
+    .showMoreBtn{
+        background:white !important;
+        background-color:white !important;
+        color:black !important;
+        text-transform:none !important;
+        padding:1% !important;
+        font-size:25px !important;
+        font-family:'Helvetica Neue CondensedBold' !important;
+        border-color: ${"#c1c1c1 !important"};
+    }
+
+    .showMoreBtn:hover{
+        border-color: ${"#000000 !important"};
+    }
+    /* SHOW MORE CONTENT */
+    .ShowMoreContent{
+        display:none;
+        width:80%;
+        align-items:center;
+        flex-wrap:wrap;
+        padding-top:5%;
+        padding-bottom:5%;
+        transition: opacity 300ms;
+    }
+    .showMoreContentRow{
+        display:flex;
+    }
+    .PressArticleShowMore{
+        flex:45%;
+        padding-bottom:6%;
+    }
+
+    .PressArticleShowMore .ArticleSource{
+        padding-top:5%;
+        color:#3C3C3C;
+        font-family:'Helvetica Neue CondensedBold';
+    }
+
+    .ShowMoreContent .ReadMore{
+        font-weight:Bold;
+        font-size:13px;
+        color:#1A1A1A;
+        font-family:'Helvetica Neue CondensedBold';
+    }
+    .ShowMoreContent .ShowMoreHr{
+        width:100%;
+        background:#A1A1A1;
+        border:0;
+        height:1px;
+    }
+    .ShowMoreHr_VerticalDiv{
+        width:10%;
+        display:flex;
+        align-items: center;
+        padding-top:1%;
+    }
+    .ShowMoreContent .ShowMoreHr_Vertical{
+        height:80%;
+        width:1px;
+        background:#A1A1A1;
+        border:0;
+    }
+
+    /* MOBILE UI TRIGGER */
+    @media screen and (max-width:1024px){
+        .PressHeading{
+            font-size:20px;
+        }
+        .PressHeading h1{
+             font-size:20px;
+        }
+        .PressPage .ArticleSource{
+            text-transform:uppercase;
+            font-size:15px;
+            color:#3C3C3C;
+            font-family:'Helvetica Neue CondensedBold';
+        }
+        .PressPage .ArticleTitle{
+        font-size:20px;
+        text-transform:none;
+        color:#1A1A1A;
+        }
+
+        .PressPage p{
+            font-size:12px;
+        }
+
+        .MainContent{
+        width:100%;
+        padding-bottom:10%;
+        }
+        .mainContentHr{
+            display:none;
+        }
+        .mainContentHrFirst{
+            display:block;
+            margin: 0% 0% 10% 60px;
+        }
+        .MainContent .PressArticle {
+            padding-top: 2%;
+            padding-bottom: 10%;
+            width:90%;
+        }
+        .MainContent .ReadMore{
+            text-decoration:underline;
+        }
+        /* DISPLAY MOBILE DESCRIPTION(shotter description) */
+        .ArticleDescription-Desktop{
+            display:none;
+            color:#1A1A1A;
+        }
+        .ArticleDescription-Mobile{
+            display:block;
+            color:#1A1A1A;
+        }
+
+        /* SHOW MORE CONTENT */
+        .showMoreBtn{
+            font-size:18px !important;
+            border-width:1px !important;
+            padding: 15px 20px !important;
+            font-family:'Helvetica Neue CondensedBold';
+        }
+
+        .showMoreBtn:hover{
+            border-color:${"#c1c1c1 !important"};
+        }
+
+        .ShowMoreContent{
+            width:100%;
+        }
+        .ShowMoreContent .PressArticleShowMore{
+            width:90%;
+        }
+        .ShowMoreContent .PressArticleShowMore .ArticleSource{
+            font-size:8px;
+            color:#3C3C3C;
+        }
+        .ShowMoreContent .PressArticleShowMore h1{
+            font-size:14px;
+            text-decoration:underline;
+            width:90%;
+        }
+        .ShowMoreHr_VerticalDiv{
+            padding-top:5%;
+        }
+        .ShowMoreContent .ReadMore{
+            display:none;
+        }
+        .ShowMoreContent p{
+            font-size:9px;
+        }
+        .ShowMoreContent a{
+            text-decoration:underline;
+            font-size: 14px;
+        }
+
+    }
+</style>
+<div class="container PressPage">
+    <div class="PressHeading">
+        <h1>${'SEE WHAT WE ARE'}
+        <br/>${'UP TO'}</h1>
+        <hr class="mainContentHr mainContentHrFirst"/>
+    </div>
+    <iscomment> MAIN ARTICLES </iscomment>
+    <div class="MainContent">
+        <div class="PressArticle">
+            <p class="ArticleSource">${'VOGUE'}</p>
+            <a href="https://www.vogue.com/article/how-jennifer-lopez-hair-transformations-in-her-new-music-video-maluma">
+                <h1 class="ArticleTitle">${'How Jennifer Lopez Mastered 8 Hair Transformations in Her New Music Video'}</h1>
+            </a>
+            <p class="ArticleDescription-Desktop">${'“According to Appleton, he used a Leandro Limited carbon ionic hair dryer with a diffuser attachment to gently dry J.Lo’s lob while keeping its texture. Next, he applied Color Wow Pop and Lock, a frizz control and glossing serum that promises “sparkling shine.” To add just a bit more wave, Appleton then added some loose twists using a BaBylissPro 1.25-inch curling iron on its lowest heat setting. Finally, he finished off the look with Color Wow’s Extra Shine spray, designed to create a glossy, but not greasy, shine.”'}</p>
+            <p class="ArticleDescription-Mobile">${'“According to Appleton, he used a Leandro Limited carbon ionic hair dryer with a diffuser attachment to gently dry J.Lo’s lob while keeping its texture. Next, he applied Color Wow Pop and Lock, a frizz control and glossing serum that promises “sparkling shine.”'}</p>
+            <a class="ReadMore" href="https://www.vogue.com/article/how-jennifer-lopez-hair-transformations-in-her-new-music-video-maluma">${'READ MORE +'}</a>
+        </div>
+        <hr class="mainContentHr"/>
+        <div class="PressArticle">
+            <p class="ArticleSource">${'AMERICAN SALON'}</p>
+            <a href="https://www.americansalon.com/how-to/how-to-create-90s-bombshell-hair">
+                <h1 class="ArticleTitle">${'How To Create ‘90s Bombshell Hair'}</h1>
+            </a>
+            <p class="ArticleDescription-Desktop">${'“Chris Appleton, celebrity hairstylist who tends the tresses of Kim Kardashian and the ilk, breaks down how to get ‘90s supermodel voluminous, bouncy hair using a few products and tools. First, he preps wet hair with Color Wow Raise the Root and Dream Coat on the ends to smooth. Then he partially dries the hair with Leandro Limited carbon-infused round brush and carbon-infused blow-dryer (carbon helps with smoothing).”'}</p>
+            <p class="ArticleDescription-Mobile">${'“Chris Appleton, celebrity hairstylist who tends the tresses of Kim Kardashian and the ilk, breaks down how to get ‘90s supermodel voluminous, bouncy hair using a few products and tools.”'}</p>
+            <a class="ReadMore" href="https://www.americansalon.com/how-to/how-to-create-90s-bombshell-hair">${'READ MORE +'}</a>
+        </div>
+        <hr class="mainContentHr"/>
+        <div class="PressArticle">
+            <p class="ArticleSource">${'VOGUE'}</p>
+            <a href="https://www.vogue.co.uk/beauty/article/jennifer-lopez-inauguration-hair">
+                <h1 class="ArticleTitle">${'Hairstylist Chris Appleton On What It Was Really Like Creating J-Lo’s Inauguration Hair'}</h1>
+            </a>
+            <p class="ArticleDescription-Desktop">${'“As for how he created the look, it all started with Color Wow’s Dream Coat Supernatural Spray, which he liberally saturated over damp hair to create the ultimate luxe, shiny texture – he blow-dried to activate then added the curl to ends with Leandro Limited velcro rollers. “After that, I used a large brush to pull back the hair into a tight ponytail, following the cheekbone up for placement, and secured with a bland elastic,” he explains.”'}</p>
+            <p class="ArticleDescription-Mobile">${'“As for how he created the look, it all started with Color Wow’s Dream Coat Supernatural Spray, which he liberally saturated over damp hair to create the ultimate luxe, shiny texture – he blow-dried to activate then added the curl to ends with Leandro Limited velcro rollers.”'}</p>
+            <a class="ReadMore" href="https://www.vogue.co.uk/beauty/article/jennifer-lopez-inauguration-hair">${'READ MORE +'}</a>
+        </div>
+        <hr class="mainContentHr"/>
+        <div class="PressArticle">
+            <p class="ArticleSource">${'ELLE'}</p>
+            <a href="https://www.elle.com/beauty/g34643913/winter-hair-trends-2020-2021/">
+                <h1 class="ArticleTitle">${'The 5 Biggest Hair Trends For Winter,  According To J.Lo’s Stylist'}</h1>
+            </a>
+            <p class="ArticleDescription-Desktop">${'Feeling the urge for a big chop? It’s always the perfect time for a bob. Appleton recommends investing in two key products if you’re going to go for it. The Color Wow Dream Coat and Leandro Limited Carbon Infused Dryer. “Color Wow Dream Coat is by far my favorite product because it creates a silky smooth texture regardless of humidity perfect for the bombshell or bob,” he says. “The Leandro Limited Carbon Infused Dryer reduces frizz and static and leaves hair super shiny, this is great for styling curtain bangs or a bob.”'}</p>
+            <p class="ArticleDescription-Mobile">${'“Feeling the urge for a big chop? It’s always the perfect time for a bob. Appleton recommends investing in two key products if you’re going to go for it. The Color Wow Dream Coat and Leandro Limited Carbon Infused Dryer.”'}</p>
+            <a class="ReadMore" href="https://www.elle.com/beauty/g34643913/winter-hair-trends-2020-2021/">${'READ MORE +'}</a>
+        </div>
+
+    </div>
+
+    <iscomment> SHOW MORE </iscomment>
+    <button class="showMoreBtn" id="showMoreBtn" onclick="document.getElementById('showMoreContent').style.display='flex';">
+        ${'SHOW MORE ARTICLES'}
+    </button>
+
+    <iscomment> SHOW MORE CONTENT </iscomment>
+    <div id="showMoreContent" class="ShowMoreContent" >
+        <div class="showMoreContentRow">
+            <div class="PressArticleShowMore">
+                <p class="ArticleSource">${'stylecaster'}</p>
+                <a href="https://stylecaster.com/beauty/ponytail-trend-peoples-choice-awards/">
+                    <h1 class="ArticleTitle">${'The Waist-Length Ponytail Trend Won The People’s Choice Awards'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'“Hairstylist Chris Appleton calls sky-high ponytail “Xmas Barbie” and you can see why. He used Leandro Limited hair tools and Color Wow styling products to achieve the bouncy style. “'}</p>
+                <p class="ArticleDescription-Mobile">${'“Hairstylist Chris Appleton calls sky-high ponytail “Xmas Barbie” and you can see why. He used Leandro Limited hair tools and Color Wow styling products to achieve the bouncy style…'}</p>
+                <a class="ReadMore" href="https://stylecaster.com/beauty/ponytail-trend-peoples-choice-awards/">${'READ MORE +'}</a>
+            </div>
+            <div class="ShowMoreHr_VerticalDiv" ><hr class="ShowMoreHr_Vertical"/></div>
+            <div class="PressArticleShowMore">
+                <p class="ArticleSource">${'refinery29'}</p>
+                <a href="https://www.refinery29.com/en-us/2020/11/10185956/jennifer-lopez-hair-cut-style-ama">
+                    <h1 class="ArticleTitle">${'J.Lo Showed Off A Blonde Wavy Lob At The AMAs'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'According to Appleton, he used a Leandro Limited carbon ionic hair dryer with a diffuser attachment to gently dry J.Lo’s lob while keeping its texture. Next, he applied Color Wow Pop and Lock, a frizz control and glossing serum that promises “sparkling shine.” To add just a bit more wave, Appleton then added some loose twists using a BaBylissPro 1.25-inch curling iron on its lowest heat setting. Finally, he finished off the look with Color Wow’s Extra Shine spray, designed to create a glossy, but not greasy, shine.'}</p>
+                <p class="ArticleDescription-Mobile">${'“According to Appleton, he used a Leandro Limited carbon ionic hair dryer with a diffuser attachment to gently dry J.Lo’s lob while keeping its texture.”'}</p>
+                <a class="ReadMore" href="https://www.refinery29.com/en-us/2020/11/10185956/jennifer-lopez-hair-cut-style-ama">${'READ MORE +'}</a>
+            </div>
+        </div>
+        <div class="showMoreContentRow">
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'Yahoo'}</p>
+                <a href="https://www.yahoo.com/lifestyle/chris-appleton-new-in-the-q-213203188.html">
+                    <h1 class="ArticleTitle">${'Hairstylist-to-the-stars Chris Appleton is staying a cut above with these quarantine faves'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'“Trends right now are high volume and bounce,” says Appleton, and with this three-size variety pack you’ll be checking both of those boxes in no time. “I prep first with the Dream Coat, dry it, and then whack these rollers in.” And voila, he says, “you get great bouncy, sexy-looking hair.”'}</p>
+                <p class="ArticleDescription-Mobile">${'“Trends right now are high volume and bounce,” says Appleton, and with this three-size variety pack you’ll be checking both of those boxes in no time.”'}</p>
+                <a class="ReadMore" href="https://www.yahoo.com/lifestyle/chris-appleton-new-in-the-q-213203188.html">${'READ MORE +'}</a>
+            </div>
+            <div class="ShowMoreHr_VerticalDiv"><hr class="ShowMoreHr_Vertical"/></div>
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'byrdie'}</p>
+                <a href="https://www.byrdie.com/jennifer-lopez-wet-hair-look-american-music-awards-2020-5088622">
+                    <h1 class="ArticleTitle">${'This Is the $20 Secret Behind J.Lo’s AMAs Wet Hair Look'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'“Inspired by the season—“Nothing better than a fresh cut for fall,” he says—Appleton wanted a wet look finish “as a sexy, wearable texture.” On Lopez’s damp hair, he applied Color Wow Dream Coat For Curly Hair ($24) to smooth, then blowdried with the Leandro Limited Carbon Ionic Hairdryer ($179.95) with the diffuser attached for extra control.”'}</p>
+                <p class="ArticleDescription-Mobile">${'“Inspired by the season—“Nothing better than a fresh cut for fall,” he says—Appleton wanted a wet look finish “as a sexy, wearable texture.” '}</p>
+                <a class="ReadMore" href="https://www.byrdie.com/jennifer-lopez-wet-hair-look-american-music-awards-2020-5088622">${'READ MORE +'}</a>
+            </div>
+        </div>
+        <div class="showMoreContentRow">
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'modernsalon'}</p>
+                <a href="https://www.modernsalon.com/620887/leandro-limited-introduced">
+                    <h1 class="ArticleTitle">${'Leandro Limited Introduced'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'Ever wonder what a press/influencer product launch looks like? Conair’s “Leandro Limited” Collection was introduced last night in NYC to the professional and consumer worlds at the Gramercy Park Rooftop Terrace.'}</p>
+                <p class="ArticleDescription-Mobile">${'“Conair’s “Leandro Limited” Collection was introduced last night in NYC to the professional and consumer worlds at the Gramercy Park Rooftop Terrace.”'}</p>
+                <a class="ReadMore" href="https://www.modernsalon.com/620887/leandro-limited-introduced">${'READ MORE +'}</a>
+            </div>
+            <div class="ShowMoreHr_VerticalDiv"><hr class="ShowMoreHr_Vertical"/></div>
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'Vogue'}</p>
+                <a href="https://www.vogue.co.uk/beauty/article/jennifer-lopez-inauguration-hair">
+                    <h1 class="ArticleTitle">${'Hairstylist Chris Appleton On What It Was Really Like Creating J-Lo’s Inauguration Hair'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'As for how he created the look, it all started with Color Wow’s Dream Coat Supernatural Spray, which he liberally saturated over damp hair to create the ultimate luxe, shiny texture – he blow-dried to activate then added the curl to ends with Leandro Limited velcro rollers. “After that, I used a large brush to pull back the hair into a tight ponytail, following the cheekbone up for placement, and secured with a bland elastic,” he explains.'}</p>
+                <p class="ArticleDescription-Mobile">${'“….which he liberally saturated over damp hair to create the ultimate luxe, shiny texture – he blow-dried to activate then added the curl to ends with Leandro Limited velcro rollers.”'}</p>
+                <a class="ReadMore" href="https://www.vogue.co.uk/beauty/article/jennifer-lopez-inauguration-hair">${'READ MORE +'}</a>
+            </div>
+        </div>
+        <div class="showMoreContentRow">
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'wwd'}</p>
+                <a href="https://wwd.com/beauty-industry-news/hair/conair-granddaughter-leandro-rizzuto-hair-tools-brand-1203352821/">
+                    <h1 class="ArticleTitle">${'Conair Granddaughter Launching Hair Tools Brand'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'“The granddaughter of Conair founder Leandro Rizzuto is launching a new line of hair tools. Leandro Ltd.’s hair parting tool.  Sophia Wojczak is set to launch her line of brushes, clips and hair tool …”'}</p>
+                <p class="ArticleDescription-Mobile">${'“The granddaughter of Conair founder Leandro Rizzuto is launching a new line of hair tools. Leandro Ltd.’s hair parting tool.  Sophia Wojczak is set to launch her line of brushes, clips and hair tool …”'}</p>
+                <a class="ReadMore" href="https://wwd.com/beauty-industry-news/hair/conair-granddaughter-leandro-rizzuto-hair-tools-brand-1203352821/">${'READ MORE +'}</a>
+            </div>
+            <div class="ShowMoreHr_VerticalDiv"><hr class="ShowMoreHr_Vertical"/></div>
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'allure'}</p>
+                <a href="https://www.allure.com/gallery/new-hair-care-products-tools-july-2020">
+                    <h1 class="ArticleTitle">${'The Best Hair-Care Products and Tools Dropping in July'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'“BaByliss Pro and Conair teamed up to create Leandro Limited, a range of hair tools and accessories to make it easy for you to create the styles you want right at home. Addicted to blowouts? You’ll love the brand’s selection of brushes, which includes six round-barrel and three paddle options. Best part? Each of them has a little point at the end to make parting your hair easier.”'}</p>
+                <p class="ArticleDescription-Mobile">${'“BaByliss Pro and Conair teamed up to create Leandro Limited, a range of hair tools and accessories to make it easy for you to create the styles you want right at home. Addicted to blowouts?”'}</p>
+                <a class="ReadMore" href="https://www.allure.com/gallery/new-hair-care-products-tools-july-2020">${'READ MORE +'}</a>
+            </div>
+        </div>
+        <div class="showMoreContentRow">
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'beautypackaging'}</p>
+                <a href="https://www.beautypackaging.com/contents/view_breaking-news/2020-04-15/leandro-limited-supports-hairstylists-during-covid-19-crisis/">
+                    <h1 class="ArticleTitle">${'Leandro Limited Supports Hairstylists During COVID-19 Crisis'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${' Leandro Limited is giving back to hairstylists who are struggling with the closing of salons and the inability to practice their craft. The brand hopes to shine a spotlight on hairstylists and spread some love using the hashtag #LoveLeandro.'}</p>
+                <p class="ArticleDescription-Mobile">${'“Leandro Limited is giving back to hairstylists who are struggling with the closing of salons and the inability to practice their craft.”'}</p>
+                <a class="ReadMore" href="https://www.beautypackaging.com/contents/view_breaking-news/2020-04-15/leandro-limited-supports-hairstylists-during-covid-19-crisis/">${'READ MORE +'}</a>
+            </div>
+
+            <div class="ShowMoreHr_VerticalDiv"><hr class="ShowMoreHr_Vertical"/></div>
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'womenshealthmag'}</p>
+                <a href="https://www.womenshealthmag.com/beauty/g30498773/best-hair-straightener/">
+                    <h1 class="ArticleTitle">${'15 Straighteners To Make Your Sleek Hair Dreams Come True'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'This new collection is a collaboration between two iconic hair brands—Babyliss and Conair—and is designed to not only work well on your hair, but to also look chic in your bathroom too. The carbon infused plates help reduce frizz and static and create shine, making this iron safe for any hair type.'}</p>
+                <p class="ArticleDescription-Mobile">${'This new collection is a collaboration between two iconic hair brands—Babyliss and Conair—and is designed to not only work well on your hair, but to also look chic in your bathroom too.'}</p>
+                <a class="ReadMore" href="https://www.womenshealthmag.com/beauty/g30498773/best-hair-straightener/">${'READ MORE +'}</a>
+            </div>
+        </div>
+        <div class="showMoreContentRow">
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'hollywoodlife'}</p>
+                <a href="https://hollywoodlife.com/2020/01/15/kylie-jenner-hairstylist-best-valentines-day-hairstyles-date-night/">
+                    <h1 class="ArticleTitle">${'Kylie Jenner’s Hairstylist Reveals How ToGet The Ideal Valentine’s Day Date NightHairstyle'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${' Cash Lawless, whose clients include Kylie Jenner, 22, shared with HollywoodLife EXCLUSIVELY, the top hairstyles you should try for the upcoming holiday. Cash spoke to HollywoodLife at the Leandro Limited, a collaboration between CONAIR and BaBylissPRO, launch event in NYC on Jan. 9, about Valentine’s Day hairstyles and the hottest hair trends of 2020.'}</p>
+                <p class="ArticleDescription-Mobile">${''}</p>
+                <a class="ReadMore" href="https://hollywoodlife.com/2020/01/15/kylie-jenner-hairstylist-best-valentines-day-hairstyles-date-night/">${'READ MORE +'}</a>
+            </div>
+            <div class="ShowMoreHr_VerticalDiv" ><hr class="ShowMoreHr_Vertical"/></div>
+            <div class="PressArticleShowMore">
+                <hr class="ShowMoreHr"/>
+                <p class="ArticleSource">${'hollywoodlife'}</p>
+                <a href="https://hollywoodlife.com/2020/01/14/nina-agdal-workout-secrets-toned-abs-home-exercises-treadmill-diet/">
+                    <h1 class="ArticleTitle">${'Nina Agdal Reveals How She Gets HerToned Abs Without Splurging On A GymMembership'}</h1>
+                </a>
+                <p class="ArticleDescription-Desktop">${'Nina shared her favorite workouts with HollywoodLife at the Leandro Limited, a collaboration between CONAIR and BaBylissPRO, launch event in NYC on Jan. 9, “So I do a lot of home workouts. I do the treadmills twice a week, and then besides that, everything I do is basically done in my apartment on a mat with lighter weights, or a Pilates ring, but mostly body weights.”'}</p>
+                <p class="ArticleDescription-Mobile">${''}</p>
+                <a class="ReadMore" href="https://hollywoodlife.com/2020/01/14/nina-agdal-workout-secrets-toned-abs-home-exercises-treadmill-diet/">${'READ MORE +'}</a>
+            </div>
+        </div>
+    </div>
+</div>
+</isdecorate>

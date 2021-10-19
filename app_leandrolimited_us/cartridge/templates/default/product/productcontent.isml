@@ -1,0 +1,603 @@
+<style>
+.product-detail-top1 .breadcrumb{
+    display:none;
+    margin-top: 30px;
+    padding-left:0px;
+}
+.description{
+    font-size:12px;
+    font-family:'Helvetica Neue';
+    color: ${"#262626 !important"};
+    line-height:20px;
+}
+.description pre{
+    white-space: pre-wrap;
+    font-family:'Helvetica Neue';
+    font-size:12px;
+}
+.description b{
+    font-size:12px;
+    font-family:'Helvetica Neue LT W05 65 Medium';
+}
+.product-description table tbody tr td {
+    border-style: none none none none !important;
+}
+.product-detail-top1 {
+        display: block;
+        overflow: hidden;
+}
+
+.add-to-cart{
+    font-size:12px!important;
+    font-weight:bold;
+    text-transform:uppercase !important;
+}
+
+.arrowDivider{
+    position:relative;
+}
+.arrowDividerTitle{
+    font-size:14px;
+    padding-bottom:10px;
+    letter-spacing:3.86px;
+    font-family:'Helvetica Neue LT W01_75 Bold';
+    line-height:17px;
+}
+.arrowDivider .arrowDividerHr{
+    width: 90%;
+    border-bottom: 1px solid #707070;
+    position: absolute;
+}
+.arrowDivider .arrowDividerArrow{
+    position:absolute;
+    top:18px;
+    left:92%;
+    display: inline-block;
+    padding:10px;
+    box-shadow: 1.5px -1.5px 0 0 #707070 inset;
+    transform: rotate(135deg);
+    cursor:pointer;
+}
+
+.product-actions-mob{
+        display:none;
+}
+
+@media screen and (max-width:1025px) {
+    .product-detail-top1 .breadcrumb{
+        display:block;
+    }
+
+    .add-to-cart{
+        width:100%;
+        background:white !important;
+        color: ${"#222222"} !important;
+        text-align: center;
+        border-width: 5px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        font-size:14px!important;
+        font-weight:bold;
+        cursor: pointer;
+        padding: 5px;
+        text-transform:capitalize !important;
+    }
+    .wishlistWithPrice{
+        display:flex;
+        justify-content:space-between;
+    }
+    .product-actions-mob{
+        display:block;
+        width:85px;
+        flex:20%;
+    }
+    .product-actions-mob .wishlist-link {
+        position:initial;
+        width:0;
+    }
+
+    .wishlist-link .fa{
+        margin-left:0;
+    }
+    .product-actions{
+        display:none !important;
+    }
+    .inventory{
+        display:none;
+    }
+
+    .description{
+        font-size:14px;
+        font-family:'Helvetica Neue';
+    }
+
+    .description pre{
+        font-size:14px;
+    }
+
+    .description b{
+        font-size:14px;
+        font-weight:normal;
+    }
+}
+
+</style>
+<isif condition="${pdict.resetAttributes}">
+    <isscript>
+        var ProductUtils = require('~/cartridge/scripts/product/ProductUtils.js');
+        var url = dw.web.URLUtils.url('Product-Variation', 'pid', pdict.Product.ID, 'format', 'ajax');
+        var qs = ProductUtils.getQueryString(pdict.CurrentHttpParameterMap, ["source", "uuid", "Quantity"]);
+        if (qs && qs.length>0) { url+="&"+qs; }
+    </isscript>
+    <isinclude url="${url}"/>
+<iselse/>
+    <isset name="isQuickView" value="${pdict.CurrentHttpParameterMap.source.stringValue == 'quickview' || pdict.CurrentHttpParameterMap.source.stringValue == 'cart' || pdict.CurrentHttpParameterMap.source.stringValue == 'giftregistry' || pdict.CurrentHttpParameterMap.source.stringValue == 'wishlist'}" scope="page"/>
+    <isscript>
+        let product = pdict.Product;
+        let masterId = product.isVariant() || product.isVariationGroup() ? product.getMasterProduct().getID() : product.getID();
+        let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+        let selectedVariant = variationModel.getSelectedVariant();
+
+        let avm = selectedVariant ? selectedVariant.getAvailabilityModel() : product.getAvailabilityModel();
+        pdict.isProductAvailable = avm.availability > 0;
+
+        let availableCount = "0";
+        if (pdict.isProductAvailable && !empty(avm.inventoryRecord)) {
+            availableCount = avm.inventoryRecord.perpetual ? "999" : avm.inventoryRecord.ATS.value.toFixed().toString();
+        }
+    </isscript>
+    <iscomment>
+        primary details
+        =============================================================
+    </iscomment>
+    <h2 class="visually-hidden">Details</h2>
+    <span class="visually-hidden" itemprop="url">${URLUtils.http('Product-Show','pid', pdict.Product.ID)}</span>
+
+    <isscript>
+        let productNumber = masterId;
+
+        if (pdict.isProductAvailable) {
+            let product = pdict.Product;
+            let va=pdict.Product.variationGroup;
+            var v2=pdict.CurrentVariationModel.variants.size();
+            var v3=pdict.CurrentVariationModel.variants[0];
+            var v4=pdict.CurrentVariationModel.variants[1];
+            let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+            let selectedVariant = variationModel.getSelectedVariant();
+            productNumber = selectedVariant
+                ? selectedVariant.getID()
+                : product.getID();
+        }
+    </isscript>
+
+    <isif condition="${pdict.CurrentHttpParameterMap.source && pdict.CurrentHttpParameterMap.source.stringValue != 'giftregistry'}">
+        <isif condition="${isQuickView}">
+            <!-- shown only in quick view -->
+            <a href="${URLUtils.url('Product-Show','pid', pdict.Product.ID)}" title="${pdict.Product.name}">${Resource.msg('product.viewdetails','product',null)}</a>
+        </isif>
+    </isif>
+    <div class="product-detail-top1">
+        <isinclude template="components/productbreadcrumbs"/>
+        <isif condition="${!empty(pdict.Product.brand)}">
+            <span class="product-brand1"><isprint value="${pdict.Product.brand}"/></span>
+        </isif>
+            
+       
+         <iscomment> WISHLIST </iscomment>
+        <div class="wishlistWithPrice">
+            <div style="display:block; flex:80%">
+                <h1 class="product-name1" itemprop="name"><isprint value="${pdict.Product.name}"/></h1>
+                <iscomment>
+                product pricing
+                =============================================================
+                </iscomment>
+
+                <isset name="showTieredPrice" value="${true}" scope="page"/>
+                <isinclude template="product/components/pricing"/>
+            </div>
+            
+            <div class="product-actions-mob">
+                <isscript>
+                var Url = require('~/cartridge/scripts/util/Url');
+                pdict.url = Url.getCurrent(pdict);
+                pdict.title = pdict.Product.name;
+                </isscript>
+
+                <isif condition="${pdict.CurrentHttpParameterMap.source && pdict.CurrentHttpParameterMap.source.stringValue != 'giftregistry'}">
+                    <isif condition="${pdict.isProductAvailable && !pdict.Product.bundle && !(pdict.Product.master || pdict.Product.variationGroup)}">
+                        <isscript>
+                        // ensure a unique form name and make the name reuseable, because the call to
+                        // dynamicHtmlName always creates a different name
+                        var uniqueFormID : String = pdict.CurrentForms.product.addtocart.dynamicHtmlName;
+                        </isscript>
+                        <input type="hidden" id="${uniqueFormID}-isUserAuthenticated" value="${pdict.CurrentCustomer.authenticated}"/>
+                        <input type="hidden" id="${uniqueFormID}-wishlistUrl" name="wishlistUrl" value="${URLUtils.https('Wishlist-Add', 'pid', pdict.Product.ID , 'source', 'productdetail')}"/>
+                        <input type="hidden" id="${pdict.Product.ID}-wishlistUrlAjexSuccess" value="not-active"/>
+                        <input type="hidden" id="${pdict.Product.ID}-inWishlist" value="not-in-wishlist"/>
+                        <div class="wishlist-link" style="width:revert !important;" align="right" data-action="wishlist" title="${Resource.msg('global.addtowishlist.label','locale',null)}"
+                        onclick="
+                        document.getElementById('${pdict.Product.ID}-wishlistIcon').className='fa fa-heart fa-lg';
+                        document.getElementById('${pdict.Product.ID}-wishlistIcon').style.color='gray';
+                        if(document.getElementById('${uniqueFormID}-isUserAuthenticated').value=='true'){
+                            $.ajax({url: document.getElementById('${uniqueFormID}-wishlistUrl').value,method: 'POST',
+                                success: function (data) {
+                                console.log('success:  ${uniqueFormID}-wishlistUrl');
+                                document.getElementById('${pdict.Product.ID}-wishlistIcon').style.color='';
+                                document.getElementById('${pdict.Product.ID}-wishlistIcon').className='fa fa-heart fa-lg';
+                                document.getElementById('${pdict.Product.ID}-wishlistUrlAjexSuccess').value='active';
+                                },
+                                error: function () {console.log('error');}
+                            })
+                        }else{
+                            window.location.href = '${URLUtils.https('Wishlist-Add', 'pid', pdict.Product.ID , 'source', 'productdetail')}';
+                        }"
+                        onmouseover="document.getElementById('${pdict.Product.ID}-wishlistIcon').className='fa fa-heart fa-lg';"
+                        onmouseout="if(document.getElementById('${pdict.Product.ID}-wishlistUrlAjexSuccess').value=='not-active'){
+                            document.getElementById('${pdict.Product.ID}-wishlistIcon').className='fa fa-heart-o fa-lg';
+                        }"
+                        >
+                            <i id='${pdict.Product.ID}-wishlistIcon' style="font-size: 40px; color:#222222;" class="fa fa-heart-o"></i>
+                        </div>
+                    </isif>
+                </isif>
+            </div>
+
+        </div>
+        
+
+
+        <iscomment>
+            PROMOTIONS
+            ==============================================================
+        </iscomment>
+        <isinclude template="product/components/promotions"/>
+
+    </div>
+    <iscomment> VARIATIONS </iscomment>
+    <iscomment> <div class="product-variations-wrapper1">
+        <isinclude template="product/components/variations"/>
+    </div> </iscomment>
+
+    <isset name="pam" value="${pdict.Product.getAttributeModel()}" scope="page"/>
+    <isset name="group" value="${pam.getAttributeGroup('mainAttributes')}" scope="page"/>
+    <isinclude template="product/components/group"/>
+
+    <iscomment>
+        add to cart form
+        =============================================================
+    </iscomment>
+
+    <form action="${URLUtils.continueURL()}" method="post" id="${pdict.CurrentForms.product.addtocart.dynamicHtmlName}" class="pdpForm">
+        <fieldset>
+                <isset name="showTieredPrice" value="${false}" scope="page"/>
+                <div class="product-add-to-cart">
+                        <h2 class="visually-hidden">Product Actions</h2>
+                    <iscomment>availability=============================================================
+                    <isscript>
+                        let product = pdict.Product;
+                        let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+                        let selectedVariant = variationModel.getSelectedVariant();
+                        let availableForInStorePickup = selectedVariant ? selectedVariant.custom.availableForInStorePickup : product.custom.availableForInStorePickup;
+                        let isStorePickUpEnabled = dw.system.Site.getCurrent().getCustomPreferenceValue('enableStorePickUp');
+                    </isscript>
+                    <isif condition="${isStorePickUpEnabled && availableForInStorePickup}">
+                        <div class="availability-storepickup">
+                            <div class="availability-web">
+                                <i class="fa fa-truck fa-lg pull-left"></i>
+                                <label for="Stock">${Resource.msg('product.webstock','product',null)}</label>
+                                <isif condition="${!pdict.Product.master && !pdict.Product.variationGroup}">
+                                    <span class="value"><isinclude template="product/components/availability"/></span>
+                                <iselse/>
+                                    <div class="availability-novariation">${Resource.msg('product.selectforstock','product',null)}</div>
+                                </isif>
+                            </div>
+                            <div class="availability-instore">
+                                <i class="fa fa-briefcase fa-lg pull-left"></i>
+                                <label for="Stock">${Resource.msg('product.instorestock','product',null)}</label>
+                                <isif condition="${empty(pdict.CurrentHttpParameterMap.uuid.value)}">
+                                    <div id="${pdict.Product.ID}" class="availability-results availability-msg store-stock">
+                                        <span class="label set-preferred-store"><a href="${URLUtils.url('StoreInventory-SetZipCodeCore','pid', pdict.Product.ID)}" title="${pdict.Product.name}">${Resource.msg('storelist.check.availablity','storepickup',null)}</a></span>
+                                    </div>
+                                <iselse/>
+                                    <div id="${pdict.CurrentHttpParameterMap.uuid.value}" class="availability-results store-stock"></div>
+                                </isif>
+                            </div>
+                        </div>
+                    <iselse/>
+                        <div class="availability-web">
+                            <label class="visually-hidden" for="Stock">${Resource.msg('global.availability','locale',null)}</label>
+                            <isif condition="${!pdict.Product.master && !pdict.Product.variationGroup}">
+                                <span class="value"><isinclude template="product/components/availability"/></span>
+                            <iselse/>
+                                <div class="availability-novariation">${Resource.msg('product.selectforstock','product',null)}</div>
+                            </isif>
+                        </div>
+                    </isif></iscomment>
+
+                    <iscomment>product options (Must be inside form)=====================================</iscomment>
+                    <div class="product-options-wrapper"><isinclude template="product/components/options"/></div>
+
+                    <iscomment>
+                        product quantity
+                        =============================================================
+                    </iscomment>
+
+                    <div class="inventory">
+                        <div class="quantity">
+                            <label for="Quantity">${Resource.msg('global.qty','locale',null)}</label>
+                            <iscomment>
+                            <input type="text" class="input-text" name="Quantity" id="Quantity" size="2" maxlength="3" value="${Number(empty(pdict.CurrentHttpParameterMap.Quantity.stringValue) ? 1 : pdict.CurrentHttpParameterMap.Quantity.stringValue).toFixed()}" data-available="${availableCount}"/>
+                            </iscomment>
+                            <iscomment> <div class="select-field-wrapper">
+                                <select class="input-select quantity-select" id="Quantity" name="Quantity">
+                                    <isloop items="${new Array(!empty(product.custom.maxOrderQuantity)?product.custom.maxOrderQuantity:9)}" status="quantity" step="${!empty(product.stepQuantity)?product.stepQuantity.value:1}" begin="${!empty(product.minOrderQuantity)?product.minOrderQuantity.value-1:0}" >
+                                        <option value="${(quantity.index+1).toFixed()}" class="select-option">${(quantity.index+1).toFixed()}</option>
+                                    </isloop>
+                                </select>
+                                <span class="select-field__icon"><i class="fa fa-angle-down"></i></span>
+                            </div> </iscomment>
+                            <iscomment> quantity selcter + - </iscomment>
+                            <style>
+                                /* quantity select */
+                                .quantity{
+                                    width:100px;
+                                    height:2.5rem;
+                                }
+
+                                .inventory{
+                                    width:65px !important;
+                                    user-select:none;
+                                }
+                                span {cursor:pointer;}
+                                .plus{
+                                    width:20px;
+                                    height:30px;
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                    margin-left:5px;
+                                    text-align: center;
+                                }
+
+                                .minus{
+                                    width:20px;
+                                    height:30px;
+                                    margin-left:-55px ;
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                    text-align: center;
+                                }
+                                input{
+                                    height:34px;
+                                    width: 50px;
+                                    text-align: center;
+                                    font-size: 26px;
+                                    border:1px solid #ddd;
+                                    border-radius:4px;
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                }
+                            </style>
+                            <div class="number input-select " style="width:50%;">
+                                <input type="text" value="1" name="Quantity" id="Quantity"/ style="height:40px;">
+                                <span class="minus" onclick="inputMinus()">-</span>
+                                <span class="plus" onclick="inputPlus()">+</span>
+                            </div>
+                            <script>
+                                function inputPlus(){
+                                    var $input = document.getElementById('Quantity');
+                                    var countp = parseInt($input.value) + 1;
+                                    countp = countp > 9 ? 9:countp;
+                                    $input.value=(countp);
+                                    console.log('plus');
+                                    return false;
+                                }
+                                function inputMinus() {
+                                    console.log('input minus');
+                                    var $input = document.getElementById('Quantity');
+                                    var count = parseInt($input.value) - 1;
+                                    count = count < 1 ? 1 : count;
+                                    $input.value=(count);
+                                    console.log('input minus');
+                                    return false;
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <iscomment>
+                        add to cart submit
+                        =============================================================
+                    </iscomment>
+
+                    <isscript>
+                        var updateSources = ["cart", "giftregistry", "wishlist"];
+                        var source = pdict.CurrentHttpParameterMap.source.stringValue;
+                        var buttonTitle = dw.web.Resource.msg('global.addtocart','locale','Add to Cart');
+                        var plid = null;
+                        if (updateSources.indexOf(source) > -1) {
+                            buttonTitle = dw.web.Resource.msg('global.update','locale','Update');
+                            if (pdict.CurrentHttpParameterMap.productlistid && pdict.CurrentHttpParameterMap.productlistid.stringValue) {
+                                plid = pdict.CurrentHttpParameterMap.productlistid.stringValue;
+                            }
+                        } else {
+                            // Only pass on white-listed sources
+                            source = null;
+                        }
+                    </isscript>
+
+                    <isset name="cartAction" value="add" scope="page"/>
+
+                    <isif condition="${pdict.CurrentHttpParameterMap.uuid.stringValue}">
+                        <input type="hidden" name="uuid" id="uuid" value="${pdict.CurrentHttpParameterMap.uuid.stringValue}" />
+                        <isset name="cartAction" value="update" scope="page"/>
+                    </isif>
+                    <isif condition="${source}">
+                        <input type="hidden" name="source" id="source" value="${source}" />
+                    </isif>
+                    <isif condition="${plid}">
+                        <input type="hidden" name="productlistid" id="productlistid" value="${plid}" />
+                    </isif>
+                    <input type="hidden" name="cartAction" id="cartAction" value="${cartAction}" />
+                    <isscript>
+                    let product = pdict.Product;
+                    let pid = pdict.Product.getID();
+                    let disabledAttr = pdict.isProductAvailable && !product.master ? '' : ' disabled="disabled"';
+
+                    if (product.isVariationGroup()) {
+                        let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+                        let selectedVariant = variationModel.getSelectedVariant();
+                        if (selectedVariant) {
+                            pid = selectedVariant.getID();
+                        } else {
+                            disabledAttr = ' disabled="disabled"';
+                        }
+                    };
+                    </isscript>
+                    <input type="hidden" name="pid" id="pid" value="${pid}" />
+                    <isif condition="${!disabledAttr}">
+                    <button id="add-to-cart" type="submit" title="${buttonTitle}" value="${buttonTitle}" class="button add-to-cart">${buttonTitle}</button>
+                    <isapplepay sku="${pdict.Product.ID}"></isapplepay>
+                    <iselse>
+                    <isscript>
+                        var pvm = pdict.Product.getVariationModel();
+                        var it = pvm.getProductVariationAttributes().iterator();
+                        var array = [];
+                        var options = '';
+                        var requiredOptions = '';
+                        while (it.hasNext()) {
+                            var text = it.next();
+                            array.push(text.displayName);
+                        }
+                        options = array.join(', ');
+                        var lastIndex = options.lastIndexOf(',');
+                        if (lastIndex > 0 && options.length > 1 && array.length > 1) {
+                            requiredOptions = options.substr(0,lastIndex) + ' ' + Resource.msg('product.attributedivider', 'product', null) + options.substr(lastIndex+1, options.length);
+                        } else {
+                            requiredOptions = options;
+                        }
+                        var buttonTitleDisabledSelectVariation = StringUtils.format(Resource.msg('product.missingval','product', null), requiredOptions);
+                    </isscript>
+                    <button id="add-to-cart" type="button" title="${buttonTitleDisabledSelectVariation}" value="${buttonTitleDisabledSelectVariation}" class="button add-to-cart-disabled"<isprint value="${disabledAttr}" encoding="off"/>>${buttonTitle}</button>
+                    </isif>
+                    <div class="product-actions">
+                        <isscript>
+                            var Url = require('~/cartridge/scripts/util/Url');
+                            pdict.url = Url.getCurrent(pdict);
+                            pdict.title = pdict.Product.name;
+                        </isscript>
+                        <script>
+                            function getWishlistpids() {
+                                $.ajax({
+                                    url: document.getElementById('getWishlistItemsUrl').value,method: 'GET',
+                                    success: function (data) {
+                                    console.log('success: getwishlistUrl'+ data);
+                                    document.getElementById("wishlisturlreponse").innerHTML = data;
+                                    },
+                                    error: function () {console.log('error');}
+                                })
+                            }
+
+                            function markwishlisttile() {
+                                for(var i = 0; i < document.getElementById('wishpidCount').value;i++){
+                                    var elementID = 'wishpid-'+(i+1);
+                                    var inWishlistpid = document.getElementById('wishpid-'+(i+1)).value;
+                                    if(document.getElementById(inWishlistpid+'-inWishlist')){
+                                        document.getElementById(inWishlistpid+'-inWishlist').value='in-wishlist';
+                                        document.getElementById(inWishlistpid+'-wishlistIcon').className='fa fa-heart fa-lg';
+                                        document.getElementById(inWishlistpid+'-wishlistIcon-desk').className='fa fa-heart fa-lg';
+                                        document.getElementById(inWishlistpid+'-wishlistUrlAjexSuccess').value='active';
+                                    }
+                                }
+                            }
+                            window.onload = function() {
+                                getWishlistpids();
+                                setTimeout(() => {
+                                    markwishlisttile();
+                                }, 1000);
+                            }
+                        </script>
+                        <div id="wishlistpid" style="display:none">
+                            <input type="hidden" id="getWishlistItemsUrl" value="${URLUtils.https('WishlistCtrl-getWishlistItems')}"/>
+                            <div id="wishlisturlreponse">
+                            </div>
+                        </div>
+                        <isif condition="${pdict.CurrentHttpParameterMap.source && pdict.CurrentHttpParameterMap.source.stringValue != 'giftregistry'}">
+                            <isif condition="${pdict.isProductAvailable && !pdict.Product.bundle && !(pdict.Product.master || pdict.Product.variationGroup)}">
+                                <div class="wishlist-link" data-action="wishlist" title="${Resource.msg('global.addtowishlist.label','locale',null)}"
+                                onclick="
+                                document.getElementById('${pdict.Product.ID}-wishlistIcon-desk').className='fa fa-heart fa-lg';
+                                document.getElementById('${pdict.Product.ID}-wishlistIcon-desk').style.color='gray';
+                                if(document.getElementById('${uniqueFormID}-isUserAuthenticated').value=='true'){
+                                    $.ajax({url: document.getElementById('${uniqueFormID}-wishlistUrl').value,method: 'POST',
+                                        success: function (data) {
+                                        console.log('success:  ${uniqueFormID}-wishlistUrl');
+                                        document.getElementById('${pdict.Product.ID}-wishlistIcon-desk').style.color='';
+                                        document.getElementById('${pdict.Product.ID}-wishlistIcon-desk').className='fa fa-heart fa-lg';
+                                        document.getElementById('${pdict.Product.ID}-wishlistUrlAjexSuccess').value='active';
+                                        },
+                                        error: function () {console.log('error');}
+                                    })
+                                }else{
+                                    window.location.href = '${URLUtils.https('Wishlist-Add', 'pid', pdict.Product.ID , 'source', 'productdetail')}';
+                                }"
+                                onmouseover="document.getElementById('${pdict.Product.ID}-wishlistIcon-desk').className='fa fa-heart fa-lg';"
+                                onmouseout="if(document.getElementById('${pdict.Product.ID}-wishlistUrlAjexSuccess').value=='not-active'){
+                                    document.getElementById('${pdict.Product.ID}-wishlistIcon-desk').className='fa fa-heart-o fa-lg';
+                                }"
+                                >
+                                    <i id='${pdict.Product.ID}-wishlistIcon-desk' style="font-size:30px;padding-bottom:15px;" class="fa fa-heart-o"></i>
+                                </div>
+                            </isif>
+                        </isif>
+                    </div><!--  end product-actions block -->
+                </div><!--  end details block -->
+            </fieldset>
+    </form>
+
+    <iscomment>
+           description(s)
+        =============================================================
+    </iscomment>
+    <div class="description">
+        <iscomment> short description </iscomment>
+        <isif condition="${! empty(pdict.Product.shortDescription) && pdict.Product.shortDescription.markup.length > 0}">
+            <div class="product-description product-description--short">
+                <isprint value="${pdict.Product.shortDescription}" encoding="off"/>
+            </div>
+        </isif>
+        <iscomment> Arrow divider </iscomment>
+        <div class="arrowDivider">
+            <div class="arrowDividerTitle">PRODUCT DETAILS</div>
+            <div class="arrowDividerHr"></div>
+            <div id='arrowDividerArrow' class="arrowDividerArrow" onclick="ProductDetailToggle()"></div>
+            <script>
+                function ProductDetailToggle() {
+                    var descriptionlong = document.getElementById('product-description--long');
+                    var arrowDividerArrow = document.getElementById('arrowDividerArrow');
+                    if(descriptionlong.style.display=='none'){
+                        descriptionlong.style.display='block';
+                        arrowDividerArrow.style.transform='rotate(-45deg)';
+                    }
+                    else{
+                        descriptionlong.style.display='none';
+                        arrowDividerArrow.style.transform='rotate(135deg)';
+                    }
+                }
+            </script>
+        </div>
+
+        <iscomment> long description </iscomment>
+        <isif condition="${! empty(pdict.Product.longDescription) && pdict.Product.longDescription.markup.length > 0}">
+            <div id ='product-description--long' class="product-description product-description--long" style="display:none;">
+                <isprint value="${pdict.Product.longDescription}" encoding="off"/>
+            </div>
+        </isif>
+    </div>
+    <iscomment>This is ugly, but it works until we can get a better solution</iscomment>
+    <isif condition="${pdict.GetImages}">
+        <div id="update-images" style="display:none">
+            <isinclude template="product/components/productimages"/>
+        </div>
+    </isif>
+</isif>

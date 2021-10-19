@@ -1,0 +1,9 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isdecorate template="content/content/pt_content-offset">
+
+	<isinclude template="util/modules"/>
+
+	<div class="${pdict.Content.getID()}">
+		<isprint value="${pdict.Content.custom.body}" encoding="off"/>
+	</div>
+</isdecorate>

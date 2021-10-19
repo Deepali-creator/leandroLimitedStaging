@@ -1,0 +1,45 @@
+/**
+*
+*
+*
+* @output ErrorMessage : String
+* @output extCartId : String
+*
+*/
+
+importPackage( dw.system );
+importPackage( dw.catalog );
+importPackage( dw.order );
+importPackage( dw.util );
+
+function execute( args : PipelineDictionary ) : Number {
+	if(!request.httpParameterMap.cart.submitted){
+		args.ErrorMessage="No cart data supplied.";
+		return PIPELET_ERROR;
+	}
+	var bask : Basket = BasketMgr.currentOrNewBasket;
+	var cartstring=request.httpParameterMap.cart.stringValue;
+	var cartdata = JSON.parse(cartstring);
+	for each (var line in bask.allProductLineItems){
+		bask.removeProductLineItem(line);
+	}
+	//bask.custom.extCartId=cartdata.extCartId;
+	//args.extCartId=cartdata.extCartId;
+	for each (var item in cartdata.items){
+		var product : Product = ProductMgr.getProduct(item.productId);
+		if(empty(product)){
+			args.ErrorMessage="Product "+item.productId+" does not exist.";
+			Logger.error(args.ErrorMessage+"\nCart data: "+cartstring);
+			return PIPELET_ERROR;
+		}else if(!product.availabilityModel.inStock){
+			args.ErrorMessage="Product "+item.productId+" is out of stock.";
+			return PIPELET_ERROR;
+		}else if(!product.priceModel.price.available){
+			args.ErrorMessage="Product "+item.productId+" has no price.";
+			return PIPELET_ERROR;
+		}
+		var lineitem : ProductLineItem = bask.createProductLineItem(product, product.optionModel, bask.defaultShipment);
+		lineitem.setQuantityValue(item.qty);
+	}
+	return PIPELET_NEXT;
+}

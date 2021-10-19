@@ -1,0 +1,46 @@
+<iscontent type="text/html" charset="UTF-8"/>
+<isinclude template="util/modules"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<subject><isif condition="${!empty(pdict.MailSubject)}">${pdict.MailSubject}<iselse/><isprint value="${pdict.CurrentForms.inforequest.myquestion.value}"/></isif></subject>
+
+<head>
+
+</head>
+
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="center" style="background:#e0e0e0;padding:50px 0;">
+			<center>
+				<table  style="background:#ffffff;border:1px solid #999999;width:680px;">
+					<tr>
+						<td style="font-size:12px;font-family:arial;padding:20px 10px;vertical-align:top;">
+
+							<p style="font-family:georgia;font-size:20px;">${dw.system.Site.current.name}</p>
+
+							<p>${Resource.msg('request.name','email',null)}: <isprint value="${pdict.CurrentForms.inforequest.firstName.value}"/> <isprint value="${pdict.CurrentForms.inforequest.lastName.value}"/></p>
+
+							<p>${Resource.msg(pdict.CurrentForms.inforequest.address1.label,'forms',null)}: <isprint value="${pdict.CurrentForms.inforequest.address1.value}"/></p>
+
+							<p>${Resource.msg(pdict.CurrentForms.inforequest.city.label,'forms',null)}: <isprint value="${pdict.CurrentForms.inforequest.city.value}"/></p>
+
+							<p>${Resource.msg(pdict.CurrentForms.inforequest.state.label,'forms',null)}: <isprint value="${pdict.CurrentForms.inforequest.state.value}"/></p>
+
+							<p>${Resource.msg(pdict.CurrentForms.inforequest.postal.label,'forms',null)}: <isprint value="${pdict.CurrentForms.inforequest.postal.value}"/></p>
+
+							<p>${Resource.msg(pdict.CurrentForms.inforequest.emailAddress.label,'forms',null)}: <isprint value="${pdict.CurrentForms.inforequest.emailAddress.value}"/></p>
+
+							<p>${Resource.msg(pdict.CurrentForms.inforequest.relationship.label,'forms',null)}: <isprint value="${Resource.msg(pdict.CurrentForms.inforequest.relationship.selectedOption.label,'forms',null)}"/></p>
+
+						</td>
+					</tr>
+				</table>						
+			</center>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

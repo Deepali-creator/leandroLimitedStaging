@@ -1,0 +1,39 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+
+<iscomment>this is the template rendering the homepage</iscomment>
+<div id="oc"></div>
+<style>
+.vFrame {
+	width:100%;
+	height: 900px
+}
+.py-10p {
+	padding-top:10%;
+	padding-bottom : 10%;
+}
+@media only screen and (max-width:1450px) {
+	.vFrame {
+		width:100%;
+		height: 750px;
+	}
+}
+@media only screen and (max-width:800px) {
+	.vFrame {
+		width:100%;
+		height: 450px;
+	}
+}
+@media only screen and (max-width:500px) {
+	.vFrame {
+		width:100%;
+		height: 250px;
+	}
+}
+
+</style>
+<div class="py-10p">
+	<iframe src="https://player.vimeo.com/video/503102989?autoplay=1&muted=1&loop=1&autopause=0&controls=0" class="vFrame" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
+</isdecorate>

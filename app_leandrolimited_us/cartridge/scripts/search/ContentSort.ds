@@ -1,0 +1,19 @@
+/**
+*
+*   @input content : dw.util.Iterator
+*   @input sortby : String
+*   @input sortdirection : Number
+*   @output sorted : dw.util.List
+*
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+
+function execute( args : PipelineDictionary ) : Number {
+	var sorted : List = new ArrayList(args.content);
+	if(!empty(args.sortby)&&!empty(args.sortdirection)){
+		sorted.sort(new PropertyComparator(args.sortby, 1===args.sortdirection));
+	}
+	args.sorted = sorted;
+	return PIPELET_NEXT;
+}

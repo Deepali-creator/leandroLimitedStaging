@@ -1,0 +1,48 @@
+/*==================================================================
+						404 Error Page
+===================================================================*/
+.pt_error {
+  .page-content {
+    .primary-content {
+      @include breakpoint(tabletUp) {
+        width: 70%;
+        padding: 0 rem(15) rem(35) 0;
+      }
+    }
+  }
+  .primary-content {
+    padding-right: 0;
+    @include breakpoint(desktop) {
+      padding: 0;
+    }
+  }
+  .error-page-search {
+    text-align: left;
+    label {
+      display: block;
+    }
+    .input-text {
+      width: 50%;
+      @include breakpoint(tabletUp) {
+        width: 65%;
+      }
+    }
+  }
+}
+
+.notfound {
+	margin: rem(60) 0 rem(15) rem(12);
+  padding: rem(5) 0 0 rem(325);
+  position: relative;
+  background: rgba(0, 0, 0, 0) url("../images/exception.png") no-repeat scroll left top;
+  ul{
+    li{
+      display: inline-block;
+      list-style: none;
+      &#go_back{
+        cursor: pointer;
+        padding-left: 1rem;
+      }
+    }
+  }
+}

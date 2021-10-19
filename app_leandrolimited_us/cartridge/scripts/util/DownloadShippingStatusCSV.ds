@@ -1,0 +1,79 @@
+/**
+* Demandware Script File
+* 
+*
+* Copies files from a remote SFTP-Location
+*
+*	@output StatusCSV : dw.io.File
+*
+*/
+importPackage( dw.system );
+importPackage( dw.net );
+importPackage( dw.io );
+importPackage( dw.util );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+
+    var ssurl : String = dw.system.Site.current.getCustomPreferenceValue("shippingstatus_ftp_url");
+    var ssfolder : String = dw.system.Site.current.getCustomPreferenceValue("shippingstatus_ftp_folder");
+    var ssuser : String = dw.system.Site.current.getCustomPreferenceValue("shippingstatus_ftp_user");
+	var sspassword : String = dw.system.Site.current.getCustomPreferenceValue("shippingstatus_ftp_password");
+	
+	var inclocation = File.IMPEX + File.SEPARATOR + "src" + File.SEPARATOR + "shippingstatus";
+	var incfolder : File = new File(inclocation);
+	var statuscsv : File;
+	incfolder.mkdirs();
+
+	
+	//Test mandatory paramater
+	if(!empty(ssurl) && !empty(ssuser) && !empty(sspassword))
+	{
+		var sftp : SFTPClient = new dw.net.SFTPClient();
+		sftp.setTimeout(10000);
+		var success: Boolean = sftp.connect(ssurl, ssuser, sspassword);
+		if (success) {
+			if (!empty(ssfolder)) {
+				sftp.cd(ssfolder);
+			}
+			
+			var list : Array = sftp.list();
+			var remotefilename : String = "";
+			for each (var fi : SFTPFileInfo in list) {
+				remotefilename = fi.name;
+				if (remotefilename.indexOf('.xml') < 0) {
+					break;
+				}
+			}
+			if (!empty(remotefilename) && remotefilename != "") {
+				statuscsv = new File(inclocation + File.SEPARATOR + remotefilename);
+				success = sftp.getBinary(remotefilename,statuscsv);
+				if (success) {
+					pdict.StatusCSV = statuscsv;
+					//success = sftp.del(remotefilename);
+					return PIPELET_NEXT;
+					Logger.error( "DownloadShippingStatusCSV.ds : successfully downloaded file " +  remotefilename);
+				} else {
+					Logger.error( "DownloadShippingStatusCSV.ds : failed to download file " +  remotefilename);
+					return PIPELET_ERROR;
+				}
+			} else {
+				Logger.error( "DownloadShippingStatusCSV.ds : no file found on remote location" );
+			}
+		} else {
+			Logger.error( "DownloadShippingStatusCSV.ds : failed to connect to SFTP location" );
+		}
+
+	} else {
+		Logger.error( "DownloadShippingStatusCSV.ds : missing user, pw or url" );
+	}
+	
+	/* TEST CODE start*/
+		/*
+		var testfile : File = new File(inclocation + File.SEPARATOR + "00000918-001.089");
+		pdict.StatusCSV = testfile;
+		*/
+	/* TEST CODE start*/
+	return PIPELET_NEXT;
+
+}

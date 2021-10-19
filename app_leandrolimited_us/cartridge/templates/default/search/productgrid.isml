@@ -1,0 +1,109 @@
+
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isscript>
+    importScript('search/ProductGridUtils.ds');
+</isscript>
+<iscomment><!--Display the remaining products as list--></iscomment>
+<script>
+    function getWishlistpids() {
+        $.ajax({
+            url: document.getElementById('getWishlistItemsUrl').value,method: 'GET',
+            success: function (data) {
+            console.log('success: getwishlistUrl'+ data);
+            document.getElementById("wishlisturlreponse").innerHTML = data;
+            },
+            error: function () {console.log('error');}
+        })
+    }
+
+    function markwishlisttile() {
+        for(var i = 0; i < document.getElementById('wishpidCount').value;i++){
+            var elementID = 'wishpid-'+(i+1);
+            var inWishlistpid = document.getElementById('wishpid-'+(i+1)).value;
+            if(document.getElementById(inWishlistpid+'-inWishlist')){
+                console.log(document.getElementById(inWishlistpid+'-inWishlist'));
+                document.getElementById(inWishlistpid+'-inWishlist').value='in-wishlist';
+                document.getElementById(inWishlistpid+'-wishlistIcon').className='fa fa-heart fa-lg';
+                document.getElementById(inWishlistpid+'-wishlistUrlAjexSuccess').value='active';
+            }
+        }
+    }
+
+    function getWishlistpidsQV() {
+        $.ajax({
+            url: document.getElementById('getWishlistItemsUrl').value,method: 'GET',
+            success: function (data) {
+            console.log('success: getwishlistUrl'+ data);
+            document.getElementById("wishlisturlreponseQV").innerHTML = data;
+            },
+            error: function () {console.log('error');}
+        })
+    }
+
+    function markwishlisttileQV() {
+        for(var i = 0; i < document.getElementById('wishpidCount').value;i++){
+            var elementID = 'wishpid-'+(i+1);
+            var inWishlistpid = document.getElementById('wishpid-'+(i+1)).value;
+            if(document.getElementById(inWishlistpid+'-inWishlistQV')){
+                document.getElementById(inWishlistpid+'-inWishlistQV').value='in-wishlist';
+                document.getElementById(inWishlistpid+'-wishlistIconQV').className='fa fa-heart fa-lg';
+                document.getElementById(inWishlistpid+'-wishlistUrlAjexSuccessQV').value='active';
+            }
+        }
+    }
+
+    window.onload = function() {
+        getWishlistpids();
+        getWishlistpidsQV();
+        setTimeout(() => {
+            markwishlisttile();
+            markwishlisttileQV();
+        }, 1000);
+    }
+</script>
+
+<style>
+    .product-tile .product-image .thumb-link .thumb-img-hover{
+        display: none !important;
+    }
+
+    .product-tile .product-image:hover .thumb-link .thumb-img-hover{
+        display: inline !important;
+    }
+
+    .product-tile .product-image:hover .thumb-link .thumb-img-main{
+        display: none !important;
+    }
+</style>
+<div id="wishlistpid" style="display:none">
+    <input type="hidden" id="getWishlistItemsUrl" value="${URLUtils.https('WishlistCtrl-getWishlistItems')}"/>
+    <div id="wishlisturlreponse">
+    </div>
+</div>
+<ul id="search-result-items" class="search-result-items tiles-container clearfix ${ProductGridUtils.getCompareClass(pdict.category)} ${!empty(pdict.CurrentHttpParameterMap.format.value) ? (pdict.CurrentHttpParameterMap.format.value) : ''}">
+    <isloop items="${pdict.pagingmodel.pageElements}" var="LoopProductHit" status="loopstate">
+
+        <li class="grid-tile ${(loopstate.index % 3 == 0) ? 'new-row' : ''}"  data-colors-to-show="${ProductGridUtils.getRepresentedVariationValueIDs(LoopProductHit,'color').join(',')}">
+
+            <iscomment><!--display a tile per product--></iscomment>
+            <isobject object="${LoopProductHit}" view="searchhit">
+                <iscomment><!-- Self contained product information. Can be cached separately even if search finds this product in different categories or positions within the grid  --></iscomment>
+                <isinclude url="${ProductGridUtils.buildHitTileURL(LoopProductHit, pdict.CurrentHttpParameterMap.cgid.value)}"/>
+            </isobject>
+
+        </li>
+        <isif condition="${pdict.pagingmodel.currentPage != pdict.pagingmodel.maxPage }">
+            <div class="infinite-scroll-placeholder" data-loading-state="unloaded" data-grid-url="${decodeURI(pdict.pagingmodel.appendPaging ( pdict.ProductSearchResult.url('Search-Show'), (pdict.pagingmodel.currentPage + 1) * pdict.pagingmodel.pageSize).append('format','page-element'))}" ></div>
+        </isif>
+
+		<isif condition="${(loopstate.last)&&(loopstate.odd)}">
+        	<li class="grid-tile">
+			</li>
+    	</isif>
+    </isloop>
+</ul>
+<isif condition="${dw.system.Site.getCurrent().getCustomPreferenceValue('enableInfiniteScroll')}">
+    <isif condition="${pdict.pagingmodel.currentPage != pdict.pagingmodel.maxPage }">
+        <div class="infinite-scroll-placeholder" data-loading-state="unloaded" data-grid-url="${decodeURI(pdict.pagingmodel.appendPaging ( pdict.ProductSearchResult.url('Search-Show'), (pdict.pagingmodel.currentPage + 1) * pdict.pagingmodel.pageSize).append('format','page-element'))}" ></div>
+    </isif>
+</isif>

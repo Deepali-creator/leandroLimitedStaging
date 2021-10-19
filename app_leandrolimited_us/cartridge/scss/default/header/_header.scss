@@ -1,0 +1,259 @@
+@import "nav";
+@import "menu_utility";
+@import "country_selector";
+
+#header{
+	width: 100%;
+	z-index: 1000;
+	.menu-active & {
+		width: 100%;
+		border: solid $color-gray-20;
+		border-width: 0 0 rem(1);
+		@include breakpoint(lgTabletUp) {
+			border-width: 0;
+		}
+	}
+}
+
+.header-top {
+	position: relative;
+	background: $color-black;
+	.pt_cart &,
+	.pt_checkout &,
+	.pt_order-confirmation & {
+		display: none;
+	}
+	.policy-warning {
+		font-size: 0.675rem;
+		color: $color-white;
+		text-align: center;
+		padding: 0.3125rem;
+		transition: all 0.3s ease;
+		display: none;
+		.policy-text {
+			display: inline-block;
+		}
+		.policy-link {
+			font-weight: bold;
+
+		}
+		.close-button{
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 0.875rem;
+			border: solid $color-gray-20;
+			border-width: rem(1);
+			border-radius: 0.25rem;
+			padding: 0 0.3125rem;
+			margin-left: 0.3125rem;
+			color: $color-gray-20;
+			&:hover{
+				color: $color-black;
+			}
+	    }
+	    &.nocookie {
+			display: block;
+			height: auto;
+			max-height: 12rem;
+		}
+		.pt_cart &,
+		.pt_checkout & {
+			display: none;
+		}
+	}
+}
+
+.header-bottom {
+	position: relative;
+	.wrap {
+		&--header{
+			position: relative;
+			background-color: $color-white;
+			text-align: center;
+			padding: 0 rem(15);
+		}
+	}
+}
+
+.search-toggle {
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: none;
+	color: $color-black;
+	width: rem(24);
+	height: rem(24);
+	font-size: rem(8);
+	text-align: center;
+	transition: all 0.3s ease;
+	box-shadow: none;
+	display: block;
+	opacity: 1;
+	position: absolute;
+	top: 50%;
+	left: rem(50);
+	transform: translateY(-50%);
+	@include breakpoint(desktop) {
+		display: none;
+	}
+	&.mobile-search-close {
+		left: auto;
+		right: rem(32);
+	}
+}
+.header-search {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 100%;
+	padding: 2rem;
+	transform: translate(-50%, -50%);
+	background: $color-white;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 97;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.search-active & {
+		opacity: 1;
+		pointer-events: auto;
+	}
+	@include breakpoint(desktop) {
+		position: static;
+		display: block;
+		width: auto;
+		height: auto;
+		transform: none;
+		opacity: 1;
+		padding: 0;
+		pointer-events: auto;
+	}
+	> form {
+		position: relative;
+		flex: 1;
+	}
+	input[type="text"] {
+	  	width: calc(100% - 3.875rem);
+		height: rem(26);
+		line-height: rem(26);
+		padding: 0 rem(5);
+		font-family: $sans-serif-light;
+	  	font-size: rem(15);
+		text-transform: uppercase;
+		border-radius: 0;
+		background-color: #eaeaea;
+		text-align: center;
+		border: none;
+		@include breakpoint(desktop) {
+			width: rem(120);
+		}
+		&:focus {
+			color: $color-black;
+		}
+	}
+
+	button:not(.mobile-search-close).search-button {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		margin: rem(3) 0 0;
+		padding: 0 0.625em;
+		background: transparent;
+		border: rem(1) solid rgba(0,0,0,0);
+		color: $color-black;
+		width: rem(48);
+		height: rem(48);
+		font-size: rem(10);
+		text-align: center;
+		transition: all 0.3s ease;
+		box-shadow: none;
+		transform: translateY(-50%);
+		@include breakpoint(desktop) {
+			left: rem(-32);
+		}
+		&:hover {
+			background: transparent;
+			border-color: transparent;
+		}
+	}
+}
+
+.header-info-bar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: rem(12);
+	line-height: rem(14);
+	min-height: rem(35);
+	background-color: black;
+	color: white;
+	letter-spacing: 0.025rem;
+	text-align: center;
+	@include breakpoint(desktop) {
+		font-size: 1rem;
+		line-height: 1rem;
+	}
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		display: block;
+	}
+	.content-asset-container,
+	.html-slot-container {
+		padding: rem(5) 0;
+		@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+			padding: rem(10) 0;
+		}
+	}
+}
+.primary-logo {
+	display: inline-block;
+	margin: 0 0 0 -1.5rem;
+	padding: 1.25rem 0;
+	z-index: 90;
+	text-align: center;
+	width: 34.5%;
+	max-width: rem(400);
+	transition: all 0.3s ease-in-out;
+	@include breakpoint(desktop) {
+		max-width: rem(530);
+		margin: 0;
+		padding: 2.5rem 0;
+	}
+	a {
+		display: block;
+		width: 100%;
+		height: 100%;
+		color: $color-black;
+		letter-spacing: 0.5rem;
+	}
+	img,
+	svg {
+		width: 100%;
+		max-width: 100%;
+	}
+}
+
+.header-utility {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	align-self: flex-start;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	right: rem(15);
+	transform: translateY(-50%);
+	@include breakpoint(desktop) {
+		top: rem(15);
+		margin: rem(15) 0 0;
+		transform: none;
+	}
+}
+
+.wishlist-link {
+	font-size: rem(20);
+	&:hover {
+		color: $color-gray-50;
+	}
+}

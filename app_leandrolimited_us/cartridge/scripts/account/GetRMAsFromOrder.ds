@@ -1,0 +1,34 @@
+/**
+ * Finds the gift certificate line item with the given UUID in the given basket and returns PIPELET_NEXT,
+ * or returns PIPELET_ERROR if there is a problem, or no such line item exists.
+ *
+ * @input Order : dw.order.Order
+ * @output RMAList : dw.util.ArrayList
+ */
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.util );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+	var order = pdict.Order;
+	if (empty(order)) {
+		return PIPELET_ERROR;
+	}
+	
+	var rmalist : dw.util.ArrayList = new ArrayList();
+	
+	for each (var note : dw.object.Note in order.getNotes()) {
+		try {
+			var noteo : Object = JSON.parse(note.text);
+			if (!empty(noteo.rma)) {
+				rmalist.add(noteo);
+			} 
+			
+		} catch(e) {
+			continue;
+		}
+	}
+	pdict.RMAList = rmalist;
+	return PIPELET_NEXT;
+}

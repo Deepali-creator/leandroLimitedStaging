@@ -1,0 +1,36 @@
+/**
+*
+*
+*   @input Content : dw.util.Collection
+*   @input SelectedRule : String
+*   @output SortedContent : dw.util.Collection
+*   @output SortingRules : Array
+*
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.web );
+
+var comparators = {
+		'dateasc'  : new PropertyComparator('custom.press-date-published',false),
+		'datedesc' : new PropertyComparator('custom.press-date-published',true),
+		'nameasc'  : new PropertyComparator('name',true),
+		'namedesc' : new PropertyComparator('name',false),
+		'natural' : new PropertyComparator('ID')};
+
+function execute( args : PipelineDictionary ) : Number {
+	args.SortingRules =[{ID: 'dateasc',		displayName: Resource.msg('dateasc','press','null')},
+	                    {ID: 'datedesc',	displayName: Resource.msg('datedesc','press','null')},
+						{ID: 'nameasc',		displayName: Resource.msg('nameasc','press','null')},
+						{ID: 'namedesc',	displayName: Resource.msg('namedesc','press','null')},
+						{ID: 'natural',		displayName: Resource.msg('natural','press','null')}];
+
+	var sorted : ArrayList = new ArrayList(args.Content);
+	if(!empty(args.SelectedRule) && 'natural' != args.SelectedRule){
+		sorted.sort(comparators[args.SelectedRule]);
+	}else if(empty(args.SelectedRule)){
+		sorted.sort(comparators['dateasc']);
+	}
+	args.SortedContent = sorted;
+	return PIPELET_NEXT;
+}

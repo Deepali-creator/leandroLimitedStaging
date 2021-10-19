@@ -1,0 +1,21 @@
+/**
+*
+*
+* @input extCartId : String
+* @input ErrorMessage : String
+* @output Location : String
+*
+*/
+
+importPackage( dw.system );
+importPackage( dw.crypto );
+
+function execute( args : PipelineDictionary ) : Number {
+	var errorObject={error:args.ErrorMessage};
+	/*if(!empty(args.extCartId)){
+		errorObject.extCartId=args.extCartId;
+	}*/
+	var errorJSON=JSON.stringify(errorObject);
+	args.Location=Site.current.getCustomPreferenceValue("ShopifyErrorURL") + "?JSON=" + Encoding.toURI(errorJSON);
+	return PIPELET_NEXT;
+}

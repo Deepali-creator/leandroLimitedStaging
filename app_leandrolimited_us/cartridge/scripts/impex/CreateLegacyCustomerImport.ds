@@ -1,0 +1,206 @@
+/**
+* @input FileName : String
+* @output ImportFile : dw.io.File
+*/
+ 
+ importPackage( dw.system );
+ importPackage( dw.order );
+ importPackage( dw.util );
+ importPackage( dw.web );
+ importPackage( dw.net );
+ importPackage( dw.object );
+ importPackage( dw.io );
+ importPackage( dw.crypto );
+ 
+ var XML_NAMESPACE : String = "http://www.demandware.com/xml/impex/customer/2006-10-31";
+ var CUSTOMER_HEADER : Array = ["user_id","status","user_type","user_login","referer","is_root","company_id","last_login","timestamp","password","salt","firstname","lastname","company","email","phone","fax","url","tax_exempt","lang_code","birthday","purchase_timestamp_from","purchase_timestamp_to","responsible_email","last_passwords","password_change_timestamp","api_key"];
+ var HEADER_FIELD_MAP : HashMap = null;
+
+function execute( pdict : PipelineDictionary ) : Number {
+	var filename = pdict.FileName;
+    var hm : HashMap = new HashMap();
+    for (var i = 0; i < CUSTOMER_HEADER.length; i++) {
+    	hm.put(CUSTOMER_HEADER[i],i);
+    }
+    HEADER_FIELD_MAP = hm;
+    var targetDirectory : File = new File(File.IMPEX + File.SEPARATOR + "src" + File.SEPARATOR + "customer");
+	targetDirectory.mkdirs(); 
+    var file : File = new File(File.IMPEX + "/src/customer/LegacyCustomer.xml");
+    var csvfile : File = new File (File.TEMP + "/" + filename);
+    var fw : FileWriter;
+    var xsw : XMLIndentingStreamWriter;
+    var fr : FileReader;
+    var csr : CSVStreamReader;
+    try {
+		fw = new FileWriter(file);
+		xsw = new XMLIndentingStreamWriter(fw);
+		xsw.writeStartDocument("UTF-8", "1.0");
+		xsw.writeStartElement("customers");
+		xsw.writeAttribute("xmlns", XML_NAMESPACE);
+		fr = new FileReader(csvfile);
+		csr = new CSVStreamReader(fr, ',', '"', 1);
+		writeCustomers(xsw, csr);
+		xsw.writeEndElement(); 
+		xsw.writeEndDocument();
+		xsw.flush();
+    } catch(ex) {
+        Logger.debug("[exception caught] "+ex);
+        return PIPELET_ERROR;
+    } finally {
+    	if (xsw!=null){
+    		xsw.close();
+    	}
+    	if (csr!=null){
+    		csr.close();
+    	}
+    	if (fw!=null){
+    		fw.close();
+    	}
+    	if (fr!=null){
+    		fr.close();
+    	}
+    }
+    
+    return PIPELET_NEXT;
+}
+
+function writeCustomers(xsw : XMLStreamWriter, csr : CSVStreamReader) {
+	var customer = ["not empty"];
+	while (!empty(customer)) {
+		customer = csr.readNext();
+		if (!empty(customer)) {
+			writeCustomer(xsw, customer);
+		}
+	}
+}
+
+function writeCustomer(xsw : XMLStreamWriter, customer : Array) {
+    xsw.writeStartElement("customer");
+    xsw.writeAttribute("customer-no", "L" + fillLeadingZeros(getCustomerField(customer,"user_id"),8));
+    writeCredentials(xsw,customer);
+    writeProfile(xsw,customer);
+   // writeAddresses(xsw,customer);
+	 
+    xsw.writeEndElement();
+}
+
+function writeCredentials(xsw : XMLStreamWriter, customer : Array) {
+    xsw.writeStartElement("credentials");
+    
+    writeElement(xsw, "login", getCustomerField(customer,"email"));
+    var md : MessageDigest = new MessageDigest(MessageDigest.DIGEST_MD5);
+    var pw = md.digest("abcd1234");
+
+    xsw.writeStartElement("password");
+		xsw.writeAttribute("encrypted", "true");
+		xsw.writeAttribute("encryptionScheme", "md5");
+		xsw.writeCharacters(pw);
+    xsw.writeEndElement();
+    writeElement(xsw, "enabled-flag", true);
+    
+    xsw.writeEndElement();
+}
+
+/*
+user_id,status,user_type,user_login,referer,is_root,company_id,last_login,timestamp,password,salt,firstname,lastname,company,email,phone,fax,url,tax_exempt,lang_code,birthday,purchase_timestamp_from,purchase_timestamp_to,responsible_email,last_passwords,password_change_timestamp,api_key
+*/
+
+function writeProfile(xsw : XMLStreamWriter, customer : Array) {
+    xsw.writeStartElement("profile");
+   
+    //writeElement(xsw, "salutation", getCustomerField(customer,""));
+    //writeElement(xsw, "title", getCustomerField(customer,""));
+    writeElement(xsw, "first-name", getCustomerField(customer,"firstname"));
+    writeElement(xsw, "second-name", getCustomerField(customer,""));
+    writeElement(xsw, "last-name", getCustomerField(customer,"lastname"));
+    writeElement(xsw, "suffix", getCustomerField(customer,""));
+    writeElement(xsw, "company-name", getCustomerField(customer,"company_id"));
+    //writeElement(xsw, "job-title", getCustomerField(customer,"lastname"));
+    writeElement(xsw, "email", getCustomerField(customer,"email"));
+    writeElement(xsw, "phone-home", getCustomerField(customer,"phone"));
+    writeElement(xsw, "phone-business", getCustomerField(customer,"phone"));
+    writeElement(xsw, "phone-mobile", getCustomerField(customer,"phone"));
+    writeElement(xsw, "fax", getCustomerField(customer,"fax"));
+    //writeElement(xsw, "gender", getCustomerField(customer,"accesskey"));
+		xsw.writeStartElement("custom-attributes");
+	 		writeCustomAttribute(xsw, "legacyCustomer","true");
+		xsw.writeEndElement();
+    xsw.writeEndElement();
+}
+
+function writeAddresses(xsw : XMLStreamWriter, customer : Array) {
+	xsw.writeStartElement("addresses");
+	var state = getCustomerField(customer,"state");
+	var city = getCustomerField(customer,"city");
+	var address = getCustomerField(customer,"billingaddress1");
+	if (!empty(state) && !empty(city) && !empty(address)) {
+	xsw.writeStartElement("address");
+	xsw.writeAttribute("address-id", getCustomerField(customer,"state") + ", " + getCustomerField(customer,"city") + ", " + getCustomerField(customer,"billingaddress1"));
+	xsw.writeAttribute("preferred", "true");
+		writeElement(xsw, "first-name", getCustomerField(customer,"firstname"));
+		writeElement(xsw, "last-name", getCustomerField(customer,"lastname"));
+		writeElement(xsw, "address1", getCustomerField(customer,"billingaddress1"));
+		writeElement(xsw, "address2", getCustomerField(customer,"billingaddress2"));
+		writeElement(xsw, "city", getCustomerField(customer,"city"));
+		writeElement(xsw, "postal-code", getCustomerField(customer,"postalcode"));
+		writeElement(xsw, "state-code", getCustomerField(customer,"state"));
+		writeElement(xsw, "country-code", mapCC(getCustomerField(customer,"country")));
+		writeElement(xsw, "phone", getCustomerField(customer,"phonenumber"));
+
+	xsw.writeEndElement();
+	}
+	xsw.writeEndElement();
+}
+
+function writeAddress(xsw : XMLStreamWriter, customer : Array) {
+    xsw.writeStartElement("address");
+    xsw.writeEndElement();
+}
+
+function mapCC(country : String) : String {
+	var countrycode : String = "US";
+	 switch(country)
+		{
+			case "United States":
+				countrycode = "US"
+				break;
+			case "Canada":
+				countrycode = "CA"
+				break;
+			default:
+				break;
+		}
+    return countrycode;
+}
+
+function writeElement(xsw : XMLStreamWriter, elementName : String, chars : String) {
+    xsw.writeStartElement(elementName);
+    xsw.writeCharacters(chars);
+    xsw.writeEndElement();
+}
+
+function writeCustomAttribute(xsw : XMLStreamWriter, id : String, chars : String) {
+    xsw.writeStartElement("custom-attribute");
+    xsw.writeAttribute("attribute-id", id);
+    xsw.writeCharacters(chars);
+    xsw.writeEndElement();
+}
+
+function getCustomerField(customer:Array, fieldname: String) : String {
+	if (empty(customer) || empty(fieldname) || empty(HEADER_FIELD_MAP)) {
+		return null;
+	}
+    return StringUtils.trim(customer[HEADER_FIELD_MAP.get(fieldname)]);
+}
+
+function fillLeadingZeros(nb : Number, size: Number) : String {
+	var result : String = nb.toString();
+	while (result.length < 8) {
+		result = "0" + result;
+	}
+	
+	return result;
+}
+
+
+

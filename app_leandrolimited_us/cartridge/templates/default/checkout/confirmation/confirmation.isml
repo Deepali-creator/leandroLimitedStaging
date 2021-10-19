@@ -1,0 +1,43 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isdecorate template="checkout/pt_orderconfirmation">
+
+	<isinclude template="util/modules"/>
+	<isinclude template="util/reporting/ReportOrder.isml"/>
+
+	<iscomment>If Google Analytics has been enabled, bring in the Ecommerce tagging code</iscomment>
+	<isif condition="${'GoogleAnalyticsEnabled' in dw.system.Site.current.preferences.custom && dw.system.Site.current.preferences.custom.GoogleAnalyticsEnabled!=''}">
+		<isinclude template="ga_ecommerce"/>
+	</isif>	
+
+	<iscomment>
+		This template visualizes the order confirmation page. Note, that it
+		uses a different decorator template.
+		It displays the order related information, such as the order number,
+		creation date, payment information, order totals and shipments of
+		the order.
+	</iscomment>
+
+	<div class="confirmation <isif condition="${!pdict.CurrentCustomer.authenticated}">create-account</isif>" style="padding-left: 1.875rem;
+    padding-right: 1.875rem;">
+		<div class="confirmation-message">
+
+			<h1>${Resource.msg('confirmation.thankyou','checkout',null)}</h1>
+
+			<iscontentasset aid="confirmation-message" />
+		</div>
+
+        <div class="order-confirmation-details">
+            <isorderdetails order="${pdict.Order}"/>
+        </div>
+
+        <iscomment>
+        <isinclude template="checkout/confirmation/confirmationregister"/>
+		</iscomment>
+        <div class="actions">
+            <a href="${URLUtils.http('Cart-ContinueShopping')}" class="button button-secondary continue">
+            	${Resource.msg('confirmation.returnshop','checkout',null)}
+            </a>
+        </div>
+	</div>
+
+</isdecorate>

@@ -1,0 +1,30 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" minute="30" varyby="price_promotion"/>
+
+<isinclude template="util/modules"/>
+
+<isset name="hasInfo" value="${!empty(slotcontent.calloutMsg) && !empty(slotcontent.calloutMsg.markup)}" scope="page" />
+
+<div class="content-row wrap">
+	<div class="product-slot <isif condition="${!empty(slotcontent.recommenderName)}"> einstein-recommendation-prod </isif> <isif condition="${hasInfo}"> has-callout</isif>">
+		<isif condition="${hasInfo}">
+			<div class="slot-callout">
+				<isprint value="${slotcontent.calloutMsg.markup}" encoding="off" />
+			</div>
+		</isif>
+		<ul class="search-result-items tiles-container product-slider">
+			<isloop items="${slotcontent.content}" var="product" begin="0" end="12">
+				<li class="grid-tile">
+					<isobject object="${product}" view="recommendation">
+						<isinclude url="${URLUtils.url('Product-HitTile',
+							'pid', product.ID,
+							'showswatches', 'true',
+							'showpricing', 'true',
+							'showpromotion', 'true',
+							'showrating', 'true')}"/>
+					</isobject>
+				</li>
+			</isloop>
+		</ul>
+	</div>
+</div>

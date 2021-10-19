@@ -1,0 +1,39 @@
+importPackage( dw.system );
+importPackage( dw.catalog );
+importPackage( dw.value );
+importPackage( dw.web );
+importPackage( dw.content );
+importPackage( dw.util );
+/*
+* 
+*
+* @input ContentSearchIndex : dw.util.Collection
+* @input videoFolder : Object
+* @input pageStart : Number
+* @input pageSize : Number
+* @output iter : dw.util.Iterator
+* @output vidCount : Number
+*
+*/
+var PagingModel = require('dw/web/PagingModel');
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var videoFolder = "";
+	
+	if(empty(args.videoFolder)){
+	var videoIndex : Collection = args.ContentSearchIndex;
+    videoFolder = videoIndex[0].ID;
+	}else{
+	videoFolder = args.videoFolder;
+	}
+	
+    var videoCats  = dw.content.ContentMgr.getFolder(videoFolder).getContent();
+    args.vidCount = videoCats.length;
+    var pagingModel = new PagingModel(videoCats);
+        pagingModel.setStart(args.pageStart);
+        pagingModel.setPageSize(args.pageSize);
+        args.iter = pagingModel.pageElements;
+    
+   return PIPELET_NEXT;
+}

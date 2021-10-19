@@ -1,0 +1,42 @@
+<iscontent type="text/html" charset="UTF-8"/>
+<isinclude template="util/modules"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<subject><isif condition="${!empty(pdict.MailSubject)}">${pdict.MailSubject}<iselse/><isprint value="${pdict.CurrentForms.infodelete.myquestion.value}"/></isif></subject>
+
+<head>
+
+</head>
+
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="center" style="background:#e0e0e0;padding:50px 0;">
+			<center>
+				<table  style="background:#ffffff;border:1px solid #999999;width:680px;">
+					<tr>
+						<td style="font-size:12px;font-family:arial;padding:20px 10px;vertical-align:top;">
+
+							<p style="font-family:georgia;font-size:20px;">Thank you for submitting your request under the CCPA.</p>
+
+							<p style="font-family:georgia;font-size:20px;">We will verify your identity using the information that we maintain about you. If we have any questions, we will contact you at the information submitted in your request form. If you are an agent submitting on behalf of a resident, we may contact the resident to verify your authority to make the request.</p>
+
+							<p style="font-family:georgia;font-size:20px;">We will respond to your request within the time period required by law; if we need additional time to process your request, then we will contact you before the expiration of the initial time period.</p>
+
+							<p style="font-family:georgia;font-size:20px;"><a href="${dw.web.URLUtils.https('Page-Show','cid','privacy-policy')}">For general questions about our privacy practices, please see our Privacy Policy.</a></p>
+
+							<p style="font-family:georgia;font-size:20px;">Sincerely,</p>
+
+							<p style="font-family:georgia;font-size:20px;">The Conair Privacy Team</p>
+
+						</td>
+					</tr>
+				</table>						
+			</center>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

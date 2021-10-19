@@ -1,0 +1,307 @@
+.ui-dialog #listings-nav {
+    float: right;
+    margin-top: 2%;
+    a {
+        cursor: pointer;
+        display: inline-block;
+        margin: 0 rem(5);
+        &.active {
+            font-weight: bold;
+        }
+    }
+}
+
+.pdp-main .product-add-to-cart {
+    .online-stock span {
+        float: left;
+    }
+    .store-stock {
+        display: block;
+        clear: left;
+    }
+}
+
+// Store inventory
+
+.availability-web {
+    label {
+        float: none;
+    }
+    p {
+        margin: 0;
+    }
+    .availability-novariation {
+        font-size: 0.875rem;
+        color: $color-gray-50;
+        font-style: italic;
+    }
+}
+.availability-storepickup {
+    .availability-instore,
+    .availability-web {
+        background-color: $color-gray-20;
+        padding: 1rem;
+    }
+    .availability-web {
+        float: none;
+    }
+    .availability-instore {
+        margin-bottom: 1rem;
+    }
+}
+
+.in-stock-msg,
+.is-in-stock,
+[data-status="store-in-stock"] {
+    font-size: 0.75rem;
+    color: $color-green-50;
+    font-weight: 700;
+}
+
+.not-available-msg,
+.in-stock-date-msg,
+.not-available,
+.out-of-stock,
+.store-error, {
+    color: $color-red-50;
+}
+
+.on-order,
+.preorder-msg,
+.backorder-msg {
+    font-size: 0.75rem;
+    color: $color-black;
+    font-weight: 700;
+}
+
+#user-zip {
+    display: block;
+    margin: 1rem auto 0;
+}
+
+.store-list-container {
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    width: rem(565);
+}
+
+.store-list {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+.store-tile {
+    border: rem(1) dashed $color-gray-40;
+    box-sizing: border-box;
+    float: left;
+    list-style: none outside none;
+    margin: 0.3rem 0.4rem;
+    padding: 0.8rem;
+    text-align: center;
+    width: rem(175);
+    &.selected {
+        background-color: rgba($color-black, 0.5);
+    }
+    .store-status {
+        display: block;
+        font-size: 0.9em;
+        margin: 1rem 0;
+    }
+    &.selected {
+        .select-store-button {
+            @extend button.simple;
+        }
+    }
+}
+
+.store-list-pdp-container {
+    margin-top: 1em;
+    .store-list-pdp {
+        margin-top: 0.5em;
+    }
+    .store-list-item {
+        @extend %clearfix;
+        display: none;
+        padding: 0.5em  0.8em;
+        &:last-of-type {
+            border: none;
+        }
+        &.selected {
+            display: block;
+            font-weight: bold;
+        }
+        &.visible {
+            display: block;
+        }
+        .store-address {
+            float: left;
+        }
+        .store-status {
+            float: right;
+        }
+    }
+}
+
+// Cart inventory
+.selected-store-address {
+    margin-top: 0.5em;
+}
+.selected-store-availability {
+    margin: 0.3em 0 0.5em;
+}
+
+.multishipprogress {
+    div, .step-3 {
+        display: inline;
+        padding: 1em;
+    }
+    .step-4 {
+        padding-right: 0;
+    }
+}
+
+.multishipaddressestable {
+    margin: rem(9) 0 rem(20);
+    width: rem(706);
+}
+
+.multi-ship-shipments-table {
+    margin: 0 0 rem(20);
+    width: rem(706);
+    .section-header {
+        font-size: rem(10);
+        font-weight: bold;
+        padding: rem(9) rem(6) rem(11);
+    }
+    .shipping-address .details {
+        padding: 0 rem(10) 0 rem(22);
+    }
+    .gift-options {
+        label {
+            float: left;
+            padding: 0;
+        }
+        input {
+            margin: 0 rem(10);
+        }
+    }
+}
+
+.multi-shipping-addresses {
+    margin-bottom: rem(20) !important;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    .shipping-address {
+        text-align: right;
+        select {
+            margin: erm(4) 0 0;
+            width: rem(260);
+        }
+    }
+}
+
+.header-product-shipping {
+    width: rem(276);
+}
+
+.header-qty-shipping {
+    width: rem(45);
+}
+
+.header-location-shipping {
+    text-indent: rem(70);
+    width: rem(307);
+}
+
+.header-shipment-index {
+    width: rem(409);
+}
+
+.header-shipment-qty {
+    width: rem(27);
+}
+
+.header-shipment-details {
+    text-indent: rem(22);
+}
+
+.multi-shipping-methods {
+    position: absolute;
+    top: rem(30);
+    .form-row {
+        clear: none;
+        float: left;
+        display: none;
+    }
+    select {
+        width: rem(250);
+        margin: rem(-5) 0 0 rem(15);
+    }
+}
+
+.multi-shipping-option {
+    border-bottom: rem(2) dotted $color-gray-50;
+    left: 0;
+    padding: 0 0 rem(12);
+    position: absolute;
+    text-indent: rem(10);
+    top: rem(48);
+    width: 95%;
+}
+
+.multi-shipping-addresses .shipping-qty,
+.multi-ship-shipments-table .shipping-qty {
+    background: none repeat scroll 0 0 $color-gray-10;
+}
+
+.multiship .label {
+    font-weight: bold;
+}
+
+.hide {
+    display: none;
+}
+
+.loading {
+    background: url("../images/loading-progress-98x22.gif") no-repeat scroll left center transparent;
+}
+
+.instore-shipping-option {
+    width: 100%;
+}
+
+.pt_checkout {
+    .instore-shipment-header {
+        width: 100%;
+    }
+    .instore-shipment-method {
+        width: 100%;
+        padding: 1em;
+        span {
+            font-weight: bold;
+        }
+    }
+    .instore-shipment-address {
+        width: 40%;
+        float: left;
+        padding-left: 1em;
+    }
+    .instore-shipment-message {
+        clear: both;
+    }
+    .instore-shipment-messagetxt {
+        width: 50%;
+        float: right;
+    }
+}
+
+.checkout-shipping fieldset .instore-continue-button {
+    margin-left: 61.5%;
+}
+
+.checkout-shipping .shipment-pobox-label > .form-caption {
+    color: red;
+}

@@ -1,0 +1,41 @@
+importPackage( dw.system );
+importPackage( dw.crypto );
+importPackage( dw.util );
+importPackage( dw.svc );
+importPackage( dw.net );
+importPackage( dw.ws );
+importPackage( dw.rpc );
+ServiceRegistry.configure("zCreditCheck",{
+	initServiceClient : function(service : Service) : Object {
+		this.webReference = webreferences['ZCreditCheck'];
+		var stub : Stub = this.webReference.getService("ZCreditCheck", "CC_Binding");
+		stub.setUsername(service.configuration.credential.user);
+		stub.setPassword(service.configuration.credential.password);
+		return stub;
+	},
+	// params[0] is sapAccountNumber
+	createRequest : function(service : Service, params) {
+		return new this.webReference.ZcreditcheckApi(params.sapAccountNumber,Site.current.preferences.custom.sapSite);
+	},
+	execute: function(svc:SOAPService, requestObject) {
+    	return this.serviceClient.zcreditcheckApi(requestObject);
+	},
+	parseResponse : function(service : Service, response : Object) : Object {
+		// return something useful based on the data from response parameter
+		var obj : Object = new Object();
+		if(response !== null){
+			// sample output: <Credit>SUCCESS 0000053190 YES 150000.00 18870.00</Credit>
+			var responseString : String = response['credit'].toString();
+			var responseStringArr = responseString.split(' ');
+			if(responseStringArr[0] === "SUCCESS"){
+				obj.status = "OK";
+				obj.balance = responseStringArr[4];
+			}else{
+				obj.status = "ERROR";
+			}
+		}else{
+			obj.status = "ERROR";
+		}
+		return obj;
+	}
+});

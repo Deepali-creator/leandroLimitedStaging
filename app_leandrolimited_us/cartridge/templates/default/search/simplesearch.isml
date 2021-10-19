@@ -1,0 +1,12 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<form role="search" action="${URLUtils.url('Search-Show')}" method="get" name="simpleSearch">
+	<fieldset>
+		<label class="visually-hidden" for="q">${Resource.msg('global.searchcatalog', 'locale', null)}</label>
+		<input type="text" id="q" name="q" value="" placeholder="${Resource.msg('simplesearch.searchtext', 'search', null)}" style="outline:none;"/>
+		<input style="letter-spacing:1.5px" type="hidden" name="lang" value="${pdict.CurrentRequest.locale}"/>
+		<button type="submit" class="search-button">
+			<span class="visually-hidden">${Resource.msg('global.search', 'locale', null)}</span>
+			<img style="max-width:70%;padding-bottom:6px" src="${URLUtils.staticURL('/images/icon-search-new.svg')}"alt="${Resource.msg('simplesearch.searchtext', 'search', null)}"\>
+		</button>
+	</fieldset>
+</form>

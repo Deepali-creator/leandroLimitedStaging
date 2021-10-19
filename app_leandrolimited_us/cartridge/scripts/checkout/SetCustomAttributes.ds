@@ -1,0 +1,40 @@
+/**
+* Set custom values on the order
+*
+*    @input Order : dw.order.Order The order.
+*    @input profile : dw.customer.Profile The profile.
+*
+*/
+importPackage( dw.system );
+importPackage( dw.order);
+importPackage( dw.util);
+var leadingZeros : String = "0000000000";
+
+function execute( pdict : PipelineDictionary ) : Number {
+	var order : Order = pdict.Order;
+	order.custom.site=Site.current.ID;
+	// set the discount flag true or false if product or order level discounts
+	order.custom.discount=false;
+	var items : Iterator = order.getAllProductLineItems().iterator();
+	var shippingitems : Iterator = order.getShipments().iterator();
+	while(items.hasNext()){
+		var item : dw.order.ProductLineItem = items.next();
+		if(item.getPriceAdjustments().size() > 0){
+			order.custom.discount=true;
+			break;
+		}
+	}   
+	if(order.getPriceAdjustments().size() > 0){
+		order.custom.discount=true;
+	}
+	order.custom.sapSite=Site.current.preferences.custom.sapSite;
+	order.custom.division=Site.current.preferences.custom.division;
+
+	// set account number
+	if(!empty(pdict.profile) && !empty(pdict.profile.custom.sapAccountNumber)) {
+		order.custom.sapAccountNumber = (leadingZeros + pdict.profile.custom.sapAccountNumber).slice(-leadingZeros.length);
+	} else {
+		order.custom.sapAccountNumber = Site.current.preferences.custom.sapAccountNumber;
+	}
+	return PIPELET_NEXT;
+}

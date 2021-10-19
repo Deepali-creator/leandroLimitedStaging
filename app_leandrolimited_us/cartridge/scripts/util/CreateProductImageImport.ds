@@ -1,0 +1,137 @@
+/**
+* @input MasterCatID : String
+* @output FileNameToImport : String
+*
+*/
+ 
+ importPackage( dw.system );
+ importPackage( dw.order );
+ importPackage( dw.util );
+ importPackage( dw.web );
+ importPackage( dw.net );
+ importPackage( dw.object );
+ importPackage( dw.io );
+ 
+var XML_NAMESPACE : String = "http://www.demandware.com/xml/impex/catalog/2006-10-31";
+
+function execute( pdict : PipelineDictionary ) : Number {
+
+	
+	var catalogid : String = pdict.MasterCatID;
+
+	var newdir : File = new File(File.IMPEX + File.SEPARATOR + "src" + File.SEPARATOR + "imageassign" );
+	newdir.mkdirs();
+	var importfilename : String = File.IMPEX + File.SEPARATOR + "src" + File.SEPARATOR + "imageassign" + File.SEPARATOR + "imageassign.xml";
+	var productimages : dw.util.HashMap = new dw.util.HashMap();
+	
+	try {
+
+		var folder : dw.io.File = new dw.io.File(dw.io.File.CATALOGS + "/" + catalogid + "/default");
+		
+		if (folder.exists() && folder.directory) {
+			var list = folder.listFiles();
+		}
+		var xsw : XMLStreamWriter = initXML(new File(importfilename), catalogid);
+		var filesiterator = list.iterator();
+		while (filesiterator.hasNext()) {
+			var file = filesiterator.next();
+			collectFile(productimages,file.name);
+
+		}
+		for each (var key in productimages.keySet()){
+			writeProduct(xsw,key,productimages.get(key));
+		}	 
+        finalizeFeed(xsw);
+    } catch(ex) {
+    	var i = ex.toString();
+        return PIPELET_NEXT;    
+    }
+    pdict.FileNameToImport = importfilename.replace(File.IMPEX + File.SEPARATOR + "src" + File.SEPARATOR, "");
+    return PIPELET_NEXT;
+}
+
+
+
+function writeProduct(xsw : XMLStreamWriter, pid: String, images : dw.util.ArrayList) {
+	/*
+	var filename_nosuffix = filename.substr(0,filename.lastIndexOf('.'));
+	var productid = getProductID(filename_nosuffix);
+	var suffix = filename.substr(filename.lastIndexOf('.'));
+	var product : dw.catalog.Product = dw.catalog.ProductMgr.getProduct(productid);
+	*/
+	//if (!empty(product)) {
+		xsw.writeStartElement("product");
+		xsw.writeAttribute("product-id", pid);
+		xsw.writeStartElement("images");
+
+		xsw.writeStartElement("image-group");
+		xsw.writeAttribute("view-type", "hi-res");
+		
+		for each (var filename in images) {
+			xsw.writeStartElement("image");
+			xsw.writeAttribute("path", filename);
+			xsw.writeEndElement(); //image
+		}
+		xsw.writeEndElement(); //image-group
+		xsw.writeEndElement(); //images
+	    xsw.writeEndElement(); //product
+	//}
+}
+
+/*
+* Initializes XML Stream
+*/
+
+function initXML(file : File, catalogid: String) : XMLStreamWriter {
+    var fw : FileWriter = new FileWriter(file);
+    var xsw : XMLIndentingStreamWriter = new XMLIndentingStreamWriter(fw);
+    
+    
+    xsw.writeStartDocument("UTF-8", "1.0");
+    xsw.writeStartElement("catalog");
+    xsw.writeAttribute("xmlns", XML_NAMESPACE);
+    //xsw.writeAttribute("catalog-id", dw.catalog.CatalogMgr.siteCatalog.ID);
+    xsw.writeAttribute("catalog-id", catalogid);
+    return xsw;
+}
+
+/*
+* Closes XML and Stream
+*/
+
+function finalizeFeed(xsw : XMLStreamWriter) {
+    xsw.writeEndElement(); 
+    xsw.writeEndDocument();
+   
+    xsw.flush();
+    xsw.close();
+}
+
+function getProductID(filename : String) : String {
+	var pid = filename.substr(0,filename.lastIndexOf('_'));
+	return pid;
+}
+
+function collectFile(productimages: dw.util.HashMap, filename : String) {
+	var filename_nosuffix = filename.substr(0,filename.lastIndexOf('.'));
+	var productid = getProductID(filename_nosuffix);
+	var suffix = filename.substr(filename.lastIndexOf('.'));
+	var product : dw.catalog.Product = dw.catalog.ProductMgr.getProduct(productid);
+	if (empty(product)) {
+		productid = productid.toUpperCase();
+		product = dw.catalog.ProductMgr.getProduct(productid);
+	}
+	if (!empty(product)) {
+		var images = productimages.get(productid);
+		if ( empty(images) ) {
+			images = new dw.util.ArrayList();
+		}
+		if (!images.contains(filename)) {
+			images.add(filename);
+		}
+		if (!images.isEmpty()) {
+			productimages.put(productid,images);
+		}
+		
+	}
+}

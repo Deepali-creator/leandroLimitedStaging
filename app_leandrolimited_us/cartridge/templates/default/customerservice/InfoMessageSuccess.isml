@@ -1,0 +1,6 @@
+<!--- TEMPLATENAME: InfoMessageSuccess.isml --->
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isdecorate template="content/content/pt_content">
+	<isinclude template="util/modules"/>
+	<isprint value="${Resource.msgf('requestmessage', 'forms', null, pdict.Name, pdict.Email)}"/>
+</isdecorate>

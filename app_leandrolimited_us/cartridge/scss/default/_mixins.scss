@@ -1,0 +1,98 @@
+/***********************/
+/***** BREAKPOINTS *****/
+/***********************/
+
+@mixin breakpoint($point) {
+	@if $point == wide { //Desktop and Up (1152px and Up)
+		@media screen and (min-width: 75em) { @content ; }
+	}
+	@if $point == desktop { //Desktop and Up (1025px and Up)
+		@media screen and (min-width: 64.0625em) { @content ; }
+	}
+	@else if $point == lgTabletUp { // Large Tablet and Up (960px +)
+		@media screen and (min-width: 60em) { @content ; }
+	}
+	@else if $point == tablet {
+		@media screen and ( min-width: 48em) and (max-width: 64em) { @content ; }
+	}
+	@else if $point == tabletUp {
+		@media screen and ( min-width: 48em) { @content ; }
+	}
+	@else if $point == smMobile {
+		@media screen and (max-width: 30em) { @content ; }
+	}
+}
+
+%clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+/*******************************/
+/***** MOBILE/DESKTOP ONLY *****/
+/*******************************/
+
+@mixin desktop-only($display: block) {
+	display: none !important;
+	@include breakpoint(desktop) {
+		display: $display !important;
+	}
+}
+
+@mixin mobile-only($display: block) {
+	display: $display !important;
+	@include breakpoint(desktop) {
+		display: none !important;
+	}
+}
+
+/********************************/
+/***** PX TO REM CONVERSION *****/
+/********************************/
+
+$base-size: $base-font-size;
+
+@function rem($pixels, $context: $base-size) {
+	@if (unitless($pixels)) {
+		$pixels: $pixels * 1px;
+	}
+
+	@if (unitless($context)) {
+		$context: $context * 1px;
+	}
+
+	@return $pixels / $context * 1rem;
+}
+
+/********************/
+/***** IOS ONLY *****/
+/********************/
+
+@mixin ios-only() {
+	@supports (-webkit-overflow-scrolling: touch) {
+		@content;
+	}
+}
+
+/********************/
+/****** FF ONLY *****/
+/********************/
+
+@mixin ff-only() {
+	@-moz-document url-prefix() {
+		@content;
+	}
+}
+
+/********************/
+/***** IE ONLY ******/
+/********************/
+
+@mixin ie-only() {
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		@content;
+	}
+}

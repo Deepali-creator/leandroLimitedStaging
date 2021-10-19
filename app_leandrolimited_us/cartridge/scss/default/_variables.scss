@@ -1,0 +1,59 @@
+// Basic colors
+$color-black: #000000;
+$color-gray-90: #212120;
+$color-gray-50: #686f6f;
+$color-gray-45: #6f7478;
+$color-gray-40: #aaaaaa;
+$color-gray-30: #dbdbdb;
+$color-gray-20: #ebefef;
+$color-gray-15: #fafafa;
+$color-gray-10: #f7f7f7;
+$color-white: #fff;
+
+$color-red-80: #990000;
+$color-red-50: #ff0000;
+$color-red-10: #faeded;
+$color-green-80: #64772d;
+$color-green-50: #019328;
+$color-yellow-10: #fffc21;
+$color-yellow-20: #cec7b3;
+
+
+$swatch-types: black #000000, beige #f5f5dc, blue blue, purple purple, red red, brown #783201, green green, grey #8f979d, pink #fe249a, orange orange, white #ffffff, yellow #ffff00, navy navy;
+
+// fonts, variable assignments
+
+$arial-regular: "Arial MT W01 Regular", Arial, sans-serif;
+$arial-black: "Arial MT W01 Black", Arial, sans-serif;
+
+$helvetica-neue-regular: "Helvetica Neue LT W05 55 Roman", Arial, sans-serif;
+$helvetica-neue-medium: "Helvetica Neue LT W05 65 Medium", Arial, sans-serif;
+$helvetica-neue-light: "Helvetica Neue LT W05 45 Light", Arial, sans-serif;
+$helvetica-neue-bold: "Helvetica Neue LT W01_75 Bold", Arial, sans-serif;
+.font-weight-bold {
+    font-family: $helvetica-neue-bold;
+}
+$helvetica-light-condensed: "Helvetica LT W01 Light Cond", Arial, sans-serif;
+$helvetica-neue-light-extended: "Helvetica Neue LT W05_53 Ext", Arial, sans-serif;
+$helvetica-neue-bold-condensed: "Helvetica Neue LT W05_77 Bd Cn", Arial, sans-serif;
+
+$old-english-regular: "EngrvrsOldEngBTWXX-Regular", Arial, sans-serif;
+$old-english-bold: "EngrvrsOldEngBdBTWXX-Bold", Arial, sans-serif;
+
+$kokomo-breeze: "KokomoBreeze-Regular", Arial, sans-serif;
+
+// Default font variables
+
+$sans-serif: $helvetica-neue-regular;
+$sans-serif-light: $helvetica-neue-light;
+$sans-serif-medium: $helvetica-neue-medium;
+$sans-serif-bold: $helvetica-neue-bold;
+$sans-serif-alt: $arial-regular;
+$sans-serif-alt-black: $arial-black;
+$serif: Crete Round, serif;
+$fontawesome: "FontAwesome";
+
+$base-font-size: 16px;
+
+// flag-icon-css
+$flag-icon-css-path: '../lib/flag-icon-css/flags';

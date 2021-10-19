@@ -1,0 +1,77 @@
+#PasswordResetForm {
+    fieldset {
+        position: relative;
+    }
+    button {
+        float: right;
+        top: 0px;
+        left: 63%;
+    }
+}
+
+.account-landing-heading{
+    @include breakpoint(tabletUp) {
+        padding-left: 2rem;
+    }
+}
+
+h1 .account-logout {
+    font-size: 0.6em;
+    float: none;
+}
+
+.registration-selection {
+    input, label {
+        display: inline;
+        float: none;
+    }
+}
+
+.address-list,
+.payment-list {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    li {
+        list-style-type: none;
+        padding: 1em;
+        width: 90%;
+        @include breakpoint(lgTabletUp) {
+            width: 25%;
+        }
+        &.default {
+            background-color: $color-gray-10;
+            border: rem(1) solid $color-gray-40;
+            border-radius: rem(5);
+            margin-top: 1em;
+            width: 85%;
+        }
+        address {
+            color: $color-gray-50;
+            font-style: normal;
+        }
+        a,
+        .button-text {
+            line-height: 2rem;
+            padding-right: .2rem;
+        }
+    }
+    .mini-address-title {
+        font-style: italic;
+        line-height: 2rem;
+    }
+    .cc-owner {
+        font-weight: 700;
+    }
+}
+
+.profile-data-download {
+    display: none;
+    @include breakpoint(tabletUp) {
+        position: absolute;
+        right: 0;
+        margin-right: 4.3em;
+    }
+}

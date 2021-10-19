@@ -1,0 +1,66 @@
+/**
+* @input OrderForm : dw.web.Form
+* @output RMAJSON : Object
+*/
+
+importPackage( dw.order );
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.web );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+	var form = pdict.OrderForm;
+	var order : dw.order.Order = form.object;
+	var json = new Object();
+	var now = new Date();
+	
+	if (empty(order)) {
+		json.success = "false";
+		json.code = "session_expired";
+		return PIPELET_ERROR;
+	}
+//	https://www.collectplus.co.uk/returns/new/scunci?return%5bfrom_postcode%5d=WA44NR&return%5buser_attributes%5d%5bemail%5d=barry_miller@conair.com&return%5bretailer_reference%5d=12345
+
+	var url = "https://www.collectplus.co.uk/returns/new/babylisspro?return%5bfrom_postcode%5d=";
+	
+	var postalcode = order.defaultShipment.shippingAddress.postalCode;
+	var email = order.customerEmail;
+	var rmano =  order.orderNo + now.getTime().toString();   // dw.util.UUIDUtils.createUUID();
+	
+	url += postalcode;
+	url += "&return%5buser_attributes%5d%5bemail%5d=";
+	url += email;
+	url += "&return%5bretailer_reference%5d=";
+	url += rmano;
+	
+	var fshipments = form.shipments;
+	
+	for each (var fshipment in fshipments) {
+		for each (var fitem in fshipment.items) {
+			var returnflag : Boolean = fitem['return'].checked;
+			if (returnflag) {
+				var returnquantity = fitem.returnquantity.value;
+				var quantity = fitem.quantity.value;
+				
+				if (!empty(returnquantity) && returnquantity <= quantity) {
+					// SKU of item to be returned, QTY, Reason, Return Action, and RMA
+					var noteobj : Object = new Object();
+					noteobj.productID = fitem.object.productID;
+					noteobj.qty = returnquantity;
+					noteobj.reason = form.reason.value;
+					noteobj.action = form.requiredAction.value;
+					noteobj.rma = rmano;
+					order.addNote(rmano, JSON.stringify(noteobj));
+				}
+			}
+		}
+	}
+	
+
+	json.success = "true";
+	json.url = url;
+	json.rmano = rmano;
+	pdict.RMAJSON = json;
+	return PIPELET_NEXT;
+}

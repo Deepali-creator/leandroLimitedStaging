@@ -1,0 +1,13 @@
+/**
+* returns data about where the user appears to be.
+*
+*   @output usersettings : Object
+*
+*/
+importPackage( dw.system );
+importScript("util/Resource.ds");
+
+function execute( args : PipelineDictionary ) : Number {
+	args.usersettings = ResourceHelper.getUserSettings();
+	return PIPELET_NEXT;
+}

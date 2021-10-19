@@ -1,0 +1,40 @@
+/**
+*
+*
+*   @input Content : dw.util.ArrayList
+*   @input SelectedRule : String
+*   @output SortedContent : dw.util.Collection
+*   @output SortingRules : Array
+*
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.web );
+
+var comparators = {
+		'dateasc'  : new PropertyComparator('creationDate',false),
+		'datedesc' : new PropertyComparator('creationDate',true),
+		'nameasc'  : new PropertyComparator('name',true),
+		'namedesc' : new PropertyComparator('name',false),
+		'natural' : new PropertyComparator('ID')};
+
+function execute( args : PipelineDictionary ) : Number {
+	args.SortingRules =[{ID: 'dateasc',		displayName: Resource.msg('dateasc','press','null')},
+	                    {ID: 'datedesc',	displayName: Resource.msg('datedesc','press','null')},
+						{ID: 'nameasc',		displayName: Resource.msg('nameasc','press','null')},
+						{ID: 'namedesc',	displayName: Resource.msg('namedesc','press','null')},
+						{ID: 'natural',		displayName: Resource.msg('natural','press','null')}];
+	if("name"===request.httpParameterMap.csortb1.value){
+		if("2"===request.httpParameterMap.csortd1.value){
+			args.Content.sort(comparators['namedesc']);
+		}else{
+			args.Content.sort(comparators['nameasc']);
+		}
+	}else if(!empty(args.SelectedRule) && 'natural' != args.SelectedRule){
+		args.Content.sort(comparators[args.SelectedRule]);
+	}else{
+		args.Content.sort(comparators['dateasc']);
+	}
+	args.SortedContent = args.Content;
+	return PIPELET_NEXT;
+}

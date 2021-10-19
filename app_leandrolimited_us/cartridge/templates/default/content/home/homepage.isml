@@ -1,0 +1,489 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+
+<iscomment>this is the template rendering the homepage</iscomment>
+<div id="oc"></div>
+<div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+@font-face {
+  font-family: HelveticaNeue;
+  src: url('/on/demandware.static/Sites-us-leandrolimited-Site/-/default/dw729b1597/fonts/custom/Helvetica Neue/HelveticaNeueCondensedBold.ttf');
+}
+body {font-family: Arial, Helvetica, sans-serif;
+overflow-x:hidden;
+}
+
+.modal {
+  display:none !important;
+  position: fixed; 
+  z-index: 91;
+  padding-top: 230px; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  backdrop-filter: blur(2px);
+}
+
+.videoSection {
+    display: none;
+}
+
+.modal-content {
+  background:url('/on/demandware.static/Sites-us-leandrolimited-Site/-/default/dw729b1597/images/img.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: auto;
+  padding: 20px;
+  width: 475px;
+  height:475px;
+  position: relative;
+  z-index:2;
+}
+
+.showVideoSection {
+    display : block; 
+    background : unset;
+    padding : 0px;
+    border : unset;
+}
+.headerpop {
+    font-size:5rem !important;
+    line-height:1.2;
+    padding-top:55px;
+    color :white !important;
+    font-family: "Helvetica Neue LT W05_77 Bd Cn", Arial, sans-serif;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.formDiv {
+    position : absolute;
+    top:76%;
+    left:45%;
+    margin-right:5%;
+}
+.formBtn {
+    margin-left: 5%;
+    margin-top : 5%;
+    font-size : 15px !important;
+    width: 100%;
+    height: 30px;
+    font-family: 'Helvetica Neue LT W01_75 Bold' !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    border : none !important;
+    font-weight:700 !important;
+    color:black!important;
+}
+.formField {
+    background: rgba(255, 255, 255, 0) !important;
+    width:110% !important;
+    color : white !important;
+    border-top : none !important;
+    border-left:none !important;
+    border-right:none !important;
+    border-bottom: 1px solid white !important;
+    border-radius:unset !important;
+}
+.formField::placeholder { 
+  color: #fff;
+  opacity: 1; 
+}
+.formField:focus {
+    outline:none;
+}
+.formBtn:focus {
+    outline:none;
+}
+.error {
+    color:white !important;
+}
+.mob1 {
+    display:none;
+}
+.my-8 {
+    margin-top:7%;
+    margin-bottom:7%;
+}
+.mt-8 {
+    margin-top:7%;
+}
+.mld-8 {
+    margin-left:10%;
+    margin-top:5%;
+}
+.hl1 {
+    font-size:42px;
+    font-weight:700;
+    font-family: "Helvetica Neue LT W05_77 Bd Cn", Arial, sans-serif;
+}
+.shopbtn {
+    width:200px;
+}
+.fireImg{
+    background:url('images/homepage/banners/fireImg.svg') no-repeat  ;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 25% 15% 15% 15% 15% 15%;
+    display:none;
+}
+
+.grid-item {
+    padding: 20px;
+    text-align: center;
+}
+
+.grid-container2 {
+    display: grid;
+    grid-template-columns:25% 18.7% 18.7% 18.7% 18.7%;
+}
+
+.first {
+    text-align:left;
+    position:relative;
+}
+.second {
+    text-align:left;
+    position:relative;
+}
+
+.first>div {
+    position:absolute;
+    top:30%;
+}
+.grid-tile {
+    width:100% !important;
+}
+.p21_20 {
+    font-weight: 200 !important;
+    font-family: "Helvetica Neue LT W05 45 Light", Arial, sans-serif;
+}
+.marg50 {
+    margin-top:-50px;
+}
+.hw {
+
+        white-space: nowrap;
+}
+.vFrame {
+    width:100%;
+    height: 900px
+}
+@media only screen and (min-width:1451px) and (max-width:1550px) {
+    .formDiv {
+        width:40%;
+        left:50%;
+    }
+    .formBtn {
+        margin-left: 0%;
+    }
+}
+@media only screen and (min-width:1450px) {
+
+    .bannerBlock5_1 {
+        width: 16% !important;
+    }
+    .bb {
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+}
+@media only screen and (min-width:1350px) {
+    .second {padding-left:0px}
+    .first {padding-left:0px}
+    .grid-item {padding-right:0px}
+}
+@media only screen and (max-width:1450px) {
+    .formDiv {
+        margin-right:2%;
+        width:35%;
+        left:60%;
+    }
+    .formBtn {
+        margin-left:0%;
+        width:100%;
+    }
+    .vFrame {
+        width:100%;
+        height: 750px;
+    }
+
+}
+
+@media only screen and (max-width:1200px) {
+    .dnone1 {
+        display:none;
+    }
+
+    .mob1 {
+        display:block;
+    }
+    .vFrame {
+        width:100%;
+        height: 750px;
+    }
+
+}
+
+@media only screen and (min-width:1350px) {
+    
+    .grid-container2 {
+        margin : 5% 10%;
+    }
+}
+
+@media only screen and (max-width:800px) {
+    .modal-content {
+        height:370px;
+        width:370px;
+    }
+    .headerpop {
+        font-size:70px !important;
+        line-height :70px !important;
+    }
+    .grid-tile {
+        width:100% !important;
+        margin-left:10%;
+    }
+    .mld-8 {
+        margin-left:0%;
+    }
+    .margm-0 {
+        margin-left:0% !important;
+        margin-top:60%;
+    }
+    .shopbtn {
+        width:200px;
+    }
+    .bannerBlock4 {
+        padding-top:5%;
+    }
+    .bannerBlock2 {
+        margin-left: 3% !important;
+    }
+    .third .grid-tile, .fifth .grid-tile {
+        width:55% !important;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      padding: 10px;
+    }
+    .grid-container2 {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      padding: 10px;
+    }
+    .second {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        text-align:center;
+    }
+    .hl1 {
+        margin-top:0px;
+    }
+    .vFrame {
+        width:100%;
+        height: 450px;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    .bannerBlock2 {
+        margin-left: 3% !important;
+    }
+    .first>div {
+        top:35%;
+    }
+
+    .marg50 {
+        margin-top:0px;
+    }
+    .hw {
+        height: 80px;
+        width: 100px;
+        white-space: unset;
+    }
+    .margm12 {
+        margin-left:-12px;
+    }
+    .vFrame {
+        width:100%;
+        height: 250px;
+    }
+}
+@media only screen and (max-width:1156px){
+    .grid-container {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      padding: 10px;}
+}
+/*
+@media only screen and (max-width:355px) {
+    .fireImg {
+        margin-top: -50px;
+        line-height: 50px;
+    }
+    .hl1 {
+        margin-top:-50px;
+    }
+}*/
+.stretch {
+  width: 100%;
+  display: inline-block;
+}
+.fireMob {
+    display:none;
+}
+@media only screen and (max-width:767px) {
+    .fireDesk {
+        display:none;
+    }
+    .fireMob {
+        display:block;
+    }
+    .prodBord {
+        border: 1px solid #F1F1F1;
+    }
+}
+@media only screen and (max-width:400px) {
+    .hotList {
+        margin-top: 15px !important;
+    }
+}
+
+</style>
+
+<button id="myBtn" style="display:none">Open Modal</button>
+<div id="myModal1" class="modal" style="display:none;">
+    <div class="modal-content acousticPopup">
+        <span class="close"><i style="font-size:24px;color:black" class="fa">&#xf057;</i></span>
+        <h1 class="headerpop">ON A<br/>NEED <br>TO KNOW <br>BASIS</h1>
+        <isslot id="popupForm" context="global" description="LLPopup"/>
+    </div>
+    <div class="modal-content videoSection">
+        <iscomment> <img id="myVideo" src="${URLUtils.staticURL('/images/SmokeWithTextAnimation.gif')}" alt="Welcome to fam" style="max-width: 100%;"/> </iscomment>
+        <img id="myVideo" src="${URLUtils.staticURL('/images/Welcome_to_the_fam.gif')}" alt="Welcome to fam" style="max-width: 100%;"/>
+        <iscomment> <div>Iteration: <span id="iteration"></span></div> </iscomment>
+        <iscomment> <video id="myVideo" muted webkit-playsinline playsinline autoplay style="max-width: 100%;">
+            <source src="${URLUtils.staticURL('/images/SmokeWithTextAnimation.mov')}" type='video/mp4; codecs="hvc1"' />
+            <source src="${URLUtils.staticURL('/images/SmokeWithTextAnimation.webm')}" type="video/webm"/>
+        </video> </iscomment>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#myModal1").delay(2000).fadeIn(500);
+});
+</script>
+
+
+<div class="home1" style="">
+    <isslot id="home-main" description="Flash Banner in homepage" context="global" />
+
+<iscomment> <div class="grid-container">
+    <div class="grid-item first">
+        <img class="hl1 marg50 fireDesk" src="${URLUtils.staticURL('/images/fire.png')}" >
+        <img class="hl1 marg50 fireMob" src="${URLUtils.staticURL('/images/fireMob.png')}" >
+        <div>
+            <div class="fireImg">
+                <p class="hl1" style="white-space:nowrap">
+                    HOT LIST
+                </p>
+            </div>
+            <p class="p21_20">
+                brushes we can’t <br/> live without
+            </p>
+            <a style="margin-top:30px;padding-top: 14px;padding-bottom: 15px;height:45px" href="shop" class="button align-self-center align-self-md-end hevetical-neuefont text-transform-capitalize shopbtn hw homePageBtns hotList"><p class="margm12">SHOP NOW</p></a>
+        </div>
+      </div>
+  <div class="grid-item">
+  <isslot id="p1" context="global" description="" context-object="" preview-url="" />
+  </div>
+  <div class="grid-item"><isslot id="p2" context="global" description="" context-object="" preview-url="" /></div>  
+  <div class="grid-item"><isslot id="p3" context="global" description="" context-object="" preview-url="" /></div>
+  <div class="grid-item"><isslot id="p4" context="global" description="" context-object="" preview-url="" /></div>
+  <div class="grid-item"><isslot id="p5" context="global" description="" context-object="" preview-url="" /></div>
+</div> </iscomment>
+
+    <iscomment><isslot id="home-main3" description="Flash Banner in homepage" context="global" /></iscomment>
+<iscomment>
+<div class="grid-container2" style="margin-top: 70px;">
+  <div class="grid-item second" style="margin-top: -20px">
+  <img class="hl1" src="${URLUtils.staticURL('/images/ll.png')}">
+    <div>
+        <div class="fireImg">
+            <p class="hl1">
+                EXCLUSIVES
+            </p>
+        </div>
+        <p class="p21_20">
+            find your newest fav’s<br> only available here
+        </p>
+        <a style="margin-top:30px;padding-top: 15px;padding-bottom: 15px; white-space: nowrap;"  href="shop" class="button align-self-center align-self-md-end hevetical-neuefont text-transform-capitalize shopbtn homePageBtns">SHOP NOW</a>
+    </div>
+
+  </div>
+  <div class="grid-item"><isslot id="cc-exclusive-p1" context="global" description="" context-object="" preview-url="" /></div>
+  <div class="grid-item"><isslot id="cc-exclusive-p2" context="global" description="" context-object="" preview-url="" /></div>  
+  <div class="grid-item"><isslot id="cc-exclusive-p3" context="global" description="" context-object="" preview-url="" /></div>
+  <div class="grid-item"><isslot id="cc-exclusive-p4" context="global" description="" context-object="" preview-url="" /></div>
+  <div class="grid-item"><isslot id="cc-exclusive-p5" context="global" description="" context-object="" preview-url="" /></div>
+
+  <span class="stretch"></span>
+</div>
+</iscomment>
+<iscomment> <isslot id="Video-main" description="Video Banner in homepage" context="global" /> </iscomment>
+<isslot id="homepage-bottom" description="Flash Banner in homepage" context="global" />
+
+</div>
+
+</isdecorate>
+<script>
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+var modal = document.getElementById("myModal1");
+var session = window.sessionStorage.getItem('Acoustic_pop_hide');
+
+
+window.addEventListener('load', function () {
+  console.log("It's loaded!");
+  
+    console.log('session',session);
+
+    if(session != '1') {
+        console.log('Here');
+        modal.style.setProperty('display', 'block', 'important');
+    }
+})
+
+btn.onclick = function() {
+      modal.style.setProperty('display', 'block', 'important');
+}
+span.onclick = function() {
+  modal.style.setProperty('display', 'none', 'important');
+  window.sessionStorage.setItem('Acoustic_pop_hide','1');
+}
+/*window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}*/
+</script>

@@ -1,0 +1,119 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+
+<head>
+
+	<isscript>
+		var pageContext = {
+			title: 'Customer Service',
+			type: 'customerservice',
+			ns:'account'
+		};
+	</isscript>
+	<isinclude template="util/modules"/>
+
+	<iscomment>This page must be cachable. It inherits the caching attributes by the decorated template.</iscomment>
+
+	<isinclude template="components/header/htmlhead"/>
+	<isinclude template="content/pt_customerservice_UI"/>
+	<link rel="canonical" href="${URLUtils.abs('CustomerService-ContactUs')}"/>
+
+	<iscomment>Add template-specific header information here.</iscomment>
+	<script type="application/ld+json">
+	{
+	"@context": "https://schema.org/", 
+	"@type": "BreadcrumbList", 
+	"itemListElement": [{
+		"@type": "ListItem", 
+		"position": 1, 
+		"name": "Home page",
+		"item": "https://leandrolimited.com/"  
+	},{
+		"@type": "ListItem", 
+		"position": 2, 
+		"name": "Contact Us",
+		"item": "https://leandrolimited.com/contact"  
+	}]
+	}
+	</script>
+
+</head>
+
+<body>
+
+	<div id="wrapper" class="pt_customer-service">
+
+		<isinclude template="components/header/header"/>
+
+		<div id="main" role="main" class="page-content clearfix">
+			<div class="wrap">
+				<isbreadcrumbs bcurl1="${URLUtils.url('CustomerService-Show')}" bctext1="${Resource.msg('global.customerservice','locale',null)}" bctext2="${empty(pdict.Content) ? null : pdict.Content.name}" />
+
+				<div id="primary" class="primary-content">
+					<section>
+						<isinclude template="components/browsertoolscheck"/>
+						<isreplace/>
+					</section>
+				</div>
+
+				<div id="secondary" class="nav">
+					<nav>
+						<h1 class="visually-hidden">${Resource.msg('global.secondarynavheading','locale',null)}</h1>
+						<div class="secondary-navigation">
+							<isinclude url="${URLUtils.url('CustomerService-LeftNav')}"/>
+						</div>
+					</nav>
+					<div class="account-nav-asset">
+						<iscontentasset aid="account-nav-text"/>
+					</div>
+				</div>
+			</div>
+		</div><!-- /main -->
+
+		<isinclude template="components/footer/footer"/>
+		<isinclude template="content/pt_customerservice_VARS"/>
+
+	</div><!--  /wrapper -->
+
+	<script>
+		(function() {
+			var s = document.createElement('script'),
+				e = !document.body ? document.querySelector('head') : document.body;
+			s.src = 'https://acsbapp.com/apps/app/dist/js/app.js';
+			s.async = true;
+			s.onload = function() {
+				acsbJS.init({
+					statementLink: '',
+					footerHtml: '',
+					hideMobile: false,
+					hideTrigger: false,
+					language: 'en',
+					position: 'right',
+					leadColor: '#146FF8',
+					triggerColor: '#146FF8',
+					triggerRadius: '50%',
+					triggerPositionX: 'right',
+					triggerPositionY: 'bottom',
+					triggerIcon: 'people',
+					triggerSize: 'medium',
+					triggerOffsetX: 20,
+					triggerOffsetY: 20,
+					mobile: {
+						triggerSize: 'small',
+						triggerPositionX: 'right',
+						triggerPositionY: 'center',
+						triggerOffsetX: 0,
+						triggerOffsetY: 0,
+						triggerRadius: '50%'
+					}
+				});
+			};
+			e.appendChild(s);
+		}());
+	</script>
+</body>
+</html>

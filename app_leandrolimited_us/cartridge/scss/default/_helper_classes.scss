@@ -1,0 +1,164 @@
+/*********************************/
+/***** HELPER/UTILITY CLASSES*****/
+/*********************************/
+.hidden {display: none !important;}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: rem(1);
+  margin: rem(-1);
+  overflow: hidden;
+  padding: 0;
+  position: absolute ;
+  width: rem(1);
+}
+
+.desktop-only {
+	@include desktop-only();
+}
+
+.mobile-only {
+	@include mobile-only();
+}
+
+.menu {
+  float: left;
+  margin: 0;
+  padding: 0;
+  li {
+    float: left;
+    list-style: none outside none !important;
+  }
+}
+
+.border {
+	border: solid #020000;
+  border-width: rem(1);
+	&.top {
+		border-width: rem(1) 0 0 0;
+	}
+	&.right {
+		border-width: 0 rem(1) 0 0;
+	}
+	&.bottom {
+		border-width: 0 0 rem(1) 0;
+	}
+	&.left {
+		border-width: 0 0 0 rem(1);
+	}
+}
+
+.clearfix {
+	@extend %clearfix;
+}
+
+.float-left {
+	float: left !important;
+}
+
+.float-right {
+	float: right !important;
+}
+
+.float-none {
+	float: none !important;
+}
+
+p {
+  &.large {
+    font-size: rem(18);
+    @include breakpoint(tabletUp) {
+      font-size: rem(21);
+    }
+  }
+  &.small {
+    font-size: rem(13);
+  }
+}
+
+.text-align-left { text-align: left !important;}
+.text-align-right { text-align: right !important;}
+.text-align-center { text-align: center !important;}
+.text-align-justify { text-align: justify !important;}
+
+.text-transform-none { text-transform: none !important;}
+.text-transform-uppercase { text-transform: uppercase !important;}
+.text-transform-lowercase { text-transform: lowercase !important;}
+.text-transform-capitalize { text-transform: capitalize !important;}
+
+.font-style-strikethrough { text-decoration: line-through !important;}
+.font-style-italic { font-style: italic !important;}
+.font-style-underline { text-decoration: underline !important;}
+
+.font-weight-regular {
+  font-weight: 400 !important;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+  &.font-family-arial-regular {
+    font-family: $arial-black !important;
+    font-weight: 400 !important;
+  }
+  &.font-family-helvetica-neue-regular {
+    font-family: $helvetica-neue-bold !important;
+    font-weight: 400 !important;
+  }
+  &.font-family-helvetica-neue-light-condensed {
+    font-family: $helvetica-neue-bold-condensed !important;
+    font-weight: 400 !important;
+  }
+  &.font-family-old-english-regular {
+    font-family: $old-english-bold !important;
+    font-weight: 400 !important;
+  }
+}
+
+.font-family-arial-regular  {
+  font-family: $arial-regular !important;
+}
+
+.font-family-arial-black  {
+  font-family: $arial-black !important;
+}
+
+.font-family-helvetica-neue-regular  {
+  font-family: $helvetica-neue-regular !important;
+}
+
+.font-family-helvetica-neue-medium  {
+  font-family: $helvetica-neue-medium !important;
+}
+
+.font-family-helvetica-neue-light  {
+  font-family: $helvetica-neue-light !important;
+}
+
+.font-family-helvetica-neue-bold  {
+  font-family: $helvetica-neue-bold !important;
+}
+
+.font-family-helvetica-light-condensed {
+  font-family: $helvetica-light-condensed !important;
+}
+
+.font-family-helvetica-neue-light-extended {
+  font-family: $helvetica-neue-light-extended !important;
+}
+
+.font-family-helvetica-neue-bold-condensed {
+  font-family: $helvetica-neue-bold-condensed !important;
+}
+
+.font-family-old-english-regular {
+  font-family: $old-english-regular !important;
+}
+
+.font-family-old-english-bold {
+  font-family: $old-english-bold !important;
+}
+
+.font-family-kokomo-breeze {
+  font-family: $kokomo-breeze !important;
+}

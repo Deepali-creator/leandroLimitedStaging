@@ -1,0 +1,129 @@
+#wrapper {
+    background-color: $color-white;
+    border: 0;
+    left: 0;
+    margin: auto;
+    // padding: 3.625rem 0 0;
+    position: relative;
+    transition: left 0.2s ease-in;
+    width: 100%;
+    @include breakpoint(lgTabletUp) {
+        // padding: 5rem 0 0;
+        &.menu-active {
+            left: auto;
+        }
+    }
+}
+
+.wrap {
+    width: 100%;
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+    @include breakpoint(lgTabletUp) {
+        padding: 0;
+    }
+
+    .page-content & {
+        padding-top: 1.5rem;
+
+        @include breakpoint(desktop) {
+            padding-top: 0;
+        }
+    }
+}
+
+#main {
+    @include breakpoint(desktop) {
+        padding-top: rem(84);
+        .pt_storefront &,
+        .content-offset &,
+        .pt_cart &,
+        .pt_checkout &, {
+            padding-top: 0;
+        }
+    }
+}
+
+.primary-content {
+    width: 100%;
+    @include breakpoint(lgTabletUp) {
+        border-left: rem(1) solid $color-gray-20;
+        float: right;
+        padding: 0 1rem 2rem;
+        position: relative;
+        width: calc(100% - 12.5rem);
+	    .primary-focus & {
+	        border: none;
+	        float: left;
+	        margin: 0;
+            padding: 2rem 4% 2rem 1.875rem;
+	        width: 52%;
+            background: $color-white;
+            .pt_error & {
+                float: right;
+                width: calc(100% - 12.5rem);
+            }
+        }
+        .content-offset & {
+            padding: 0;
+        }
+        .pt_product-search-result & {
+            width: calc(100% - 15.625rem);
+            border: none;
+            padding: 1rem 0;
+        }
+	    .full-width & {
+	        border: none;
+	        width: 100%;
+	    }
+	 }
+}
+
+#secondary {
+    border: 0;
+    clear: both;
+    float: none;
+    width: 100%;
+    padding: 2rem 0;
+    @include breakpoint(lgTabletUp) {
+        clear: none;
+        float: left;
+        width: 10.75rem;
+        position: relative;
+        padding: 0;
+        nav {
+            padding: 0 0.625rem;
+            a {
+                display: block;
+            }
+        }
+        .primary-focus & {
+            background: none;
+            border: none;
+            box-sizing: border-box;
+            float: left;
+            padding: 2rem 1.875rem 0 4%;
+            width: 38%;
+            .pt_error & {
+                width: 10.75rem;
+                padding: 0;
+            }
+        }
+        .pt_product-search-result & {
+            width: rem(250);
+        }
+    }
+    // Remove Refinements for responsive design
+    .pt_content-search-result &,
+    .pt_order & {
+        display: none;
+        @include breakpoint(lgTabletUp) {
+            display: block;
+        }
+    }
+}
+
+.secondary-content {
+    clear: both;
+}

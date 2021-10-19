@@ -1,0 +1,297 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<iscomment> <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" /> </iscomment>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Swiper JS -->
+<iscomment> <script src="https://unpkg.com/swiper/swiper-bundle.js"></script> </iscomment>
+<style>
+
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+    }
+    .mobileView {
+        display: none;
+    }
+    .middleView {
+        display: none;
+    }
+    .gridDiv {
+        display: grid;
+        grid-column-gap: 10px;
+        grid-template-columns: auto auto auto auto auto auto;
+        padding: 10px;
+    }
+    .gridDiv div {
+        height: 200px;
+        margin: 20px;
+        box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.12);
+    }
+    .carousel-indicators li {
+            background-color: #E9EBED;
+            width: 16px;
+            height: 14px;
+            border-radius: 50%;
+            margin: 1%;
+    }
+    .carousel-indicators {
+        bottom: -100px;
+    }
+    .carousel-control-prev-icon {
+        background-image: url("${URLUtils.staticURL('/images/Vector1.svg')}");
+    }
+    .carousel-control-next-icon {
+        background-image: url("${URLUtils.staticURL('/images/Vector2.svg')}");
+    }
+    .carousel-control-next-icon, .carousel-control-prev-icon {
+        height: 40px;
+        width: 40px;
+    }
+    .carousel-control-next, .carousel-control-prev {
+        width: unset;
+        top: -40px;
+    }
+    .carousel-inner {
+        width: 90%;
+    }
+    .container {
+        /* width: 100% !important; */
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
+
+    /*CSS For Swipper content */
+    .swiper-container {
+      width: 100%;
+      height: 300px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      margin-bottom: 20px;
+    }
+    .swiper-pagination-bullet {
+        width: 14px;
+        height: 14px;
+        background: #E9EBED;
+    }
+
+    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      padding: 90px;
+      font-size: 18px;
+      background: #fff;
+      margin-right: 20px !important;
+      /* margin-left:20px;
+      margin-right:20px; */
+      box-shadow: 5px 5px 25px rgb(0 0 0 / 12%);
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+
+    @media only screen and (max-width: 1080px) {
+        .gridDiv {
+            grid-template-columns: auto auto auto;
+        }
+        .middleView {
+            display: block;
+        }
+        .fullView {
+            display: none;
+        }
+        .container {
+            padding-bottom: 115px;
+        }
+        .carousel-indicators {
+            bottom: -70px;
+        }
+    }
+    @media only screen and (max-width: 1024px) {
+        .container {
+            padding-top: 50px;
+        }
+    }
+    @media only screen and (max-width: 700px) {
+        .mobileView {
+            display: block;
+        }
+        .container {
+            display: none;
+        }
+    }
+    @media only screen and (min-width: 700px) {
+        .container {
+            max-width: 2000px;
+        }
+    }
+</style>
+<div class="container mt-3 fullView">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 300px;">
+
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      
+      <!-- The slideshow -->
+      <center>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="gridDiv">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="gridDiv">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="gridDiv">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+          </div>
+      </center>
+      
+      <!-- Left and right controls -->
+      <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+    </div>
+</div>
+
+<div class="container mt-3 middleView">
+    <div id="myCarousel2" class="carousel slide" data-ride="carousel" style="height: 300px;">
+
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel2" data-slide-to="1"></li>
+        <li data-target="#myCarousel2" data-slide-to="2"></li>
+      </ol>
+      
+      <!-- The slideshow -->
+      <center>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="gridDiv">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="gridDiv">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="gridDiv">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+          </div>
+      </center>
+      
+      <!-- Left and right controls -->
+      <a class="carousel-control-prev" href="#myCarousel2" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#myCarousel2" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+    </div>
+</div>
+
+<div class="swiper-container mobileView">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+      <div class="swiper-slide"></div>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        freeMode: true,
+        pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        dynamicBullets: true,
+        },
+    });
+
+    swiper.on("transitionEnd", function() {
+                    console.log("tansition end");
+    });
+</script>
+</isdecorate>

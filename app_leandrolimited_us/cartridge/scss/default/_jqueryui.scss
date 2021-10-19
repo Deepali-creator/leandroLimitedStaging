@@ -1,0 +1,100 @@
+.ui-widget-overlay {
+	background: url("../images/interface/ui-overlay-shadow.png") repeat scroll 50% 50% $color-black;
+	opacity: 0.4;
+}
+
+.ui-dialog {
+	max-width: 98%;
+	background-color: $color-white;
+	padding: 0;
+	.ui-dialog-content {
+		height: auto !important;
+		overflow: visible;
+		padding: 1rem 1rem rem(30);
+		@include breakpoint(tabletUp) {
+			overflow: auto;
+		}
+	}
+	.ui-widget-header {
+		background-color: $color-gray-10;
+		border: 0 none;
+		border-radius: 0;
+		text-transform: uppercase;
+	}
+	.ui-dialog-title {
+		color: $color-black;
+		font-weight: bold;
+	}
+	.ui-icon-closethick {
+		background-image: url("../images/icon-close.svg");
+		background-position: 50% 50%;
+		background-size: 75%;
+		height: rem(32);
+		width: rem(32);
+		left: 0;
+		top: 0;
+		margin-left: 0;
+		margin-top: 0;
+	}
+	.ui-dialog-titlebar-close {
+		background-color: transparent;
+		border: 0 none;
+		border-radius: 0 0 0 0;
+		height: rem(32);
+		margin: rem(3) rem(5) 0 0;
+		opacity: .5;
+		padding: 0;
+		right: 0;
+		top: 0;
+		width: rem(32);
+		&:hover {
+			opacity: 1;
+		}
+		span {
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
+
+.no-close .ui-dialog-titlebar-close {
+	display: none;
+}
+
+.ui-accordion .ui-accordion-content {
+	padding: 0;
+}
+
+.ui-tabs {
+	.ui-tabs-nav {
+		height: 2.45em;
+		padding: 0;
+		li {
+			border-color: $color-white;
+			border-style: solid;
+			border-width: 0 0 rem(3) 0;
+			&.ui-state-active {
+				border-bottom-color: $color-black;
+				a {
+					color: $color-black;
+					font-family: $sans-serif-bold;
+				}
+			}
+			a {
+				color: $color-gray-50;
+			}
+		}
+	}
+	.ui-tabs-panel {
+		background-color: $color-white;
+		border: rem(1) solid $color-white;
+		line-height: 1.5em;
+		margin: 0;
+		padding: rem(20) rem(10);
+		h3 {
+			@include breakpoint(lgTabletUp) {
+				display: none;
+			}
+		}
+	}
+}

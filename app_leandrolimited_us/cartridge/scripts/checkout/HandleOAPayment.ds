@@ -1,0 +1,39 @@
+/**
+*   @input CUProfile : dw.customer.Profile
+*   @input CO : dw.order.Order
+*-   @output ExampleOut : Number
+*/
+importPackage( dw.system );
+importPackage( dw.rpc );
+importPackage( dw.svc );
+importPackage( dw.customer );
+importPackage( dw.value );
+importPackage( dw.util );
+importScript("checkout/Utils.ds");
+function execute( args : PipelineDictionary ) : Number
+{
+   var _profile : Profile = args.CUProfile;
+   var _order : Order = args.CO;
+   if(!empty(_profile) && !empty(_profile.custom.sapAccountNumber)){
+   		try{
+		   var obj : Object = new Object();
+		   obj.sapAccountNumber = _profile.custom.sapAccountNumber;
+		   var zccService = ServiceRegistry.get("zCreditCheck");
+		   var zccServiceResponse = zccService.call(obj);
+		   var aBalance = new Number(zccServiceResponse.object.balance);
+		   var orderTotal = _order.adjustedMerchandizeTotalPrice.value;
+		   if(zccServiceResponse.ok &&  orderTotal <= aBalance){
+		   		return PIPELET_NEXT;
+		   }else{
+		   		Logger.error("Error response from zCreditCheck Service or insufficient balance on account to place an order");
+		   		return PIPELET_ERROR;
+		   }
+   		}catch(ex){
+   			Logger.error("Error while triggering zCreditCheck Service: "+ex);
+			return PIPELET_ERROR;
+   		}
+	   return PIPELET_ERROR;
+   }else{
+   	   return PIPELET_ERROR;
+   }
+}

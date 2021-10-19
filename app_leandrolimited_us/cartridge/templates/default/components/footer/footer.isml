@@ -1,0 +1,43 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>
+    This is the footer for all pages. Be careful caching it if it contains
+    user dependent information. Cache its elements instead if necessary (do not forget
+    to change the isinclude into a pipeline include for that).
+</iscomment>
+<isinclude template="util/modules"/>
+
+<footer id="footer" class="footer">
+    <div class="wrap wrap--footer">
+        <div class="links-and-newsletter-container">
+            <div class="footer-links">
+                <div class="footer-box">
+                    <iscontentasset aid="footer-links"/>
+                    <iscontentasset aid="footer-copy"/>
+                </div>
+
+                <div class="footer-box">
+                    <iscontentasset aid="footer-support"/>
+                </div>
+            </div>
+
+            <div class="footer-newsletter-signup">
+                <div class="footer-box">
+                    <iscontentasset aid="newsletter-signup"/>
+                </div>
+            </div>
+        </div>
+		<iscomment> Footer Social </iscomment>
+        <iscomment> <div class="footer-social-container">
+            <iscontentasset aid="footer-social"/>
+        </div> </iscomment>
+    </div>
+</footer>
+
+<iscomment>
+    Customer registration can happen everywhere in the page flow. As special tag in the pdict
+    is indicating it. So we have to check on every page, if we have to report this event for
+    the reporting engine.
+</iscomment>
+<isinclude template="util/reporting/ReportUserRegistration.isml"/>
+
+<isinclude template="components/footer/footer_UI"/>

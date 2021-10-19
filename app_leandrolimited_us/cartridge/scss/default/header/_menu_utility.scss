@@ -1,0 +1,125 @@
+.menu-utility-user {
+	margin: 0;
+	padding: 0;
+	li {
+		border-top: rem(1) solid darken($color-black, 10%);
+		list-style: none;
+		padding: 0.75rem;
+		&:first-child {
+			border: none;
+		}
+		@include breakpoint(desktop) {
+			background-color: transparent;
+			border-color: transparent;
+			float: left;
+			margin: 0;
+			padding: 0 rem(18) 0;
+			text-align: center;
+			&:first-child {
+				border: none;
+			}
+		}
+		a {
+			font-family: $sans-serif-medium;
+			font-size: rem(15);
+			color: $color-black;
+			text-transform: uppercase;
+			text-decoration: none;
+		}
+	}
+	.user-info {
+		&.active {
+			.user-login {
+				color: $color-black;
+			}
+			.user-panel {
+				pointer-events: auto;
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+		@include breakpoint(desktop) {
+			position: relative;
+			transition: color 0.5s ease;
+			&:hover {
+				.user-login {
+					color: $color-black;
+				}
+				.user-panel {
+					pointer-events: auto;
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		.link-icon {
+			font-size: 1.375rem;
+			&:hover {
+				color: $color-gray-50;
+			}
+		}
+		.user-panel {
+			box-sizing: content-box; //See https://code.google.com/p/chromium/issues/detail?can=2&q=max-content&colspec=ID%20Pri%20M%20Stars%20ReleaseBlock%20Cr%20Status%20Owner%20Summary%20OS%20Modified&id=522191&thanks=522191&ts=1439925077
+			margin-top: 0.5rem;
+			text-align: left;
+			transition: all .3s ease;
+			width: 10rem; //For IE
+			width: max-content;
+			position: absolute;
+			top: 2.5rem;
+			right: 0;
+			visibility: hidden;
+			z-index: 98;
+			background-color: $color-white;
+			border: rem(1) solid $color-gray-20;
+			border-radius: rem(5);
+			box-shadow: 0 rem(2) rem(5) 0 $color-gray-40;
+			margin-top: 0;
+			opacity: 0;
+			padding: 1em;
+			pointer-events: none;
+			@include breakpoint(desktop) {
+				top: 1.25rem;
+				right: auto;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+			&:hover {
+				pointer-events: auto;
+			}
+			h4 {
+				margin: 0;
+				padding-bottom: 0.625em;
+				text-transform: uppercase;
+				text-align: center;
+				@include breakpoint(lgTabletUp) {
+					display: block;
+				}
+			}
+			.user-links {
+				padding: 0 1rem;
+				text-align: center;
+			}
+			a {
+				color: $color-black;
+				display: block;
+				padding: 0 0 0.3125rem;
+				&:hover {
+					color: $color-gray-50;
+				}
+			}
+			.user-logout {
+				font-family: $sans-serif-alt-black;
+				color: $color-white;
+				font-size: 1.5rem;
+				margin-top: 0.5rem;
+				padding: 0 1.875rem;
+				text-transform: lowercase;
+				&:hover {
+					color: $color-black;
+					background-color: $color-gray-50;
+				}
+			}
+		}
+	}
+}

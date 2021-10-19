@@ -1,0 +1,205 @@
+#category-level-1,
+.refinement-top-level {
+	li {
+		color: $color-gray-50;
+		display: block;
+		padding: 0;
+		text-align: center;
+		@include breakpoint(desktop) {
+			padding: rem(5);
+			text-align: left;
+		}
+		.refinement-link {
+			font-family: $sans-serif-alt-black;
+			font-size: 1rem;
+			line-height: rem(18);
+			text-transform: uppercase;
+			padding: 0;
+			@include breakpoint(desktop) {
+				font-size: rem(21);
+				line-height: rem(25);
+			}
+			&:hover {
+				.fa {
+					color: $color-gray-50;
+				}
+			}
+			&.active {
+				color: $color-gray-50;
+			}
+		}
+		&.expandable {
+			&:before {
+				font-family: $fontawesome;
+				display: none;
+			}
+		}
+	}
+}
+
+#category-level-2 {
+	display: none;
+	padding: 0;
+	a {
+		&.active {
+			color: $color-gray-50;
+		}
+	}
+}
+#category-level-3 {
+	display: none;
+	padding: 0;
+	a {
+		&.refinement-link {
+			font-style: normal;
+			margin: 0 0 0 rem(15);
+			padding: 0;
+		}
+		&.active {
+			&.active {
+				color: $color-gray-50;
+			}
+		}
+	}
+}
+
+.refinement-header {
+	background-color: $color-gray-10;
+	display: block;
+	font-size: 1.1em;
+	font-weight: bold;
+	letter-spacing: 0.125em;
+	margin: 0;
+	padding: 1.15em 0.75em 0.75em;
+	text-transform: uppercase;
+}
+
+.refinement {
+	padding-bottom: 0.65em;
+	position: relative;
+	&.category-refinement {
+		@include breakpoint(desktop) {
+			margin-top: 2rem;
+		}
+	}
+	// Hide Refinements on Category Landing Pages
+	.pt_categorylanding & {
+   		display: none;
+   		&.category-refinement {
+   			display: block;
+   		}
+   	}
+	h3 {
+		background-color: $color-gray-10;
+		margin: 0 0 rem(10);
+		padding: 1rem;
+		text-transform: uppercase;
+	}
+	ul {
+		list-style: none outside none;
+		margin: 0;
+		padding: 0;
+	}
+	li {
+		padding: rem(5);
+	}
+	ul {
+		li {
+			.fa {
+				color: $color-black;
+			}
+		}
+		&.swatches li {
+			float: left;
+			padding: 0.16em;
+			a {
+				border: rem(2) solid $color-gray-20;
+				border-radius: 0.5em;
+				display: block;
+				padding: 0.2em 0.8em;
+			}
+			&.selected a {
+				border-color: $color-black;
+				font-weight: bold;
+			}
+			&.unselectable a {
+				background-image: url("../images/interface/icon-color-swatch-unselectable.png");
+				background-position: right top;
+			}
+		}
+		&.refinementColor li a {
+			height: rem(23);
+			padding: 0;
+			text-indent: -999em;
+			width: rem(30);
+		}
+	}
+	.clear-refinement {
+		margin: rem(10) 0;
+		> a {
+			font-family: $sans-serif-alt-black;
+			background-color: $color-black;
+			border: solid $color-black;
+			border-width: 0.0625rem;
+			color: $color-white;
+			display: inline-block;
+			font-size: 1rem;
+			letter-spacing: 0.0625rem;
+			padding: 0 rem(10);
+			text-align: center;
+			text-transform: lowercase;
+			transition: all 0.3s ease;
+			&:hover {
+				background-color: $color-gray-50;
+				border-color: $color-gray-50;
+			}
+		}
+	}
+	.refinement-link {
+		border: none;
+	}
+}
+
+.scrollable {
+	height: auto;
+	@include breakpoint(desktop) {
+		height: 10em;
+		overflow: auto;
+	}
+	li {
+		float: left;
+		a {
+			border: rem(1) solid #d9d9d9;
+			border-radius: rem(6);
+			display: block;
+			padding: 0.2em 0.8em;
+		}
+	}
+}
+
+.nav {
+	ul {
+		border: 0 none;
+		list-style: none outside none;
+		margin: 0.58em 0;
+		padding: 0;
+		li {
+			list-style: none outside none !important;
+			margin: 0 0 0.58em !important;
+		}
+	}
+	.toggle {
+		border: 0 none;
+		display: block;
+		font-size: 1em;
+		font-weight: 700;
+		margin: 0.83em 0 0.58em;
+		text-transform: uppercase;
+		span {
+			background: none repeat scroll 0 0 transparent;
+		}
+	}
+	.expanded {
+		background-position: left rem(-96);
+	}
+}

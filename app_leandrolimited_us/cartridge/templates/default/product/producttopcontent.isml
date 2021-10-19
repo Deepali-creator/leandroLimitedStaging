@@ -1,0 +1,176 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+
+<isinclude template="util/modules"/>
+
+<iscomment>In the product pipeline, if a product was not found for the selected attributes, we need to refresh the ProductVariationModel using the default selected variant</iscomment>
+
+<isset name="isQuickView" value="${pdict.CurrentHttpParameterMap.source.stringValue == 'quickview' || pdict.CurrentHttpParameterMap.source.stringValue == 'cart' || pdict.CurrentHttpParameterMap.source.stringValue == 'giftregistry' || pdict.CurrentHttpParameterMap.source.stringValue == 'wishlist'}" scope="page"/>
+<style>
+.product-primary-image{
+ border : none !important;
+}
+
+.product-thumbnails .thumb {
+    border:none !important;
+}
+.product-brand1 {
+	font-family: "Helvetica Neue";
+    font-style: normal;
+	font-weight: 700;
+	font-size: 10px;
+	text-align: center;
+	line-height: 17px;
+    letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #000000;
+    margin: 0 0 rem(10);
+}
+.product-name1 {
+	font-family: 'Helvetica Neue';
+	font-size: 15px;
+	font-weight:500;
+	line-height: 15px;
+	margin: 0;
+	text-transform: uppercase;
+	letter-spacing: 5px;
+	color: #000000;
+	padding-top: 5px;
+	padding-bottom:5px;
+}
+.product-item-count1 {
+	font-family:  "Helvetica Neue LT W05 55 Roman", Arial, sans-serif;
+	font-style: normal;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 0px;
+	letter-spacing: -0.03em;
+	color: #000000;
+}
+
+@media only screen and  (max-width:1025px) {
+    .product-variations-wrapper1 {
+		display: none
+	}
+	.product-name1 {
+		font-size: 18px;
+		font-family:'Helvetica Neue LT W01_75 Bold';
+		color:#222222;
+		letter-spacing:0px;
+		line-height:25px;
+	}
+	.product-brand1{
+		display:none;	
+	}
+}
+
+@media only screen and  (min-width:1025px) {
+    .product-variations-wrapper2 {
+		display: none
+	}
+}
+</style>
+<section class="product-content product-content--main wrap">
+	<div class="wrap">
+		<isscript>
+			var productImg = 'product/components/productimages';
+			var productContent="product/productcontent";
+			if(pdict.CurrentHttpParameterMap.source.stringValue=='quickview'){
+				productImg="product/components/productimages_QV";
+				productContent="product/productcontent_QV";
+			}
+		</isscript>
+		<div class="product-col-1 product-image-container">
+			<isinclude template="${productImg}"/>
+		</div>
+
+		<div class="product-col-2 product-detail">
+
+			<iscomment> <div class="product-variations-wrapper2"
+				<isinclude template="product/components/variations"/>
+			</div> </iscomment>
+			
+			
+			<iscomment> 
+				<iscomment>Item Count
+				<isif condition="${!empty(pdict.Product.custom.itemCount) && pdict.CurrentHttpParameterMap.source.stringValue != 'quickview' && pdict.Product.custom.itemCount.length > 0}">
+					<div class="product-item-count1">
+						<span><isprint value="${pdict.Product.custom.itemCount}"/></span>
+					</div>
+				</isif> 
+			</iscomment>
+	
+			<div id="product-content" class="product-details">
+				<isinclude template="${productContent}"/>
+			</div>
+		</div>
+		<iscomment>
+		<isif condition="${!isQuickView}">
+			<div class="product-info">
+				<h2 class="visually-hidden">Additional Information</h2>
+				<isset name="vags" value="${pam.getVisibleAttributeGroups()}" scope="page"/>
+				<isset name="showAttributes" value="${false}" scope="page"/>
+					<isloop items="${vags}" var="AttributeGroup" status="loopstatus">
+					<isif condition="${AttributeGroup.ID != 'mainAttributes'}">
+						<isset name="showAttributes" value="${true}" scope="page"/>
+					</isif>
+				</isloop>
+				<div class="tabs">
+					<isscript>
+						// get all orderable cross sell recommendations (1 = cross sell)
+						var recommendations = pdict.Product.getOrderableRecommendations(1).iterator();
+						var recProducts = new dw.util.ArrayList();
+						var counter = 0;
+						// display 20 recommendations at maximum
+						while (recommendations.hasNext() && counter < 20) {
+							var recommendedProduct = recommendations.next().getRecommendedItem();
+							recProducts.add(recommendedProduct);
+							counter++;
+						}
+					</isscript>
+					<isif condition="${recProducts.size() > 0}">
+						<div class="tab">
+							<input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+							<label for="tab-1" class="tab-label">${Resource.msg('product.recommendations.products','product',null)}</label>
+							<div class="tab-content"><isinclude template="product/components/recommendations"/></div>
+						</div>
+					</isif>
+					<isif condition="${! empty(pdict.Product.shortDescription) && pdict.Product.shortDescription.markup.length > 0}">
+						<div class="tab">
+							<input type="radio" name="css-tabs" id="tab-2" <isif condition="${recProducts.size() < 1}">checked</isif> class="tab-switch">
+							<label for="tab-2" class="tab-label">${Resource.msg('product.tab.description', 'product', null)}</label>
+							<div class="tab-content"><isprint value="${pdict.Product.shortDescription}" encoding="off"/></div>
+						</div>
+					</isif>
+					<isif condition="${! empty(pdict.Product.longDescription) && pdict.Product.longDescription.markup.length > 0}">
+						<div class="tab">
+							<input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
+							<label for="tab-3" class="tab-label">${Resource.msg('product.tab.details', 'product', null)}</label>
+							<div class="tab-content"><isprint value="${pdict.Product.longDescription}" encoding="off"/></div>
+						</div>
+					</isif>
+					<isif condition="${showAttributes}">
+						<div class="tab">
+							<input type="radio" name="css-tabs" id="tab-4" class="tab-switch">
+							<label for="tab-4" class="tab-label">${Resource.msg('product.tab.attributes', 'product', null)}</label>
+							<div class="tab-content">
+								<isloop items="${vags}" var="AttributeGroup" status="loopstatus">
+									<isif condition="${AttributeGroup.ID != 'mainAttributes'}">
+										<isset name="group" value="${AttributeGroup}" scope="page"/>
+										<h3><isprint value="${group.getDisplayName()}"/></h3>
+										<isinclude template="product/components/group"/>
+									</isif>
+								</isloop>
+							</div>
+						</div>
+					</isif>
+		    		<div class="tab">
+		    			<input type="radio" name="css-tabs" id="tab-5" class="tab-switch">
+		    			<label for="tab-5" class="tab-label">${Resource.msg('product.tab.reviews', 'product', null)}</label>
+		    			<div class="tab-content"><isinclude template="product/components/reviews"/></div>
+		    		</div>
+		    	</div>
+		    </div>
+		</isif>
+		</iscomment>
+	</div>
+</section>

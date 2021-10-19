@@ -1,0 +1,123 @@
+<isdecorate template="content/home/pt_storefront">
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24"/>
+
+<style>
+@media screen and (max-width: 1024px) {
+.inner {
+padding-top: 15px !important;
+}
+}
+@media screen and (max-width:600px){
+.retailer {
+width: calc(100% - 26px) !important;
+}
+
+.retailer:hover{
+display: block;
+position: relative;
+width: calc((100% / 5) - 26px);
+margin-left: 30px;
+box-shadow: 0px 0px 20px 1px rgba(136,136,136,0.4);
+margin-bottom: 30px;
+margin-right: -4px !important;
+text-align: center;
+border: 1px solid #c7c7c7;
+vertical-align: top;
+transition: all 500ms ease-in-out;
+-moz-transition: all 500ms ease-in-out;
+-webkit-transition: all 500ms ease-in-out;
+-o-transition: all 500ms ease-in-out;
+font-size: 0;
+}
+}
+.inner {
+padding-top: 100px;
+display: block;
+width: 100%;
+height: 100%;
+position: relative;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+max-width: 1040px;
+margin: 0px auto;
+text-align: left;
+}
+.h1-tag {
+display: block;
+clear: both;
+text-align: center;
+font-family:'Helvetica Neue';
+color: #262626;
+text-transform: uppercase;
+margin-top:10px;
+margin-bottom: 10px;
+}
+.retailer {
+display: inline-block;
+position: relative;
+width: calc((100% / 5) - 26px);
+margin-left: 30px;
+margin-bottom: 30px;
+margin-right: -4px !important;
+text-align: center;
+border: 1px solid #c7c7c7;
+vertical-align: top;
+transition: all 500ms ease-in-out;
+-moz-transition: all 500ms ease-in-out;
+-webkit-transition: all 500ms ease-in-out;
+-o-transition: all 500ms ease-in-out;
+font-size: 0;
+}
+
+.retailer:hover{
+display: inline-block;
+position: relative;
+width: calc((100% / 5) - 26px);
+margin-left: 30px;
+box-shadow: 0px 0px 20px 1px rgba(136,136,136,0.4);
+margin-bottom: 30px;
+margin-right: -4px !important;
+text-align: center;
+border: 1px solid #c7c7c7;
+vertical-align: top;
+transition: all 500ms ease-in-out;
+-moz-transition: all 500ms ease-in-out;
+-webkit-transition: all 500ms ease-in-out;
+-o-transition: all 500ms ease-in-out;
+font-size: 0;
+}
+.container{
+text-align:center;
+}
+</style>
+
+<div class="inner">
+<h1 class="h1-tag">Where to Buy</h1>
+<div class='container'>
+<ul style="margin-right:70px">
+<li class="retailer">
+<a href="https://www.target.com/b/leandro-limited/-/N-q643leu875a?Nao=0" target="_blank" title="Target">
+<img width="70%" src="${URLUtils.staticURL('/images/Target-Logo.png')}" style="margin-top: 10px;margin-bottom: 10px;">
+</a>
+</li>
+<li class="retailer">
+<a href="https://www.ulta.com/brand/leandro-limited" target="_blank" title="Ulta">
+<img width="70%" class="h1-tag" src="${URLUtils.staticURL('/images/Ulta_Logo.png')}" style="margin-left:15%">
+</a>
+</li>
+<li class="retailer">
+<a href="https://www.asos.com/us/women/face-body/a-to-z-of-brands/leandro-limited/cat/?cid=30006" target="_blank" title="asos">
+<img width="70%" class="h1-tag" src="${URLUtils.staticURL('/images/asos_Logo.png')}" style="margin-left:15%" >
+</a>
+</li>
+<li class="retailer">
+<a href="https://www.cvs.com/" target="_blank" title="cvs">
+<img width="90%" class="h1-tag" src="${URLUtils.staticURL('/images/cvs.png')}" style="margin-top:12px;margin-bottom:12px;margin-left:5%;" >
+</a>
+</li>
+</ul>
+</div>
+</div>
+
+</isdecorate>

@@ -1,0 +1,52 @@
+<!--- TEMPLATENAME: InfoDelete.isml --->
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isdecorate template="content/content/pt_content">
+	<isinclude template="util/modules"/>
+
+	<div class="wrap">
+		<iscontentasset aid="delete-request-header" />
+		<form action="${URLUtils.httpsContinue()}" method="post" id="${pdict.CurrentForms.infodelete.htmlName}">
+			<input type="hidden" name="${dw.web.CSRFProtection.getTokenName()}" value="${dw.web.CSRFProtection.generateToken()}"/>
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.state}" type="select" />
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.firstName}" type="input" />
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.lastName}" type="input" />
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.address1}" type="input" />
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.city}" type="input" />
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.postal}" type="input" />
+			<isinputfield formfield="${pdict.CurrentForms.infodelete.emailAddress}" type="input" />
+			<fieldset><legend><span class="required-indicator">* </span><isprint value="${Resource.msg('relationship','forms',null)}"/></legend>
+				<isloop items="${pdict.CurrentForms.infodelete.relationship.options}" var="relationship" begin="1">
+					<div class='form-row required label-inline <isif condition="${!pdict.CurrentForms.infodelete.relationship.valid}">error</isif>'>
+						<div class="field-wrapper">
+							<input id="is-${relationship.value}" type="radio" class="input-radio" name="${pdict.CurrentForms.infodelete.relationship.htmlName}" value="${relationship.htmlValue}" <isif condition="${relationship.htmlValue == pdict.CurrentForms.infodelete.relationship.htmlValue}">checked="checked"</isif> />
+						</div>
+						<label for="is-${relationship.value}"><isprint value="${Resource.msg(relationship.label,'forms',null)}"/></label>
+					</div>
+				</isloop>
+			</fieldset>
+			<fieldset><legend><span class="required-indicator">* </span><isprint value="${Resource.msg('request','forms',null)}"/></legend>
+				<isloop items="${pdict.CurrentForms.infodelete.request.options}" var="request" begin="1">
+					<div class='form-row required label-inline <isif condition="${!pdict.CurrentForms.infodelete.request.valid}">error</isif>'>
+						<div class="field-wrapper">
+							<input id="${pdict.CurrentForms.infodelete.request.htmlName}-${request.value}" type="radio" class="input-radio" name="${pdict.CurrentForms.infodelete.request.htmlName}" value="${request.htmlValue}" <isif condition="${request.htmlValue == pdict.CurrentForms.infodelete.request.htmlValue}">checked="checked"</isif> />
+						</div>
+						<label for="${pdict.CurrentForms.infodelete.request.htmlName}-${request.value}"><isprint value="${Resource.msg(request.label,'forms',null)}"/></label>
+					</div>
+				</isloop>
+				<div class="visually-hidden" id="delete-request-confirm">
+				<iscontentasset aid="delete-request-confirm" />
+				<button class="button-fancy-large delete-confirm" value="confirm"><span>${Resource.msg('global.confirm','locale',null)}</span></button>
+				<button class="button-fancy-large delete-cancel" value="cancel"><span>${Resource.msg('global.cancel','locale',null)}</span></button>
+				</div>
+			</fieldset>
+			<isif condition="${dw.system.Site.current.getCustomPreferenceValue('reCAPTCHAEnabled')}">
+			<isinclude template="recaptcha_display"/>
+			</isif>
+			<div class="form-row form-row-button">
+				<button class="button-fancy-large" type="submit" name="${pdict.CurrentForms.infodelete.delete.htmlName}" value="delete"><span>${Resource.msg('infodelete','forms',null)}</span></button>
+			</div>
+		</form>
+		<div class="visually-hidden" id="info-request-not-california"><iscontentasset aid="info-request-not-california" /></div>
+		<iscontentasset aid="info-and-request-bottom" />
+	</div>
+</isdecorate>

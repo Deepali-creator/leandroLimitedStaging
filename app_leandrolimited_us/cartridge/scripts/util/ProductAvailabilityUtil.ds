@@ -1,0 +1,29 @@
+/**
+*
+*
+* var pau=require('~/cartridge/scripts/util/ProductAvailibilityUtil.ds');
+*/
+importPackage( dw.system );
+importPackage( dw.catalog );
+importPackage( dw.value );
+
+exports.getSiteLowStockLevel=function():Number{
+	return Site.current.getCustomPreferenceValue('lowStock');
+}
+
+exports.getProductLowStockLevel=function(product : Product):Number{
+	return empty(product.custom.lowStock) ? this.getSiteLowStockLevel() : product.custom.lowStock;
+}
+
+exports.isProductLowStock=function(product : Product):Boolean{
+	var stockLevel : Quantity = product.availabilityModel.inventoryRecord.stockLevel;
+	var lowAmount : Number = this.getProductLowStockLevel(product);
+	return stockLevel.available ? stockLevel.value <= lowAmount : true;
+}
+
+exports.isProductOut=function(product : Product):Boolean{
+	var stockLevel : Quantity = product.availabilityModel.inventoryRecord.stockLevel;
+	return stockLevel.available ? stockLevel.value <= 0 : true;
+}
+
+

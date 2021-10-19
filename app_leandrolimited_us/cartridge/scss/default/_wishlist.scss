@@ -1,0 +1,84 @@
+.pt_wish-list {
+	.list-table-header {
+		overflow: hidden;
+		padding: 2em;
+		p {
+			color: $color-gray-50;
+			float: right;
+			margin: 0;
+			overflow: hidden;
+			width: 40%;
+		}
+	}
+	.primary-content .list-table-header h2 {
+		float: left;
+	}
+}
+
+.list-share {
+	@extend %clearfix;
+	border-top: rem(1) solid darken($color-gray-10, 10%);
+	padding: 2em 0;
+	text-align: center;
+	.share-option {
+		box-sizing: border-box;
+		display: block;
+		margin-bottom: .5rem;
+	}
+	.share-options {
+		text-align: center;
+		margin-bottom: .5rem;
+		font-size: 1.7em;
+		clear: both;
+		.share-icon {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.share-title {
+			display: inline;
+		}
+	}
+	.list-title {
+		float: left;
+	}
+	.share-link {
+		cursor: pointer;
+	}
+	.share-link-content {
+		display: none;
+		&.active {
+			display: block;
+			float: left;
+			text-align: left;
+		}
+		.share-url {
+			word-break: break-all;
+		}
+	}
+}
+
+.event-info {
+	margin: 1em;
+}
+
+.wishlist-search,
+.registry-search {
+	.form-row {
+		clear: both;
+		margin: 0 0 rem(10);
+		float: left;
+		width: 100%;
+		@include breakpoint(tabletUp) {
+			clear: none;
+			width: 31%;
+			margin-left: 1%;
+		}
+	}
+	.form-row-button {
+		margin: 0 0 rem(30) 0;
+		@include breakpoint(tabletUp) {
+			margin: 0 0 rem(30) 1%;
+		}
+	}
+
+}

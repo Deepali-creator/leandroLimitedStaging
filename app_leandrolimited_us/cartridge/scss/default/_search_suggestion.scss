@@ -1,0 +1,114 @@
+.search-suggestion-wrapper {
+	@extend %clearfix;
+	background-color: $color-white;
+	border: rem(1) solid $color-gray-50;
+	box-shadow: 0 rem(3) rem(3) 0 rgba(0,0,0,.25);
+	position: absolute;
+	top: 75%;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	padding: rem(10);
+	@include breakpoint(desktop) {
+		top: rem(40);
+		&.full {
+			margin-left: -75%;
+			width: 175%;
+			.phrase-suggestions {
+				width: 42.8571429%;
+				float: left;
+			}
+			.product-suggestions {
+				width: 57.1428571%;
+				float: right;
+			}
+		}
+	}
+
+	.hitgroup {
+		color: $color-gray-50;
+		margin: 0.7rem 0.7rem 0.7rem 0;
+		.header {
+			margin: 0 0 0.5rem 0;
+			font-family: $sans-serif-medium;
+			font-size: 1rem;
+			line-height: 1rem;
+			background-color: $color-gray-10;
+			padding: rem(5);
+		}
+		.hit {
+			display: block;
+			margin-left: 1rem;
+			margin-bottom: 0.5rem;
+			font-size: rem(14);
+			line-height: 1rem;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		.parent-category {
+			color: $color-gray-50;
+		}
+	}
+}
+
+.phrase-suggestions {
+	border-top: rem(1) solid $color-gray-40;
+	@include breakpoint(desktop) {
+		border-top: none;
+	}
+}
+
+.product-suggestion {
+	@extend %clearfix;
+	border: rem(1) solid $color-white;
+	border-top: rem(1) solid $color-gray-40;
+	padding: .5em;
+	&:nth-child(even) {
+		background-color: $color-gray-10;
+	}
+	&:hover,
+	&:focus {
+		background-color: $color-gray-20;
+		border: rem(1) solid $color-gray-40;
+	}
+	.product-image {
+		float: left;
+		text-align: center;
+		width: 25%;
+		img {
+			max-width: 100%;
+		}
+	}
+	.product-details {
+		float: right;
+		padding-top: 0.5em;
+		width: 70%;
+		.product-name {
+			font-family: $sans-serif-alt-black;
+			font-size: rem(14);
+			line-height: rem(14);
+			text-transform: uppercase;
+		}
+		.product-price {
+			color: $color-black;
+			font-family: $sans-serif-medium;
+			font-size: rem(14);
+		}
+	}
+}
+
+.search-phrase {
+	color: $color-gray-50;
+	margin: 1rem;
+	.completed {
+		font-style: italic;
+		.original {
+			text-decoration: underline;
+			font-family: $sans-serif-bold;
+		}
+	}
+	.corrected {
+		font-family: $sans-serif-bold;
+	}
+}

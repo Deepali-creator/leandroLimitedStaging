@@ -1,0 +1,419 @@
+<isif condition="${pdict.resetAttributes}">
+    <isscript>
+        var ProductUtils = require('~/cartridge/scripts/product/ProductUtils.js');
+        var url = dw.web.URLUtils.url('Product-Variation', 'pid', pdict.Product.ID, 'format', 'ajax');
+        var qs = ProductUtils.getQueryString(pdict.CurrentHttpParameterMap, ["source", "uuid", "Quantity"]);
+        if (qs && qs.length>0) { url+="&"+qs; }
+    </isscript>
+    <isinclude url="${url}"/>
+<iselse/>
+    <isset name="isQuickView" value="${pdict.CurrentHttpParameterMap.source.stringValue == 'quickview' || pdict.CurrentHttpParameterMap.source.stringValue == 'cart' || pdict.CurrentHttpParameterMap.source.stringValue == 'giftregistry' || pdict.CurrentHttpParameterMap.source.stringValue == 'wishlist'}" scope="page"/>
+    <isscript>
+        let product = pdict.Product;
+        let masterId = product.isVariant() || product.isVariationGroup() ? product.getMasterProduct().getID() : product.getID();
+        let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+        let selectedVariant = variationModel.getSelectedVariant();
+
+        let avm = selectedVariant ? selectedVariant.getAvailabilityModel() : product.getAvailabilityModel();
+        pdict.isProductAvailable = avm.availability > 0;
+
+        let availableCount = "0";
+        if (pdict.isProductAvailable && !empty(avm.inventoryRecord)) {
+            availableCount = avm.inventoryRecord.perpetual ? "999" : avm.inventoryRecord.ATS.value.toFixed().toString();
+        }
+    </isscript>
+    <iscomment>
+        primary details
+        =============================================================
+    </iscomment>
+
+    <h2 class="visually-hidden">Details</h2>
+    <span class="visually-hidden" itemprop="url">${URLUtils.http('Product-Show','pid', pdict.Product.ID)}</span>
+
+    <isscript>
+        let productNumber = masterId;
+
+        if (pdict.isProductAvailable) {
+            let product = pdict.Product;
+            let va=pdict.Product.variationGroup;
+            var v2=pdict.CurrentVariationModel.variants.size();
+            var v3=pdict.CurrentVariationModel.variants[0];
+            var v4=pdict.CurrentVariationModel.variants[1];
+            let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+            let selectedVariant = variationModel.getSelectedVariant();
+            productNumber = selectedVariant
+                ? selectedVariant.getID()
+                : product.getID();
+        }
+    </isscript>
+    <iscomment>
+    <div class="product-number">
+        ${Resource.msg('product.item','product',null)} <span itemprop="productID" data-masterid="${masterId}"><isprint value="${productNumber}"/></span>
+    </div>
+    </iscomment>
+
+    <iscomment>
+        reviews
+        =============================================================
+    </iscomment>
+    <iscomment>
+    <isif condition="${!isQuickView}">
+        <isinclude template="product/components/reviewsmini"/>
+    </isif>
+    </iscomment>
+    <script>
+        window.onload();
+    </script>
+    <div class="product-detail-top1" onload="window.onload()">
+        <span class="product-brandQV"><isprint value="${pdict.Product.brand}"/></span>
+        <h1 class="product-nameQV" itemprop="name"><isprint value="${pdict.Product.name}"/></h1>
+
+        <iscomment>
+            product pricing
+            =============================================================
+        </iscomment>
+
+        <isset name="showTieredPrice" value="${true}" scope="page"/>
+        <isinclude template="product/components/pricing"/>
+
+
+        <iscomment>
+            PROMOTIONS
+            ==============================================================
+        </iscomment>
+        <isinclude template="product/components/promotions"/>
+
+    </div>
+
+    <iscomment> <div class="product-variations-wrapper1">
+        <isinclude template="product/components/variations"/>
+    </div> </iscomment>
+
+    <iscomment>
+    <div class="product-variation" >
+        <isloop items="${pdict.CurrentVariationModel.variants}" var="VA">
+            <isset name="VartionProduct" value="${VA}" scope="page"/>
+
+            <div class="product-variation-group" style="height: 92px;width: 92px;">
+
+                <isset name="image" value="${new ProductImage('large', VartionProduct, 0)}" scope="page"/>
+                <isset name="allLarge" value="${image.getAllImages()}" scope="page"/>
+
+                <a href="/s/us-leandrolimited/">
+                    <img src="${allLarge[0].getURL()}" alt="${allLarge[0].alt}" />
+                </a>
+            </div>
+        </isloop>
+    </div>
+    </iscomment>
+    <isset name="pam" value="${pdict.Product.getAttributeModel()}" scope="page"/>
+    <isset name="group" value="${pam.getAttributeGroup('mainAttributes')}" scope="page"/>
+    <isinclude template="product/components/group"/>
+
+        <iscomment>
+            description(s)
+            =============================================================
+        </iscomment>
+
+        <isif condition="${! empty(pdict.Product.shortDescription) && pdict.Product.shortDescription.markup.length > 0}">
+            <div class="product-description product-description--short">
+                <isprint value="${pdict.Product.shortDescription}" encoding="off"/>
+            </div>
+        </isif>
+
+    <iscomment>
+    view detail link for quick view
+    =============================================================
+    </iscomment>
+    <isif condition="${pdict.CurrentHttpParameterMap.source && pdict.CurrentHttpParameterMap.source.stringValue != 'giftregistry'}">
+        <isif condition="${isQuickView}">
+            <!-- shown only in quick view -->
+            <div class="viewfullpage">
+                <a  style="color:#1D1D1D;" href="${URLUtils.url('Product-Show','pid', pdict.Product.ID)}" title="${pdict.Product.name}">${Resource.msg('product.viewdetails','product',null)}</a>
+            </div>
+        </isif>
+    </isif>
+
+    <iscomment>
+        product actions
+        =============================================================
+    </iscomment>
+    <iscomment>
+    <div class="product-actions">
+        <isscript>
+            var Url = require('~/cartridge/scripts/util/Url');
+            pdict.url = Url.getCurrent(pdict);
+            pdict.title = pdict.Product.name;
+        </isscript>
+
+        <isif condition="${pdict.CurrentHttpParameterMap.source && pdict.CurrentHttpParameterMap.source.stringValue != 'giftregistry'}">
+            <isif condition="${pdict.isProductAvailable && !pdict.Product.bundle && !(pdict.Product.master || pdict.Product.variationGroup)}">
+                <a class="button simple" data-action="wishlist" href="${URLUtils.https('Wishlist-Add', 'pid', pdict.Product.ID, 'source', 'productdetail')}" title="${Resource.msg('global.addtowishlist.label','locale',null)}">${Resource.msg('global.addtowishlist','locale',null)}</a>
+                <a class="button simple" data-action="gift-registry" href="${URLUtils.https('GiftRegistry-AddProduct', 'pid', pdict.Product.ID, 'source', 'productdetail')}" title="${Resource.msg('global.addtogiftregistry.label','locale',null)}">${Resource.msg('global.addtogiftregistry','locale',null)}</a>
+            </isif>
+        </isif>
+
+        <div class="socialsharing">
+            <isinclude template="components/socialsharing"/>
+        </div>
+
+    </div><!--  end product-actions block -->
+    </iscomment>
+
+    <iscomment>This is ugly, but it works until we can get a better solution</iscomment>
+    <isif condition="${pdict.GetImages}">
+        <div id="update-images" style="display:none">
+            <isinclude template="product/components/productimages"/>
+        </div>
+    </isif>
+
+    <form action="${URLUtils.continueURL()}" method="post" id="${pdict.CurrentForms.product.addtocart.dynamicHtmlName}" class="pdpForm">
+        <fieldset>
+            <isset name="showTieredPrice" value="${false}" scope="page"/>
+
+            <div class="product-add-to-cart">
+                <h2 class="visually-hidden">Product Actions</h2>
+
+                <iscomment>
+                    availability
+                    =============================================================
+                </iscomment>
+
+                <isscript>
+                    let product = pdict.Product;
+                    let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+                    let selectedVariant = variationModel.getSelectedVariant();
+                    let availableForInStorePickup = selectedVariant ? selectedVariant.custom.availableForInStorePickup : product.custom.availableForInStorePickup;
+                    let isStorePickUpEnabled = dw.system.Site.getCurrent().getCustomPreferenceValue('enableStorePickUp');
+                </isscript>
+
+                <iscomment>
+                    product options (Must be inside form)
+                    =============================================================
+                </iscomment>
+                <div class="product-options-wrapper">
+                    <isinclude template="product/components/options"/>
+                </div>
+
+                <iscomment>
+                    variations
+                    =============================================================
+                </iscomment>
+                
+
+                <iscomment>
+                    product quantity
+                    =============================================================
+                </iscomment>
+
+                <div class="inventory">
+                    <div class="quantity">
+                        <label for="Quantity">${Resource.msg('global.qty','locale',null)}</label>
+                        <iscomment>
+                        <input type="text" class="input-text" name="Quantity" id="Quantity" size="2" maxlength="3" value="${Number(empty(pdict.CurrentHttpParameterMap.Quantity.stringValue) ? 1 : pdict.CurrentHttpParameterMap.Quantity.stringValue).toFixed()}" data-available="${availableCount}"/>
+                        </iscomment>
+                        <div class="select-field-wrapper">
+                        
+                            <iscomment>
+                                <select class="input-select quantity-select" id="Quantity" name="Quantity">
+                                    <isloop items="${new Array(!empty(product.custom.maxOrderQuantity)?product.custom.maxOrderQuantity:9)}" status="quantity" step="${!empty(product.stepQuantity)?product.stepQuantity.value:1}" begin="${!empty(product.minOrderQuantity)?product.minOrderQuantity.value-1:0}" >
+                                        <option value="${(quantity.index+1).toFixed()}" class="select-option">${(quantity.index+1).toFixed()}</option>
+                                    </isloop>
+                                </select>
+                                <span class="select-field__icon"><i class="fa fa-angle-down"></i></span>
+                            </iscomment>
+                        </div>
+                        <div class="number input-select " style="width:55px;">
+                            <input type="text" value="1" name="Quantity" id="Quantity"/ style="height:40px;border:2px solid #D0CCCC">
+                            <span class="minus">-</span>
+                            <span class="plus">+</span>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                    $('.minus').click(function () {
+                                        var $input = $(this).parent().find('input');
+                                        var count = parseInt($input.val()) - 1;
+                                        count = count < 1 ? 1 : count;
+                                        $input.val(count);
+                                        $input.change();
+                                        return false;
+                                    });
+                                    $('.plus').click(function () {
+                                        var $input = $(this).parent().find('input');
+                                        var countp = parseInt($input.val()) + 1;
+                                        countp = countp > 9 ? 9:countp;
+                                        $input.val(countp);
+                                        $input.change();
+                                        return false;
+                                    });
+                                });
+                        </script>
+                    </div>
+                </div>
+                <iscomment>
+                    add to cart submit
+                    =============================================================
+                </iscomment>
+
+                <isscript>
+                    var updateSources = ["cart", "giftregistry", "wishlist"];
+                    var source = pdict.CurrentHttpParameterMap.source.stringValue;
+                    var buttonTitle = dw.web.Resource.msg('global.addtocart','locale','Add to Cart');
+                    var plid = null;
+                    if (updateSources.indexOf(source) > -1) {
+                        buttonTitle = dw.web.Resource.msg('global.update','locale','Update');
+                        if (pdict.CurrentHttpParameterMap.productlistid && pdict.CurrentHttpParameterMap.productlistid.stringValue) {
+                            plid = pdict.CurrentHttpParameterMap.productlistid.stringValue;
+                        }
+                    } else {
+                        // Only pass on white-listed sources
+                        source = null;
+                    }
+                </isscript>
+
+                <isset name="cartAction" value="add" scope="page"/>
+
+                <isif condition="${pdict.CurrentHttpParameterMap.uuid.stringValue}">
+                    <input type="hidden" name="uuid" id="uuid" value="${pdict.CurrentHttpParameterMap.uuid.stringValue}" />
+                    <isset name="cartAction" value="update" scope="page"/>
+                </isif>
+                <isif condition="${source}">
+                    <input type="hidden" name="source" id="source" value="${source}" />
+                </isif>
+                <isif condition="${plid}">
+                    <input type="hidden" name="productlistid" id="productlistid" value="${plid}" />
+                </isif>
+                <input type="hidden" name="cartAction" id="cartAction" value="${cartAction}" />
+                <isscript>
+                    let product = pdict.Product;
+                    let pid = pdict.Product.getID();
+                    let disabledAttr = pdict.isProductAvailable && !product.master ? '' : ' disabled="disabled"';
+
+                    if (product.isVariationGroup()) {
+                        let variationModel = pdict.CurrentVariationModel || product.getVariationModel();
+                        let selectedVariant = variationModel.getSelectedVariant();
+                        if (selectedVariant) {
+                            pid = selectedVariant.getID();
+                        } else {
+                            disabledAttr = ' disabled="disabled"';
+                        }
+                    };
+                </isscript>
+                <input type="hidden" name="pid" id="pid" value="${pid}" />
+                <isif condition="${!disabledAttr}">
+                    <button id="add-to-cart" type="submit" title="${buttonTitle}" value="${buttonTitle}" class="button add-to-cart">${buttonTitle}</button>
+                    <isapplepay sku="${pdict.Product.ID}"></isapplepay>
+                <iselse>
+                    <isscript>
+                        var pvm = pdict.Product.getVariationModel();
+                        var it = pvm.getProductVariationAttributes().iterator();
+                        var array = [];
+                        var options = '';
+                        var requiredOptions = '';
+                        while (it.hasNext()) {
+                            var text = it.next();
+                            array.push(text.displayName);
+                        }
+                        options = array.join(', ');
+                        var lastIndex = options.lastIndexOf(',');
+                        if (lastIndex > 0 && options.length > 1 && array.length > 1) {
+                            requiredOptions = options.substr(0,lastIndex) + ' ' + Resource.msg('product.attributedivider', 'product', null) + options.substr(lastIndex+1, options.length);
+                        } else {
+                            requiredOptions = options;
+                        }
+                        var buttonTitleDisabledSelectVariation = StringUtils.format(Resource.msg('product.missingval','product', null), requiredOptions);
+                    </isscript>
+                    <button id="add-to-cart" type="button" title="${buttonTitleDisabledSelectVariation}" value="${buttonTitleDisabledSelectVariation}" class="button add-to-cart-disabled"<isprint value="${disabledAttr}" encoding="off"/>>${buttonTitle}</button>
+                </isif>
+                    <div class="product-actions">
+                        <isscript>
+                            var Url = require('~/cartridge/scripts/util/Url');
+                            pdict.url = Url.getCurrent(pdict);
+                            pdict.title = pdict.Product.name;
+                        </isscript>
+                        <script>
+                            function getWishlistpidsQV() {
+                                $.ajax({
+                                    url: document.getElementById('getWishlistItemsUrl').value,method: 'GET',
+                                    success: function (data) {
+                                    console.log('success: getwishlistUrl'+ data);
+                                    document.getElementById("wishlisturlreponseQV").innerHTML = data;
+                                    },
+                                    error: function () {console.log('error');}
+                                })
+                            }
+
+                            function markwishlisttileQV() {
+                                for(var i = 0; i < document.getElementById('wishpidCount').value;i++){
+                                    var elementID = 'wishpid-'+(i+1);
+                                    var inWishlistpid = document.getElementById('wishpid-'+(i+1)).value;
+                                    if(document.getElementById(inWishlistpid+'-inWishlistQV')){
+                                        document.getElementById(inWishlistpid+'-inWishlistQV').value='in-wishlist';
+                                        document.getElementById(inWishlistpid+'-wishlistIconQV').className='fa fa-heart fa-lg';
+                                        document.getElementById(inWishlistpid+'-wishlistUrlAjexSuccessQV').value='active';
+                                    }
+                                }
+                            }
+                            window.onload = function() {
+                                getWishlistpidsQV();
+                                setTimeout(() => {
+                                    markwishlisttileQV();
+                                }, 1000);
+                            }
+                        </script>
+                        <div id="wishlistpid" style="display:none">
+                            <input type="hidden" id="getWishlistItemsUrl" value="${URLUtils.https('WishlistCtrl-getWishlistItems')}"/>
+                            <div id="wishlisturlreponseQV">
+                            </div>
+                        </div>
+                        <isif condition="${pdict.CurrentHttpParameterMap.source && pdict.CurrentHttpParameterMap.source.stringValue != 'giftregistry'}">
+                            <isif condition="${pdict.isProductAvailable && !pdict.Product.bundle && !(pdict.Product.master || pdict.Product.variationGroup)}">
+                                <isscript>
+                        // ensure a unique form name and make the name reuseable, because the call to
+                        // dynamicHtmlName always creates a different name
+                        var uniqueFormID : String = pdict.CurrentForms.product.addtocart.dynamicHtmlName;
+                        </isscript>
+                        <input type="hidden" id="${uniqueFormID}-isUserAuthenticated" value="${pdict.CurrentCustomer.authenticated}"/>
+                        <input type="hidden" id="${uniqueFormID}-wishlistUrl" name="wishlistUrl" value="${URLUtils.https('Wishlist-Add', 'pid', pdict.Product.ID , 'source', 'productdetail')}"/>
+                        <input type="hidden" id="${pdict.Product.ID}-wishlistUrlAjexSuccessQV" value="not-active"/>
+                        <input type="hidden" id="${pdict.Product.ID}-inWishlistQV" value="not-in-wishlist"/>
+                        <div class="wishlist-link" data-action="wishlist" title="${Resource.msg('global.addtowishlist.label','locale',null)}"
+                                onclick="
+                                document.getElementById('${pdict.Product.ID}-wishlistIconQV').className='fa fa-heart fa-lg';
+                                document.getElementById('${pdict.Product.ID}-wishlistIconQV').style.color='gray';
+                                if(document.getElementById('${uniqueFormID}-isUserAuthenticated').value=='true'){
+                                    $.ajax({url: document.getElementById('${uniqueFormID}-wishlistUrl').value,method: 'POST',
+                                        success: function (data) {
+                                        console.log('success:  ${uniqueFormID}-wishlistUrl');
+                                        document.getElementById('${pdict.Product.ID}-wishlistIconQV').style.color='#212121';
+                                        document.getElementById('${pdict.Product.ID}-wishlistIconQV').className='fa fa-heart fa-lg';
+                                        document.getElementById('${pdict.Product.ID}-wishlistUrlAjexSuccessQV').value='active';
+                                        },
+                                        error: function () {console.log('error');}
+                                    })
+                                }else{
+                                    window.location.href = '${URLUtils.https('Wishlist-Add', 'pid', pdict.Product.ID , 'source', 'productdetail')}';
+                                }"
+                                onmouseover="document.getElementById('${pdict.Product.ID}-wishlistIconQV').className='fa fa-heart fa-lg';"
+                                onmouseout="if(document.getElementById('${pdict.Product.ID}-wishlistUrlAjexSuccessQV').value=='not-active'){
+                                    document.getElementById('${pdict.Product.ID}-wishlistIconQV').className='fa fa-heart-o fa-lg';
+                                }"
+                                >
+                                <div id='${pdict.Product.ID}-wishlistIconQV' style="color:#212121;font-size: 30px;" class="fa fa-heart-o">
+                                    <iscomment> <img style="width:100px" src="${URLUtils.staticURL('/images/heart_icon.png')}" alt="Wishlist"/> </iscomment>
+                                </div>
+                                </div>
+                            </isif>
+                        </isif>
+
+                        <iscomment> <div class="socialsharing">
+                            <isinclude template="components/socialsharing"/>
+                        </div> </iscomment>
+
+                    </div><!--  end product-actions block -->
+                </div><!--  end details block -->
+            </fieldset>
+    </form>
+
+</isif>

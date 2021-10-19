@@ -1,0 +1,11 @@
+<!--- TEMPLATENAME: DeleteConfirm.isml --->
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isdecorate template="content/content/pt_content">
+	<isinclude template="util/modules"/>
+	<iscontentasset aid="delete-request-confirm" />
+	<form action="${URLUtils.httpsContinue()}" method="post" id="${pdict.CurrentForms.inforequest.htmlName}">
+        <div class="form-row form-row-button">
+            <button class="button-fancy-large" type="submit" name="${pdict.CurrentForms.infodelete.delete.htmlName}" value="${Resource.msg('infodelete','forms',null)}"><span>${Resource.msg('infodelete','forms',null)}</span></button>
+        </div>
+	</form>
+</isdecorate>
